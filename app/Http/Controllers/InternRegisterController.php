@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InternRegisterMail;
 use App\Models\InternRegister;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 
 class InternRegisterController extends Controller
 {
@@ -16,7 +19,18 @@ class InternRegisterController extends Controller
         return view('list_intern_registers', compact('internRegisters'));
     }
 
-    public function create(): View{
+    public function showByToken(string $token): View {
+        $internRegister = InternRegister::where('token', $token)->first();
+
+        if (!$internRegister) {
+            abort(404, 'Pendaftaran tidak ditemukan.');
+        }
+
+        return view('intern_register_byToken', compact('internRegister'));
+    }
+
+    public function create(): View
+    {
         return view('intern_register');
     }
 
@@ -41,9 +55,9 @@ class InternRegisterController extends Controller
         $image = $request->file('image');
         $image->storeAs('image', $image->hashName());
 
-        $token= Str::random(32);
+        $token = Str::random(32);
 
-        InternRegister::create([
+        $internRegister = InternRegister::create([
             'identity_number' => $request->identity_number,
             'name' => $request->name,
             'address' => $request->address,
@@ -54,9 +68,10 @@ class InternRegisterController extends Controller
             'end_date' => $request->end_date,
             'cover_letter' => $cover_letter->hashName(),
             'image' => $image->hashName(),
-            'token'=> $token
+            'token' => $token
         ]);
 
+        Mail::to($internRegister->email)->send(new InternRegisterMail($internRegister));
         return redirect()->route('internRegister.create')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 }

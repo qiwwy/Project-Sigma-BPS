@@ -7,7 +7,7 @@
 
     <div id="app">
 
-        @if (request()->is('intern_register'))
+        @if (request()->is('intern_register') || request()->is('list_intern_register/*'))
 
             <head>
                 <meta charset="UTF-8">
