@@ -16,9 +16,8 @@
                                 <th>Nama</th>
                                 <th>Asal Sekolah</th>
                                 <th>Periode Magang</th>
+                                <th>Total Waktu</th>
                                 <th>Status Penerimaan</th>
-                                <th>Status Pendaftaran</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,20 +26,19 @@
                                 <td>{{ $internRegister->identity_number }}</td>
                                 <td>{{ $internRegister->name }}</td>
                                 <td>{{ $internRegister->school_name }}</td>
-                                <td>{{ $internRegister->start_date }} - {{ $internRegister->end_date }}</td>
-                                <td> <span class="badge bg-success">{{ $internRegister->accept_stat }}</span></td>
-                                <td> <span class="badge bg-success">{{ $internRegister->register_stat }}</span></td>
                                 <td>
-                                    <div class="btn-group">
-                                        <span class="badge bg-primary">Detail</span>
-                                    </div>
-                                    <div class="btn-group">
-                                        <span class="badge bg-warning">Edit</span>
-                                    </div>
-                                    <div class="btn-group">
-                                        <span class="badge bg-danger">Hapus</span>
-                                    </div>
+                                    {{ \Carbon\Carbon::parse($internRegister->start_date)->format('d-m-Y') }} -
+                                    {{ \Carbon\Carbon::parse($internRegister->end_date)->format('d-m-Y') }}
                                 </td>
+                                <td>
+                                    @php
+                                        $startDate = \Carbon\Carbon::parse($internRegister->start_date);
+                                        $endDate = \Carbon\Carbon::parse($internRegister->end_date);
+                                        $daysDifference = $startDate->diffInDays($endDate);
+                                    @endphp
+                                    {{ $daysDifference }} Hari
+                                </td>
+                                <td>{{ $internRegister->accept_stat }}</td>
                             </tr>
                         </tbody>
                     </table>

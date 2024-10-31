@@ -22,6 +22,8 @@ Route::get('/dashboard', function () {
 Route::get('/list_intern_registers', [InternRegisterController::class, 'index'])->name('internRegister.index');
 Route::get('/intern_register', [InternRegisterController::class, 'create'])->name('internRegister.create');
 Route::post('/intern_register', [InternRegisterController::class, 'store'])->name('internRegister.store');
+
+Route::post('/update_status', [InternRegisterController::class, 'updateStatus'])->name('internRegister.updateStatus');
 Route::get('/list_intern_register/{token}', [InternRegisterController::class, 'showByToken'])->name('internRegister.showByToken');
 
 

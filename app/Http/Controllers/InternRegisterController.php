@@ -19,7 +19,8 @@ class InternRegisterController extends Controller
         return view('list_intern_registers', compact('internRegisters'));
     }
 
-    public function showByToken(string $token): View {
+    public function showByToken(string $token): View
+    {
         $internRegister = InternRegister::where('token', $token)->first();
 
         if (!$internRegister) {
@@ -73,5 +74,23 @@ class InternRegisterController extends Controller
 
         Mail::to($internRegister->email)->send(new InternRegisterMail($internRegister));
         return redirect()->route('internRegister.create')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $internRegister = InternRegister::find($request->id);
+        $stateNow = $internRegister->accept_stat;
+
+        if ($stateNow === "Process") {
+            $internRegister->accept_stat = "Accept";
+        } elseif ($stateNow === "Accept") {
+            $internRegister->accept_stat = "Reject";
+        } else {
+            $internRegister->accept_stat = "Process";
+        }
+
+        $internRegister->save();
+
+        return response()->json(['status' => $internRegister->accept_stat]);
     }
 }
