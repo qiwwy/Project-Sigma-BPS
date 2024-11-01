@@ -11,22 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('intern_registers', function (Blueprint $table) {
+        Schema::create('mentors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('division_id')->constrained(
+                table: 'divisions',
+                indexName: 'mentors_division_id'
+            )->onUpdate('cascade')->onDelete('cascade');
             $table->string('identity_number');
             $table->string('name');
             $table->text('address');
-            $table->string('school_name');
             $table->string('phone_number');
             $table->string('email');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('cover_letter');
             $table->string('image');
-            $table->string('token');
-            $table->boolean('is_sent')->default(false);
-            $table->enum('accept_stat', ['Process', 'Accept', 'Reject'])->default('Process');
-            $table->enum('register_stat', ['Register', 'Unregister'])->default('Register');
             $table->timestamps();
         });
     }
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('intern_registers');
+        Schema::dropIfExists('mentors');
     }
 };

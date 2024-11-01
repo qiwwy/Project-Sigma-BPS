@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InternRegister extends Model
+class TrasferedRegistrationView extends Model
 {
-    protected $table= 'intern_registers';
-    protected $primaryKey= 'id';
+    protected $table = "transfered_registration_view";
+    protected $id = "id";
 
-    protected $fillable= [
+    protected $fillable = [
         'identity_number',
         'name',
         'address',
@@ -20,7 +20,6 @@ class InternRegister extends Model
         'end_date',
         'cover_letter',
         'image',
-        'token',
-        'is_sent'
+        'token'
     ];
 }

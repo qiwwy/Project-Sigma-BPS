@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,8 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('intern_registers', function (Blueprint $table) {
+        Schema::create('interns', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('mentor_id')->nullable()->constrained(
+                table: 'mentors',
+                indexName: 'interns_mentor_id'
+            )->onUpdate('cascade')->onDelete('cascade');
             $table->string('identity_number');
             $table->string('name');
             $table->text('address');
@@ -21,12 +26,7 @@ return new class extends Migration
             $table->string('email');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('cover_letter');
             $table->string('image');
-            $table->string('token');
-            $table->boolean('is_sent')->default(false);
-            $table->enum('accept_stat', ['Process', 'Accept', 'Reject'])->default('Process');
-            $table->enum('register_stat', ['Register', 'Unregister'])->default('Register');
             $table->timestamps();
         });
     }
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('intern_registers');
+        Schema::dropIfExists('interns');
     }
 };

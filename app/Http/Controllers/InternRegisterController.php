@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InternRegisterMail;
 use App\Models\InternRegister;
+use App\Models\Interns;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 
@@ -15,7 +16,7 @@ class InternRegisterController extends Controller
 {
     public function index(): View
     {
-        $internRegisters = InternRegister::all();
+        $internRegisters = InternRegister::where('is_sent', false)->get();
         return view('list_intern_registers', compact('internRegisters'));
     }
 
@@ -92,5 +93,51 @@ class InternRegisterController extends Controller
         $internRegister->save();
 
         return response()->json(['status' => $internRegister->accept_stat]);
+    }
+
+    public function transferAccepted()
+    {
+        $acceptedRegisters = InternRegister::where('accept_stat', 'Accept')->get();
+        $notSentCount = 0;
+
+        foreach ($acceptedRegisters as $acceptedRegister) {
+            $exists = Interns::where('identity_number', $acceptedRegister->identity_number)->exists();
+
+            if (!$exists) {
+                Interns::create([
+                    'identity_number' => $acceptedRegister->identity_number,
+                    'name' => $acceptedRegister->name,
+                    'address' => $acceptedRegister->address,
+                    'school_name' => $acceptedRegister->school_name,
+                    'phone_number' => $acceptedRegister->phone_number,
+                    'email' => $acceptedRegister->email,
+                    'start_date' => $acceptedRegister->start_date,
+                    'end_date' => $acceptedRegister->end_date,
+                    'image' => $acceptedRegister->image
+                ]);
+
+                $acceptedRegister->is_sent = true;
+                $acceptedRegister->save();
+            } else {
+                $notSentCount++;
+            }
+        }
+
+        return response()->json([
+            'message' => 'Data berhasil dipindahkan',
+            'not_sent_count' => $notSentCount
+        ]);
+    }
+
+    public function transferRejected()
+    {
+        $rejectedRegisters = InternRegister::where('accept_stat', 'Reject')->get();
+
+        foreach ($rejectedRegisters as $rejectedRegister) {
+            $rejectedRegister->is_sent = true;
+            $rejectedRegister->save();
+        }
+
+        return response()->json(['message' => 'Record yang ditolak berhasil diperbarui.']);
     }
 }
