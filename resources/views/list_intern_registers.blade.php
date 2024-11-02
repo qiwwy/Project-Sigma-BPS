@@ -20,11 +20,10 @@
         <section class="section">
             <div class="col-12">
                 <div class="row">
-                    <div class="col-4 d-flex">
+                    <div class="col-12 col-md-4 d-flex mb-3">
                         <div class="card flex-fill">
-                            <div class="card flex-fill d-flex flex-column justify-content-center"
-                                style="height: 200px;">
-                                <div class="card-body px-4 py-4-5 d-flex flex-column justify-content-center">
+                            <div class="card d-flex flex-column justify-content-center" style="height: 200px;">
+                                <div class="card-body px-4 py-4 d-flex flex-column justify-content-center">
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <h6 class="text-muted font-semibold">Total Kapasitas</h6>
@@ -32,21 +31,21 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div>
+                                        <div class="col-12">
                                             <form action="{{ route('internRegister.transferAccepted') }}"
                                                 method="POST">
-                                                @csrf <!-- Untuk melindungi dari CSRF -->
-                                                <button type="submit" class="btn icon icon-left btn-success">
+                                                @csrf
+                                                <button type="submit" class="btn icon icon-left btn-success w-100">
                                                     <i data-feather="check-circle"></i>
                                                     Send Accepted Participants
                                                 </button>
                                             </form>
                                         </div>
-                                        <div class="mt-3">
+                                        <div class="col-12 mt-3">
                                             <form action="{{ route('internRegister.transferRejected') }}"
                                                 method="POST">
-                                                @csrf <!-- Untuk melindungi dari CSRF -->
-                                                <button type="submit" class="btn icon icon-left btn-danger">
+                                                @csrf
+                                                <button type="submit" class="btn icon icon-left btn-danger w-100">
                                                     <i data-feather="check-circle"></i>
                                                     Remove Rejected Participants
                                                 </button>
@@ -55,80 +54,39 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-12 col-md-8">
                         <div class="row">
-                            <div class="col-6 col-lg-4 col-md-6">
+                            <div class="col-12 col-sm-6 col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                                <span class="font-extrabold mb-0">31-12-2024 (10 Orang)</span>
-                                            </div>
-                                        </div>
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <span class="font-extrabold mb-0">31-12-2024 (10 Orang)</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6 col-lg-4 col-md-6">
+                            <div class="col-12 col-sm-6 col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                                <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
-                                            </div>
-                                        </div>
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6 col-lg-4 col-md-6">
+                            <div class="col-12 col-sm-6 col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                                <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
-                                            </div>
-                                        </div>
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6 col-lg-4 col-md-6">
+                            <div class="col-12 col-sm-6 col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                                <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6 col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                                <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6 col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                                <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
-                                            </div>
-                                        </div>
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
                                     </div>
                                 </div>
                             </div>
@@ -136,6 +94,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">
@@ -144,6 +103,18 @@
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
+
+                        @if (session('successTransfered') || session('successRemoved'))
+                            <div class="alert alert-light-success color-success">
+                                @if (session('successTransfered'))
+                                    {{ session('successTransfered') }}
+                                @endif
+                                @if (session('successRemoved'))
+                                    {{ session('successRemoved') }}
+                                @endif
+                            </div>
+                        @endif
+
                         <thead>
                             <tr>
                                 <th>No.</th>

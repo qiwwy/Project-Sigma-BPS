@@ -113,7 +113,8 @@ class InternRegisterController extends Controller
                     'email' => $acceptedRegister->email,
                     'start_date' => $acceptedRegister->start_date,
                     'end_date' => $acceptedRegister->end_date,
-                    'image' => $acceptedRegister->image
+                    'image' => $acceptedRegister->image,
+                    'role' => 'intern'
                 ]);
 
                 $acceptedRegister->is_sent = true;
@@ -123,10 +124,7 @@ class InternRegisterController extends Controller
             }
         }
 
-        return response()->json([
-            'message' => 'Data berhasil dipindahkan',
-            'not_sent_count' => $notSentCount
-        ]);
+        return redirect()->route('internRegister.index')->with('successTransfered', 'Accepted participants transferred successfully.');
     }
 
     public function transferRejected()
@@ -138,6 +136,6 @@ class InternRegisterController extends Controller
             $rejectedRegister->save();
         }
 
-        return response()->json(['message' => 'Record yang ditolak berhasil diperbarui.']);
+        return redirect()->route('internRegister.index')->with('successRemoved', 'Rejected participants removed successfully.');
     }
 }

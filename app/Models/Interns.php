@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Interns extends Model
 {
@@ -26,5 +27,10 @@ class Interns extends Model
     public function mentor(): BelongsTo
     {
         return $this->belongsTo(Mentor::class);
+    }
+
+    public function users(): HasOne
+    {
+        return $this->hasOne(User::class);
     }
 }
