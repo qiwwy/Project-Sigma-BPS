@@ -12,6 +12,7 @@ class TrasferedRegistrationView extends Model
     protected $fillable = [
         'identity_number',
         'name',
+        'sex',
         'address',
         'school_name',
         'phone_number',

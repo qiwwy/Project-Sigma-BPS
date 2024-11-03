@@ -20,6 +20,7 @@ return new class extends Migration
             )->onUpdate('cascade')->onDelete('cascade');
             $table->string('identity_number');
             $table->string('name');
+            $table->enum('sex', ['Man', 'Woman']);
             $table->text('address');
             $table->string('school_name');
             $table->string('phone_number');

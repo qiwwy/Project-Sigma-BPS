@@ -41,6 +41,7 @@ class InternRegisterController extends Controller
         $request->validate([
             'identity_number' => 'required',
             'name' => 'required',
+            'sex' => 'required',
             'address' => 'required',
             'school_name' => 'required',
             'phone_number' => 'required',
@@ -62,6 +63,7 @@ class InternRegisterController extends Controller
         $internRegister = InternRegister::create([
             'identity_number' => $request->identity_number,
             'name' => $request->name,
+            'sex' => $request->sex,
             'address' => $request->address,
             'school_name' => $request->school_name,
             'phone_number' => $request->phone_number,
@@ -107,6 +109,7 @@ class InternRegisterController extends Controller
                 Interns::create([
                     'identity_number' => $acceptedRegister->identity_number,
                     'name' => $acceptedRegister->name,
+                    'sex' => $acceptedRegister->sex,
                     'address' => $acceptedRegister->address,
                     'school_name' => $acceptedRegister->school_name,
                     'phone_number' => $acceptedRegister->phone_number,
