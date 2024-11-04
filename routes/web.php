@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InternRegisterController;
-use App\Models\InternRegister;
+use App\Http\Controllers\InternController;
 
 Route::get('/', function () {
     return view('sigma-bps');
@@ -28,6 +28,8 @@ Route::post('/update_status', [InternRegisterController::class, 'updateStatus'])
 Route::get('/list_intern_register/{token}', [InternRegisterController::class, 'showByToken'])->name('internRegister.showByToken');
 Route::post('/transfer_accepted', [InternRegisterController::class, 'transferAccepted'])->name('internRegister.transferAccepted');
 Route::post('/transfer_rejected', [InternRegisterController::class, 'transferRejected'])->name('internRegister.transferRejected');
+
+Route::get('/list_interns', [InternController::class, 'index'])->name('interns.index');
 
 Route::get('/sample', function () {
     return view('sample');

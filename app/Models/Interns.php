@@ -15,13 +15,13 @@ class Interns extends Model
         'mentor_id',
         'identity_number',
         'name',
-        'sex',
         'address',
         'school_name',
         'phone_number',
         'email',
         'start_date',
         'end_date',
+        'status',
         'image',
     ];
 

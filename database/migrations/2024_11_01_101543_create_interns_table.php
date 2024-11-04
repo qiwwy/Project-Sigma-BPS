@@ -20,13 +20,13 @@ return new class extends Migration
             )->onUpdate('cascade')->onDelete('cascade');
             $table->string('identity_number');
             $table->string('name');
-            $table->enum('sex', ['Man', 'Woman']);
             $table->text('address');
             $table->string('school_name');
             $table->string('phone_number');
             $table->string('email');
             $table->date('start_date');
             $table->date('end_date');
+            $table->enum('status', ['Active', 'Nonacttive'])->default('Active');
             $table->string('image');
             $table->enum('role', ['intern', 'mentor', 'admin']);
             $table->timestamps();

@@ -24,28 +24,34 @@
                         <div class="card flex-fill">
                             <div class="card d-flex flex-column justify-content-center" style="height: 200px;">
                                 <div class="card-body px-4 py-4 d-flex flex-column justify-content-center">
+                                    @php
+                                        $interns = \App\Models\Interns::all();
+                                        $totalInterns = $interns->count();
+                                        $totalMaxIntern = 15;
+                                    @endphp
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <h6 class="text-muted font-semibold">Total Kapasitas</h6>
-                                            <span class="font-extrabold mb-0">15 Orang dari 15 Peserta</span>
+                                            <span class="font-extrabold mb-0">{{ $totalInterns }} Orang dari
+                                                {{ $totalMaxIntern }}
+                                                Peserta</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="col-12">
-                                            <form action="{{ route('internRegister.transferAccepted') }}"
-                                                method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn icon icon-left btn-success w-100">
-                                                    <i data-feather="check-circle"></i>
-                                                    Send Accepted Participants
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <form action="{{ route('internRegister.transferAccepted') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn icon icon-left btn-success w-100"
+                                                onclick="return handleClick()">
+                                                <i data-feather="check-circle"></i>
+                                                Send Accepted Participants
+                                            </button>
+                                        </form>
                                         <div class="col-12 mt-3">
-                                            <form action="{{ route('internRegister.transferRejected') }}"
-                                                method="POST">
+                                            <form action="{{ route('internRegister.transferRejected') }}" method="POST"
+                                                id="deleteForm">
                                                 @csrf
-                                                <button type="submit" class="btn icon icon-left btn-danger w-100">
+                                                <button type="button" class="btn icon icon-left btn-danger w-100"
+                                                    onclick="confirmDelete()">
                                                     <i data-feather="check-circle"></i>
                                                     Remove Rejected Participants
                                                 </button>
@@ -57,39 +63,35 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-8">
+                        @php
+                            $interns = \App\Models\Interns::all();
+                            $endDateUnique = $interns->pluck('end_date')->filter();
+                            $endDateCounts = $endDateUnique->countBy();
+                            $sortedEndDateCounts = $endDateCounts->sortKeys();
+                        @endphp
+
                         <div class="row">
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                        <span class="font-extrabold mb-0">31-12-2024 (10 Orang)</span>
-                                    </div>
+                            @if ($sortedEndDateCounts->isEmpty())
+                                <div class="col-12">
+                                    <div class="alert alert-light-warning color-warning"><i
+                                            class="bi bi-exclamation-triangle"></i>
+                                        Tidak ada tanggal yang tersedia</div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                        <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
+                            @else
+                                @foreach ($sortedEndDateCounts as $endDate => $count)
+                                    <div class="col-12 col-sm-6 col-lg-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                                <span
+                                                    class="font-extrabold mb-0">{{ \Carbon\Carbon::parse($endDate)->format('d-m-Y') }}
+                                                    ({{ $count }})
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                        <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
-                                        <span class="font-extrabold mb-0">31-01-2025 (5 Orang)</span>
-                                    </div>
-                                </div>
-                            </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -123,7 +125,6 @@
                                 <th>Periode Magang</th>
                                 <th>Total Waktu</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,29 +158,6 @@
                                             </span>
                                         </a>
                                     </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="">
-                                                <span class="badge bg-primary">
-                                                    <i class="bi bi-eye-fill"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a href="">
-                                                <span class="badge bg-warning">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a href="">
-                                                <span class="badge bg-danger">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -188,4 +166,47 @@
             </div>
         </section>
     </div>
+
+    <script>
+        //validasi input max peserta
+        function handleClick() {
+            var totalInterns = {{ $totalInterns }};
+            var totalMaxIntern = {{ $totalMaxIntern }};
+
+            if (totalInterns >= totalMaxIntern) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Kapasitas peserta sudah penuh!",
+                });
+                return false;
+            }
+            return true;
+        }
+
+        //konfirmasi remove rejected interns
+        function confirmDelete() {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan bisa mengembalikannya!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Tidak, batalkan!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna mengonfirmasi, kirim form
+                    document.getElementById('deleteForm').submit();
+                } else {
+                    // Jika pengguna membatalkan
+                    Swal.fire(
+                        'Dibatalkan',
+                        'Data Anda aman :)',
+                        'error'
+                    );
+                }
+            });
+        }
+    </script>
+
 </x-main-layout>
