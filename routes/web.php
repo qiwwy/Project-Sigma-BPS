@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InternRegisterController;
 use App\Http\Controllers\InternController;
+use App\Http\Controllers\InternQueueController;
+use App\Http\Controllers\LastDateInternsController;
+use App\Models\Interns;
 
 Route::get('/', function () {
     return view('sigma-bps');
@@ -30,6 +33,9 @@ Route::post('/transfer_accepted', [InternRegisterController::class, 'transferAcc
 Route::post('/transfer_rejected', [InternRegisterController::class, 'transferRejected'])->name('internRegister.transferRejected');
 
 Route::get('/list_interns', [InternController::class, 'index'])->name('interns.index');
+Route::post('/update_unique_endDate', [InternController::class, 'getEndDateUnique'])->name('interns.getEndDateUnique');
+
+Route::get('/list_intern_queues', [InternQueueController::class, 'index'])->name('internQueue.index');
 
 Route::get('/sample', function () {
     return view('sample');

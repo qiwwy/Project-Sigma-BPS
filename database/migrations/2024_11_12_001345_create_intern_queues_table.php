@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('interns', function (Blueprint $table) {
+        Schema::create('intern_queues', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mentor_id')->nullable()->constrained(
-                table: 'mentors',
-                indexName: 'interns_mentor_id'
+            $table->foreignId('last_date_id')->constrained(
+                table: 'last_date_interns',
+                indexName: 'internQueue_lastDate_id'
             )->onUpdate('cascade')->onDelete('cascade');
             $table->string('identity_number');
             $table->string('name');
@@ -26,9 +25,7 @@ return new class extends Migration
             $table->string('email');
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', ['Active', 'Nonactive'])->default('Active');
             $table->string('image');
-            $table->enum('role', ['intern', 'mentor', 'admin']);
             $table->timestamps();
         });
     }
@@ -38,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('interns');
+        Schema::dropIfExists('intern_queues');
     }
 };

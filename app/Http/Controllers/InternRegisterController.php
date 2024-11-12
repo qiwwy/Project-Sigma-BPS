@@ -7,8 +7,10 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InternRegisterMail;
+use App\Models\InternQueue;
 use App\Models\InternRegister;
 use App\Models\Interns;
+use App\Models\LastDateInterns;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 
@@ -95,16 +97,22 @@ class InternRegisterController extends Controller
         return response()->json(['status' => $internRegister->accept_stat]);
     }
 
-    public function transferAccepted()
+    public function transferAccepted(Request $request)
     {
+        $lastDateId = $request->input('lastDate_id');
+        $lastDate = LastDateInterns::find($lastDateId);
+
+        $lastDate->is_use = 'done';
+        $lastDate->save();
+
         $acceptedRegisters = InternRegister::where('accept_stat', 'Accept')->get();
         $notSentCount = 0;
 
         foreach ($acceptedRegisters as $acceptedRegister) {
-            $exists = Interns::where('identity_number', $acceptedRegister->identity_number)->exists();
+            $exists = InternQueue::where('identity_number', $acceptedRegister->identity_number)->exists();
 
             if (!$exists) {
-                Interns::create([
+                InternQueue::create([
                     'identity_number' => $acceptedRegister->identity_number,
                     'name' => $acceptedRegister->name,
                     'address' => $acceptedRegister->address,
@@ -113,9 +121,8 @@ class InternRegisterController extends Controller
                     'email' => $acceptedRegister->email,
                     'start_date' => $acceptedRegister->start_date,
                     'end_date' => $acceptedRegister->end_date,
-                    'status' => 'Active',
                     'image' => $acceptedRegister->image,
-                    'role' => 'intern'
+                    'last_date_id' => $lastDate->id
                 ]);
 
                 $acceptedRegister->is_sent = true;
@@ -124,9 +131,8 @@ class InternRegisterController extends Controller
                 $notSentCount++;
             }
         }
-
-        return redirect()->route('internRegister.index')->with('successTransfered', 'Accepted participants transferred successfully.');
     }
+
 
     public function transferRejected()
     {
