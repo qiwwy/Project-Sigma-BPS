@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->date('end_date');
             $table->integer('count');
-            $table->enum('is_use', ['done', 'not_yet'])->default('not_yet');
             $table->timestamps();
         });
     }

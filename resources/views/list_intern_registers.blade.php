@@ -38,13 +38,11 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-
-
-                                            <button type="submit" class="btn icon icon-left btn-success w-100"
-                                                data-bs-toggle="modal" data-bs-target="#inlineFormQueue">
-                                                <i data-feather="check-circle"></i>
-                                                Send Accepted Participants
-                                            </button>
+                                        <button type="submit" class="btn icon icon-left btn-success w-100"
+                                            data-bs-toggle="modal" data-bs-target="#inlineFormQueue">
+                                            <i data-feather="check-circle"></i>
+                                            Send Accepted Participants
+                                        </button>
 
                                         <div class="col-12 mt-3">
                                             <form action="{{ route('internRegister.transferRejected') }}" method="POST"
@@ -64,7 +62,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @php
-                            $lastDates = App\Models\LastDateInterns::where('is_use', 'not_yet')->get();
+                            $lastDates = \App\Models\LastDateInterns::where('count', '!=', 0)->get();
                         @endphp
 
                         <div class="row">
@@ -121,7 +119,7 @@
                                 <th>Nama</th>
                                 <th>Asal Sekolah</th>
                                 <th>Periode Magang</th>
-                                <th>Total Waktu</th>
+                                <th>Rekomendasi Tanggal</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -139,12 +137,13 @@
                                         {{ \Carbon\Carbon::parse($item->end_date)->format('d-m-Y') }}
                                     </td>
                                     <td>
-                                        @php
-                                            $startDate = \Carbon\Carbon::parse($item->start_date);
-                                            $endDate = \Carbon\Carbon::parse($item->end_date);
-                                            $daysDifference = $startDate->diffInDays($endDate);
-                                        @endphp
-                                        {{ $daysDifference }} Hari</td>
+                                        @if ($item->closest_date)
+                                            {{ $item->closest_date }} <!-- Menampilkan tanggal jika ada -->
+                                        @else
+                                            <span class="text-danger">Date Not Found</span>
+                                            <!-- Tampilkan pesan jika null -->
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="#" class="status-toggle" data-id="{{ $item->id }}">
                                             <span
@@ -177,7 +176,7 @@
                     </button>
                 </div>
                 @php
-                    $lastDates = \App\Models\LastDateInterns::where('is_use', 'not_yet')->get();
+                    $lastDates = \App\Models\LastDateInterns::where('count', '!=', 0)->get();
                 @endphp
                 <form action="{{ route('internRegister.transferAccepted') }}" method="POST"
                     enctype="multipart/form-data">

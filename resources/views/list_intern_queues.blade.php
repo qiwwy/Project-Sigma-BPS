@@ -20,6 +20,52 @@
     </div>
     <section class="section">
         <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="card shadow-sm border-light rounded-3">
+                                    <div class="card-body">
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <h5 class="font-extrabold mb-0">Test</h5>
+                                        <p class="mb-0 text-muted">Jumlah: </strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card shadow-sm border-light rounded-3">
+                                    <div class="card-body">
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <h5 class="font-extrabold mb-0">Test</h5>
+                                        <p class="mb-0 text-muted">Jumlah: </strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card shadow-sm border-light rounded-3">
+                                    <div class="card-body">
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <h5 class="font-extrabold mb-0">Test</h5>
+                                        <p class="mb-0 text-muted">Jumlah: </strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card shadow-sm border-light rounded-3">
+                                    <div class="card-body">
+                                        <h6 class="text-muted font-semibold">Kosong Pada Tanggal</h6>
+                                        <h5 class="font-extrabold mb-0">Test</h5>
+                                        <p class="mb-0 text-muted">Jumlah: </strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-header">
                 <h5 class="card-title">
                     List Data
@@ -52,27 +98,38 @@
                                     @php
                                         $endDate = \Carbon\Carbon::parse(
                                             $interns->first()->lastDate->end_date,
-                                        )->startOfDay(); // Menghitung mulai dari tengah malam
-                                        $now = \Carbon\Carbon::now()->startOfDay(); // Waktu sekarang juga mulai dari tengah malam
-                                        $daysLeft = $now->diffInDays($endDate, false); // Menghitung perbedaan hari dengan 'now' sebagai tanggal awal
+                                        )->startOfDay();
+                                        $now = \Carbon\Carbon::now()->startOfDay();
+                                        $daysLeft = $now->diffInDays($endDate, false);
                                     @endphp
                                     @if ($daysLeft > 0)
                                         {{ $daysLeft }} Hari Lagi
                                     @elseif ($daysLeft === 0)
                                         <span class="badge bg-success">Dapat Dikirim</span>
-                                    @elseif($daysLeft < 0)
+                                    @elseif ($daysLeft < 0)
                                         <span class="badge bg-warning"> {{ abs($daysLeft) }} Hari Terlewatkan</span>
                                     @else
                                         Hari Ini
                                     @endif
-
                                 </td>
                                 <td>{{ $interns->first()->school_name }}</td>
                                 <td>{{ $interns->count() }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary"><i class="bi bi-eye-fill"></i></a>
+                                    <a href="{{ route('internQueue.showDetailQueue', ['last_date_id' => $lastDateId]) }}"
+                                        class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalDetailIntern"><i class="bi bi-eye-fill"></i></a>
+
                                     <a href="#" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
-                                    <a href="#" class="btn btn-success"><i class="bi bi-send"></i></i></a>
+
+                                    <form action="{{ route('internQueue.transferToIntern') }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        <input type="hidden" name="last_date_id" value="{{ $lastDateId }}">
+
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-send"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -81,4 +138,27 @@
             </div>
         </div>
     </section>
+
+    <div class="modal fade" id="modalDetailIntern" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Daftar Nama Peserta</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <ul class="list-group">
+                                @foreach ($interns as $item)
+                                    <li class="list-group-item">{{ $item->name }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </x-main-layout>

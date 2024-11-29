@@ -36,6 +36,8 @@ Route::get('/list_interns', [InternController::class, 'index'])->name('interns.i
 Route::post('/update_unique_endDate', [InternController::class, 'getEndDateUnique'])->name('interns.getEndDateUnique');
 
 Route::get('/list_intern_queues', [InternQueueController::class, 'index'])->name('internQueue.index');
+Route::get('/internQueue/detail/{last_date_id}', [InternQueueController::class, 'showDetailQueue'])->name('internQueue.showDetailQueue');
+Route::post('/transfer_to_intern', [InternQueueController::class, 'transferToIntern'])->name('internQueue.transferToIntern');
 
 Route::get('/sample', function () {
     return view('sample');

@@ -19,6 +19,21 @@ class InternRegisterController extends Controller
     public function index(): View
     {
         $internRegisters = InternRegister::where('is_sent', false)->get();
+
+        foreach ($internRegisters as $item) {
+            $closestDate = LastDateInterns::where('end_date', '<', $item->start_date)
+                ->orderBy('end_date', 'desc')
+                ->first();
+
+            if ($closestDate) {
+                $item->closest_date = $closestDate->end_date;
+            } else {
+                $item->closest_date = null;
+            }
+
+            $item->save();
+        }
+
         return view('list_intern_registers', compact('internRegisters'));
     }
 
@@ -102,16 +117,18 @@ class InternRegisterController extends Controller
         $lastDateId = $request->input('lastDate_id');
         $lastDate = LastDateInterns::find($lastDateId);
 
-        $lastDate->is_use = 'done';
-        $lastDate->save();
+        $initialCapacity = $lastDate->count;
+        $remainingCapacity = $initialCapacity;
 
         $acceptedRegisters = InternRegister::where('accept_stat', 'Accept')->get();
         $notSentCount = 0;
+        $sentCount = 0;
 
         foreach ($acceptedRegisters as $acceptedRegister) {
+
             $exists = InternQueue::where('identity_number', $acceptedRegister->identity_number)->exists();
 
-            if (!$exists) {
+            if (!$exists && $remainingCapacity > 0) {
                 InternQueue::create([
                     'identity_number' => $acceptedRegister->identity_number,
                     'name' => $acceptedRegister->name,
@@ -127,12 +144,19 @@ class InternRegisterController extends Controller
 
                 $acceptedRegister->is_sent = true;
                 $acceptedRegister->save();
+
+                $sentCount++;
+                $remainingCapacity--;
             } else {
+
                 $notSentCount++;
             }
         }
-    }
+        $lastDate->count = $remainingCapacity;
+        $lastDate->save();
 
+        return redirect()->route('internRegister.index')->with('successTransfered', 'Transfered participants successfully');
+    }
 
     public function transferRejected()
     {

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->date('start_date');
             $table->date('end_date');
+            $table->date('closest_date')->nullable();
             $table->string('cover_letter');
             $table->string('image');
             $table->string('token');
