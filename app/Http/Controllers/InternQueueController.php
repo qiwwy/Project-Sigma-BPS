@@ -25,7 +25,7 @@ class InternQueueController extends Controller
             return redirect()->route('internQueue.index')->with('error', 'Tidak ada peserta untuk tanggal ini.');
         }
 
-        return view('internQueue.showDetailQueue', compact('interns'));
+        return view('detailQueue', compact('interns', 'lastDateId'));
     }
 
     public function transferToIntern(Request $request)

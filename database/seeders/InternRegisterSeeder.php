@@ -87,7 +87,7 @@ class InternRegisterSeeder extends Seeder
 
         InternRegister::create([
             'identity_number' => '21.230.0206',
-            'name' => 'Asep Rahmat',
+            'name' => 'Arsal',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta',
             'phone_number' => '085150021005',
@@ -100,7 +100,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0207',
-            'name' => 'Budi Santoso',
+            'name' => 'Bagus',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta',
             'phone_number' => '085150021006',
@@ -113,7 +113,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0208',
-            'name' => 'Citra Dewi',
+            'name' => 'Yayuk',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta',
             'phone_number' => '085150021007',
@@ -126,7 +126,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0209',
-            'name' => 'Dian Puspitasari',
+            'name' => 'Iwan',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta',
             'phone_number' => '085150021008',
@@ -143,7 +143,7 @@ class InternRegisterSeeder extends Seeder
 
         InternRegister::create([
             'identity_number' => '21.230.0210',
-            'name' => 'Asep Rahmat',
+            'name' => 'Iwan',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya',
             'phone_number' => '085150021009',
@@ -156,7 +156,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0211',
-            'name' => 'Budi Santoso',
+            'name' => 'Agus',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya',
             'phone_number' => '085150021010',
@@ -169,7 +169,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0212',
-            'name' => 'Citra Dewi',
+            'name' => 'Diniyah',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya',
             'phone_number' => '085150021011',
@@ -182,7 +182,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0213',
-            'name' => 'Dian Puspitasari',
+            'name' => 'Slamet',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya',
             'phone_number' => '085150021012',
@@ -195,7 +195,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0313',
-            'name' => 'Vika Prasetya',
+            'name' => 'Audri',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya',
             'phone_number' => '085150021012',
@@ -208,7 +208,7 @@ class InternRegisterSeeder extends Seeder
         ]);
         InternRegister::create([
             'identity_number' => '21.230.0216',
-            'name' => 'Julietha Sekar',
+            'name' => 'Sekar',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya',
             'phone_number' => '085150021012',

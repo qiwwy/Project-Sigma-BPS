@@ -90,7 +90,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1006',
-            'name' => 'Asep Rahmat',
+            'name' => 'Rahmat',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta Baru',  // Diubah nama sekolah
             'phone_number' => '085150021005',
@@ -103,7 +103,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1007',
-            'name' => 'Budi Santoso',
+            'name' => 'Santoso',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta Baru',
             'phone_number' => '085150021006',
@@ -116,7 +116,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1008',
-            'name' => 'Citra Dewi',
+            'name' => 'Dewi',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta Baru',
             'phone_number' => '085150021007',
@@ -130,7 +130,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1009',
-            'name' => 'Dian Puspitasari',
+            'name' => 'Indri',
             'address' => 'Yogyakarta',
             'school_name' => 'SMK Negeri Yogyakarta Baru',
             'phone_number' => '085150021008',
@@ -161,7 +161,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1010',
-            'name' => 'Asep Setiawan',
+            'name' => 'Bagus',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya Baru',  // Diubah nama sekolah
             'phone_number' => '085150021009',
@@ -174,7 +174,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1011',
-            'name' => 'Budi Santoso',
+            'name' => 'Vira',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya Baru',
             'phone_number' => '085150021010',
@@ -187,7 +187,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1012',
-            'name' => 'Citra Dewi',
+            'name' => 'Jones',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya Baru',
             'phone_number' => '085150021011',
@@ -200,7 +200,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.1013',
-            'name' => 'Dian Puspitasari',
+            'name' => 'Baris',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya Baru',
             'phone_number' => '085150021012',
@@ -213,7 +213,7 @@ class InternsSeeder extends Seeder
         Interns::create([
             'mentor_id' => null,
             'identity_number' => '21.230.2347',
-            'name' => 'Vika Prasetya',
+            'name' => 'Fida',
             'address' => 'Surabaya',
             'school_name' => 'SMK Negeri Surabaya Baru',
             'phone_number' => '085150021012',

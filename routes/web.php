@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InternRegisterController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\InternQueueController;
-use App\Http\Controllers\LastDateInternsController;
-use App\Models\Interns;
+use App\Http\Controllers\LogbookInternController;
+
 
 Route::get('/', function () {
     return view('sigma-bps');
@@ -36,9 +36,16 @@ Route::get('/list_interns', [InternController::class, 'index'])->name('interns.i
 Route::post('/update_unique_endDate', [InternController::class, 'getEndDateUnique'])->name('interns.getEndDateUnique');
 
 Route::get('/list_intern_queues', [InternQueueController::class, 'index'])->name('internQueue.index');
-Route::get('/internQueue/detail/{last_date_id}', [InternQueueController::class, 'showDetailQueue'])->name('internQueue.showDetailQueue');
+Route::get('/detailQueue/{last_date_id}', [InternQueueController::class, 'showDetailQueue'])->name('internQueue.showDetailQueue');
+
 Route::post('/transfer_to_intern', [InternQueueController::class, 'transferToIntern'])->name('internQueue.transferToIntern');
 
+Route::get('/list_logbook_intern', [LogbookInternController::class, 'index'])->name('logbookIntern.index');
+Route::get('/logbook_interns', [LogbookInternController::class, 'getLogbookByIntern'])->name('logbookIntern.getLogbookByIntern');
+Route::get('/logbook_intern/{id}', [LogbookInternController::class, 'show']);
+Route::get('/detailLogbook/{intern_id}', [LogbookInternController::class, 'showDetailLogbook'])->name('logbookIntern.showDetailLogbook');
+
 Route::get('/sample', function () {
+
     return view('sample');
 });

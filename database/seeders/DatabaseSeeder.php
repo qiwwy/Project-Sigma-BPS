@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             InternRegisterSeeder::class,
             InternsSeeder::class,
-            InternQueueSeeder::class
         ]);
     }
 }

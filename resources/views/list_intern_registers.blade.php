@@ -17,6 +17,7 @@
                 </div>
             </div>
         </div>
+
         <section class="section">
             <div class="col-12">
                 <div class="row">
@@ -38,24 +39,30 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <button type="submit" class="btn icon icon-left btn-success w-100"
-                                            data-bs-toggle="modal" data-bs-target="#inlineFormQueue">
-                                            <i data-feather="check-circle"></i>
-                                            Send Accepted Participants
-                                        </button>
+                                        <!-- Button to send accepted participants -->
+                                        <div class="col-12 mb-3">
+                                            <button type="submit" class="btn icon icon-left btn-success w-100"
+                                                data-bs-toggle="modal" data-bs-target="#inlineFormQueue">
+                                                <i data-feather="check-circle"></i>
+                                                Send Accepted Participants
+                                            </button>
+                                        </div>
 
-                                        <div class="col-12 mt-3">
+                                        <!-- Button to remove rejected participants -->
+                                        <div class="col-12">
                                             <form action="{{ route('internRegister.transferRejected') }}" method="POST"
                                                 id="deleteForm">
                                                 @csrf
                                                 <button type="button" class="btn icon icon-left btn-danger w-100"
                                                     onclick="confirmDelete()">
-                                                    <i data-feather="check-circle"></i>
+                                                    <i data-feather="x-circle"></i>
+                                                    <!-- Change icon for better visual context -->
                                                     Remove Rejected Participants
                                                 </button>
                                             </form>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -92,76 +99,92 @@
                     </div>
                 </div>
             </div>
+    </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">
-                        List Data
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped" id="table1">
+    <div class="row d-flex justify-content-end mb-3">
+        <div class="col-auto">
+            <a href="/list_interns" class="btn icon icon-left btn-primary">
+                <i class="bi bi-people-fill"></i>
+                Daftar Peserta Magang
+            </a>
+        </div>
+        <div class="col-auto">
+            <a href="/list_intern_queues" class="btn icon icon-left btn-primary">
+                <i class="bi bi-collection-fill"></i>
+                Daftar Antrian Pendaftaran
+            </a>
+        </div>
+    </div>
 
-                        @if (session('successTransfered') || session('successRemoved'))
-                            <div class="alert alert-light-success color-success">
-                                @if (session('successTransfered'))
-                                    {{ session('successTransfered') }}
-                                @endif
-                                @if (session('successRemoved'))
-                                    {{ session('successRemoved') }}
-                                @endif
-                            </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">
+                List Data
+            </h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" id="table1">
+
+                @if (session('successTransfered') || session('successRemoved'))
+                    <div class="alert alert-light-success color-success">
+                        @if (session('successTransfered'))
+                            {{ session('successTransfered') }}
                         @endif
+                        @if (session('successRemoved'))
+                            {{ session('successRemoved') }}
+                        @endif
+                    </div>
+                @endif
 
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Nama</th>
-                                <th>Asal Sekolah</th>
-                                <th>Periode Magang</th>
-                                <th>Rekomendasi Tanggal</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $number = 1;
-                            @endphp
-                            @foreach ($internRegisters as $item)
-                                <tr>
-                                    <td>{{ $number++ }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ Str::limit($item->school_name, 40, '...') }}</td>
-                                    <td>
-                                        {{ \Carbon\Carbon::parse($item->start_date)->format('d-m-Y') }} -
-                                        {{ \Carbon\Carbon::parse($item->end_date)->format('d-m-Y') }}
-                                    </td>
-                                    <td>
-                                        @if ($item->closest_date)
-                                            {{ $item->closest_date }} <!-- Menampilkan tanggal jika ada -->
-                                        @else
-                                            <span class="text-danger">Date Not Found</span>
-                                            <!-- Tampilkan pesan jika null -->
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="#" class="status-toggle" data-id="{{ $item->id }}">
-                                            <span
-                                                class="badge
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nama</th>
+                        <th>Asal Sekolah</th>
+                        <th>Periode Magang</th>
+                        <th>Rekomendasi Tanggal</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $number = 1;
+                    @endphp
+                    @foreach ($internRegisters as $item)
+                        <tr>
+                            <td>{{ $number++ }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ Str::limit($item->school_name, 40, '...') }}</td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($item->start_date)->format('d-m-Y') }} -
+                                {{ \Carbon\Carbon::parse($item->end_date)->format('d-m-Y') }}
+                            </td>
+                            <td>
+                                @if ($item->closest_date)
+                                    {{ $item->closest_date }} <!-- Menampilkan tanggal jika ada -->
+                                @else
+                                    <span class="text-danger">Date Not Found</span>
+                                    <!-- Tampilkan pesan jika null -->
+                                @endif
+                            </td>
+                            <td>
+                                <a href="#" class="status-toggle" data-id="{{ $item->id }}">
+                                    <span
+                                        class="badge
                                                  @if ($item->accept_stat === 'Process') bg-warning
                                                  @elseif($item->accept_stat === 'Accept') bg-success
                                                  @elseif($item->accept_stat === 'Reject') bg-danger @endif">
-                                                {{ $item->accept_stat }}
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+                                        {{ $item->accept_stat }}
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </section>
     </div>
 
     <!-- Modal untuk memilih queue -->

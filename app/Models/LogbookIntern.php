@@ -3,18 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class User extends Model
+class LogbookIntern extends Model
 {
-    protected $table = 'users';
+    protected $table = 'logbook_intern';
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'actor_id',
-        'username',
-        'password'
+        'intern_id',
+        'date_logbook',
+        'job_description',
+        'completion_stat',
+        'documentation',
+        'accept_stat'
     ];
 
     public function intern(): BelongsTo

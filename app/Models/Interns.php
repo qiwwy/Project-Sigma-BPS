@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Interns extends Model
@@ -30,8 +31,13 @@ class Interns extends Model
         return $this->belongsTo(Mentor::class);
     }
 
-    public function users(): HasOne
+    public function user(): HasOne
     {
         return $this->hasOne(User::class);
+    }
+
+    public function logbooks(): HasMany
+    {
+        return $this->hasMany(LogbookIntern::class, 'intern_id');
     }
 }

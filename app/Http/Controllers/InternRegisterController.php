@@ -155,7 +155,7 @@ class InternRegisterController extends Controller
         $lastDate->count = $remainingCapacity;
         $lastDate->save();
 
-        return redirect()->route('internRegister.index')->with('successTransfered', 'Transfered participants successfully');
+        return redirect()->route('internQueue.index')->with('successTransfered', 'Transfered participants successfully');
     }
 
     public function transferRejected()
