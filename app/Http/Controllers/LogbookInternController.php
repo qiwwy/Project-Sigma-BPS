@@ -27,6 +27,30 @@ class LogbookInternController extends Controller
         return response()->json($logbookIntern);
     }
 
+    public function edit($id): View
+    {
+        $logbookIntern = LogbookIntern::findOrFail($id);
+
+        return view('logbook_edit', compact('logbookIntern'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => 'required',
+            'job_description' => 'required',
+            'completion_stat' => 'required',
+            'processing_time' => 'required',
+            'divisi' => 'required'
+        ]);
+
+        $logbookIntern = LogbookIntern::findOrFail($id);
+
+        $logbookIntern->update($validated);
+
+        return redirect()->route('logbookIntern.index')->with('success', 'Logbook berhasil diperbarui');
+    }
+
 
     public function getLogbookByIntern(): View
     {

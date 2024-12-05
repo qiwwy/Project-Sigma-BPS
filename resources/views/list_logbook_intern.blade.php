@@ -64,16 +64,22 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#detailLogbook" data-id="{{ $item->id }}">
+                                    <a href="#" class="btn btn-primary"
+                                        style="@if (empty($item->title) ||
+                                                empty($item->job_description) ||
+                                                empty($item->completion_stat) ||
+                                                empty($item->processing_time) ||
+                                                empty($item->divisi)) visibility: hidden; @endif"
+                                        data-bs-toggle="modal" data-bs-target="#detailLogbook"
+                                        data-id="{{ $item->id }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
 
-                                    <a href="#" class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#detailLogbook" data-id="{{ $item->id }}">
-                                        Isi Logbook
+                                    <a href="{{ route('logbookIntern.edit', $item->id) }}" class="btn btn-success">
+                                        <i class="bi bi-pencil-fill"></i>
                                     </a>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -84,21 +90,20 @@
         <!-- Modal Statis -->
         <div class="modal fade" id="detailLogbook" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"> <!-- Add modal-lg here -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <div id="date-logbook"></div>
-
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <i data-feather="x"></i>
-                        </button>
                     </div>
                     <div class="modal-body" id="modal-body">
-
+                        <!-- Isi modal akan dimasukkan di sini -->
+                    </div>
+                    <!-- Modal Footer with Close Button -->
+                    <div class="modal-footer d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
 </x-main-layout>

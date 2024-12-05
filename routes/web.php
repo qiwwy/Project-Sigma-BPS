@@ -43,6 +43,8 @@ Route::post('/transfer_to_intern', [InternQueueController::class, 'transferToInt
 
 Route::get('/list_logbook_intern', [LogbookInternController::class, 'index'])->name('logbookIntern.index');
 Route::get('/list_logbook_intern/{id}', [LogbookInternController::class, 'show'])->name('logbookIntern.show');
+Route::get('/list_logbook_intern/{id}/edit', [LogbookInternController::class, 'edit'])->name('logbookIntern.edit');
+Route::put('/list_logbook_intern/{id}', [LogbookInternController::class,  'update'])->name('logbookIntern.update');
 Route::get('/logbook_interns', [LogbookInternController::class, 'getLogbookByIntern'])->name('logbookIntern.getLogbookByIntern');
 Route::get('/logbook_intern/{id}', [LogbookInternController::class, 'show']);
 Route::get('/detailLogbook/{intern_id}', [LogbookInternController::class, 'showDetailLogbook'])->name('logbookIntern.showDetailLogbook');

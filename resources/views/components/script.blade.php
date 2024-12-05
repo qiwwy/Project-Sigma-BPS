@@ -64,24 +64,59 @@
                     );
                     $('#modal-body').html(
                         `<div class="modal-body">
-                         <label>Judul Kegiatan</label>
-                        <div class="form-group">
+                    <!-- Judul Kegiatan -->
+                    <label>Judul Kegiatan</label>
+                    <div class="form-group">
                         <input type="text" class="form-control" disabled placeholder="${response.title}">
-                        </div>
-                        <label class="form-label">Deskripsi Kegiatan</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled placeholder="${response.job_description}"></textarea>
+                    </div>
 
+                    <!-- Deskripsi Kegiatan -->
+                    <label class="form-label">Deskripsi Kegiatan</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled placeholder="${response.job_description}"></textarea>
+
+                    <!-- Tambahkan margin-bottom untuk memberikan jarak lebih besar -->
+                    <div class="mb-3"></div> <!-- Spasi tambahan -->
+
+                    <!-- Presentase Pengerjaan -->
+                    <label for="completion_stat" class="form-label">Presentase Pengerjaan</label>
+                    <div class="form-group d-flex">
+                        <input type="radio" class="btn-check" name="completion_stat" id="completion_stat_25" autocomplete="off"
+                            value="25" ${response.completion_stat == 25 ? 'checked' : ''} disabled>
+                        <label class="btn btn-outline-success" for="completion_stat_25">25 %</label>
+
+                        <input type="radio" class="btn-check" name="completion_stat" id="completion_stat_50" autocomplete="off"
+                            value="50" ${response.completion_stat == 50 ? 'checked' : ''} disabled>
+                        <label class="btn btn-outline-success" for="completion_stat_50">50 %</label>
+
+                        <input type="radio" class="btn-check" name="completion_stat" id="completion_stat_75" autocomplete="off"
+                            value="75" ${response.completion_stat == 75 ? 'checked' : ''} disabled>
+                        <label class="btn btn-outline-success" for="completion_stat_75">75 %</label>
+
+                        <input type="radio" class="btn-check" name="completion_stat" id="completion_stat_100" autocomplete="off"
+                            value="100" ${response.completion_stat == 100 ? 'checked' : ''} disabled>
+                        <label class="btn btn-outline-success" for="completion_stat_100">100 %</label>
+                    </div>
+
+                        <!-- Progress Pekerjaan -->
                         <label for="exampleFormControlTextarea1" class="form-label">Progress Pekerjaan</label>
-                        <div class="progress progress-primary  mb-4">
-                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 35%"
-                                aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress progress-primary mb-4">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${response.completion_stat}%"
+                                aria-valuenow="${response.completion_stat}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
+
+                        <!-- Waktu Pengerjaan -->
+                        <label for="processing_time" class="form-label">Waktu Pengerjaan</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" disabled placeholder="${response.processing_time}">
+                        </div>
+
+                        <!-- Tugas Dari -->
                         <label>Tugas Dari</label>
                         <div class="form-group">
                             <input type="text" class="form-control" disabled placeholder="${response.divisi}">
                         </div>
                     </div>`
-                    )
+                    );
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', error); // Debugging error

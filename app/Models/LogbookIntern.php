@@ -13,9 +13,11 @@ class LogbookIntern extends Model
     protected $fillable = [
         'intern_id',
         'date_logbook',
+        'title',
         'job_description',
         'completion_stat',
-        'documentation',
+        'processing_time',
+        'divisi',
         'accept_stat'
     ];
 
