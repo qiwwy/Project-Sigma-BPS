@@ -11,10 +11,22 @@ class LogbookInternController extends Controller
 
     public function index(): View
     {
-        $logbookInterns = LogbookIntern::all();
+        $internSession = session('intern');
+
+        $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())->get();
 
         return view('list_logbook_intern', compact('logbookInterns'));
     }
+
+    public function show($id)
+    {
+        // Mengambil data logbook berdasarkan ID
+        $logbookIntern = LogbookIntern::findOrFail($id);
+
+        // Mengembalikan data logbook sebagai JSON
+        return response()->json($logbookIntern);
+    }
+
 
     public function getLogbookByIntern(): View
     {

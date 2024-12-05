@@ -13,6 +13,7 @@ class Interns extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'id',
         'mentor_id',
         'identity_number',
         'name',
@@ -39,5 +40,14 @@ class Interns extends Model
     public function logbooks(): HasMany
     {
         return $this->hasMany(LogbookIntern::class, 'intern_id');
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter
+    public function getId() {
+        return $this->id;
     }
 }

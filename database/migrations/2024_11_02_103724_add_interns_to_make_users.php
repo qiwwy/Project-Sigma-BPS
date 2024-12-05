@@ -18,7 +18,7 @@ return new class extends Migration
             FOR EACH ROW
             BEGIN
                 INSERT INTO `users` (interns_id, username, password, created_at, updated_at)
-                VALUES (NEW.id, CONCAT('user_', NEW.identity_number), CONCAT(NEW.identity_number, '_and_', NEW.id), NOW(), NOW());
+                VALUES (NEW.id, NEW.identity_number, NEW.identity_number, NOW(), NOW());
             END;"
         );
     }

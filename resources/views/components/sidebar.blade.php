@@ -44,74 +44,76 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
+                @if (session('intern')->role === 'intern')
+                    <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
+                        <a href="/dashboard" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
 
-                <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
-                    <a href="/dashboard" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="{{ request()->is('list_intern_registers') ? 'sidebar-item active' : 'sidebar-item' }}">
-                    <a href="/list_intern_registers" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Daftar Registrasi</span>
-                    </a>
-                </li>
-                <li class="{{ request()->is('sample') ? 'sidebar-item active' : 'sidebar-item' }}">
-                    <a href="/sample" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Sample</span>
-                    </a>
-                </li>
+                    <li class="{{ request()->is('list_logbook_intern') ? 'sidebar-item active' : 'sidebar-item' }}">
+                        <a href="/list_logbook_intern" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Logbook Harian</span>
+                        </a>
+                    </li>
+                @else
+                    <li class="{{ request()->is('list_intern_registers') ? 'sidebar-item active' : 'sidebar-item' }}">
+                        <a href="/list_intern_registers" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Daftar Registrasi</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->is('sample') ? 'sidebar-item active' : 'sidebar-item' }}">
+                        <a href="/sample" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Sample</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
-                        <span>Extra Components</span>
-                    </a>
+                    <li class="sidebar-item  has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-collection-fill"></i>
+                            <span>Extra Components</span>
+                        </a>
 
-                    <ul class="submenu ">
-                        <li class="submenu-item  ">
-                            <a href="\" class="submenu-link">Test</a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="submenu ">
+                            <li class="submenu-item  ">
+                                <a href="\" class="submenu-link">Test</a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-grid-1x2-fill"></i>
-                        <span>Layouts</span>
-                    </a>
+                    <li class="sidebar-item  has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-grid-1x2-fill"></i>
+                            <span>Layouts</span>
+                        </a>
 
-                    <ul class="submenu ">
+                        <ul class="submenu ">
+                            <li class="submenu-item  ">
+                                <a href="layout-default.html" class="submenu-link">Default Layout</a>
+                            </li>
 
-                        <li class="submenu-item  ">
-                            <a href="layout-default.html" class="submenu-link">Default Layout</a>
+                            <li class="submenu-item  ">
+                                <a href="layout-vertical-1-column.html" class="submenu-link">1 Column</a>
+                            </li>
 
-                        </li>
+                            <li class="submenu-item  ">
+                                <a href="layout-vertical-navbar.html" class="submenu-link">Vertical Navbar</a>
+                            </li>
 
-                        <li class="submenu-item  ">
-                            <a href="layout-vertical-1-column.html" class="submenu-link">1 Column</a>
+                            <li class="submenu-item  ">
+                                <a href="layout-rtl.html" class="submenu-link">RTL Layout</a>
+                            </li>
 
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="layout-vertical-navbar.html" class="submenu-link">Vertical Navbar</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="layout-rtl.html" class="submenu-link">RTL Layout</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="layout-horizontal.html" class="submenu-link">Horizontal Menu</a>
-
-                        </li>
-                    </ul>
-                </li>
-
+                            <li class="submenu-item  ">
+                                <a href="layout-horizontal.html" class="submenu-link">Horizontal Menu</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

@@ -5,7 +5,8 @@ use App\Http\Controllers\InternRegisterController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\InternQueueController;
 use App\Http\Controllers\LogbookInternController;
-
+use App\Http\Middleware\CheckRoleFromSession;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('sigma-bps');
@@ -20,8 +21,8 @@ Route::get('/auth-login', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+    return view('intern.dashboard');
+})->middleware('checkRole:intern');
 
 Route::get('/list_intern_registers', [InternRegisterController::class, 'index'])->name('internRegister.index');
 Route::get('/intern_register', [InternRegisterController::class, 'create'])->name('internRegister.create');
@@ -41,6 +42,7 @@ Route::get('/detailQueue/{last_date_id}', [InternQueueController::class, 'showDe
 Route::post('/transfer_to_intern', [InternQueueController::class, 'transferToIntern'])->name('internQueue.transferToIntern');
 
 Route::get('/list_logbook_intern', [LogbookInternController::class, 'index'])->name('logbookIntern.index');
+Route::get('/list_logbook_intern/{id}', [LogbookInternController::class, 'show'])->name('logbookIntern.show');
 Route::get('/logbook_interns', [LogbookInternController::class, 'getLogbookByIntern'])->name('logbookIntern.getLogbookByIntern');
 Route::get('/logbook_intern/{id}', [LogbookInternController::class, 'show']);
 Route::get('/detailLogbook/{intern_id}', [LogbookInternController::class, 'showDetailLogbook'])->name('logbookIntern.showDetailLogbook');
@@ -49,3 +51,13 @@ Route::get('/sample', function () {
 
     return view('sample');
 });
+
+Auth::routes();
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login'); // Ganti '/custom-redirect-url' dengan URL yang diinginkan
+})->name('logout');
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

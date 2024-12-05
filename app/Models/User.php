@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Harus mewarisi Authenticatable
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class User extends Model
+class User extends Authenticatable // Harus mewarisi Authenticatable untuk autentikasi
 {
-    protected $table = 'users';
-    protected $primaryKey = 'id';
+    protected $table = 'users'; // Menentukan tabel yang digunakan
+    protected $primaryKey = 'id'; // Menentukan primary key
 
+    // Kolom yang dapat diisi mass-assignment
     protected $fillable = [
-        'actor_id',
+        'interns_id',
         'username',
-        'password'
+        'password',
     ];
 
+    // Menentukan relasi dengan model Interns
     public function intern(): BelongsTo
     {
-        return $this->belongsTo(Interns::class);
+        return $this->belongsTo(Interns::class, 'interns_id'); // Menggunakan relasi belongsTo
     }
 }
