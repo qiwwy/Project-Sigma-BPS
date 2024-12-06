@@ -4,36 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\LogbookIntern;
 use Illuminate\Contracts\View\View;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LogbookInternController extends Controller
 {
-
+    //Menampilkan logbook milik user yang melakukan login :intern
     public function index(): View
     {
         $internSession = session('intern');
+        $today = Carbon::today();
 
-        $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())->get();
+        $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())
+            ->whereDate('date_logbook', '<=', $today) // Tambahkan kondisi filter tanggal
+            ->orderBy('date_logbook', 'desc') // Opsional: urutkan berdasarkan tanggal logbook
+            ->get();
 
-        return view('list_logbook_intern', compact('logbookInterns'));
+        return view('logbook.logbook', compact('logbookInterns'));
     }
 
+    //Menampilkan detail logbook by id didalam modal :intern
     public function show($id)
     {
-        // Mengambil data logbook berdasarkan ID
         $logbookIntern = LogbookIntern::findOrFail($id);
-
-        // Mengembalikan data logbook sebagai JSON
         return response()->json($logbookIntern);
     }
 
+    //Mengarahkan ketampilan edit logbook :intern
     public function edit($id): View
     {
         $logbookIntern = LogbookIntern::findOrFail($id);
-
-        return view('logbook_edit', compact('logbookIntern'));
+        return view('logbook.logbook_edit', compact('logbookIntern'));
     }
 
+    //Melakukan update pada perubahan logbook :intern
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -45,13 +49,11 @@ class LogbookInternController extends Controller
         ]);
 
         $logbookIntern = LogbookIntern::findOrFail($id);
-
         $logbookIntern->update($validated);
-
         return redirect()->route('logbookIntern.index')->with('success', 'Logbook berhasil diperbarui');
     }
 
-
+    //Menampilkan seluruh data logbok berdasarkan peserta :admin
     public function getLogbookByIntern(): View
     {
         $logbookInterns = LogbookIntern::with('intern')
@@ -61,43 +63,27 @@ class LogbookInternController extends Controller
             });
 
         $logbookCounts = $logbookInterns->map(function ($group) {
+            // Mengambil data yang diperlukan dari intern pertama
+            $intern = $group->first()->intern;
 
-            $totalLogbookCount = $group->count();
-
-            $filledJobDescriptionCount = $group->filter(function ($logbook) {
-                return !is_null($logbook->job_description);
-            })->count();
-
-            $filledTitleCount = $group->filter(function ($logbook) {
-                return !is_null($logbook->title);
-            })->count();
-
-            $filledCompletionStatCount = $group->filter(function ($logbook) {
-                return !is_null($logbook->completion_stat);
-            })->count();
-
-            $filledProcessingTimeCount = $group->filter(function ($logbook) {
-                return !is_null($logbook->processing_time);
-            })->count();
-
-            $filledDivisiCount = $group->filter(function ($logbook) {
-                return !is_null($logbook->divisi);
-            })->count();
-
-            $filledLogbookCount = min($filledJobDescriptionCount, $filledCompletionStatCount, $filledTitleCount, $filledProcessingTimeCount, $filledDivisiCount);
+            // Menghitung total logbook dan jumlah logbook yang terisi kolom-kolom tertentu
+            $filledLogbookCount = collect(['job_description', 'title', 'completion_stat', 'processing_time', 'divisi'])
+                ->map(fn($field) => $group->filter(fn($logbook) => !is_null($logbook->$field))->count())
+                ->min();  // Mengambil jumlah minimal dari kolom yang terisi
 
             return [
-                'name' => $group->first()->intern->name,
-                'school_name' => $group->first()->intern->school_name,
-                'total_logbook_count' => $totalLogbookCount,
+                'name' => $intern->name,
+                'school_name' => $intern->school_name,
+                'total_logbook_count' => $group->count(),
                 'filled_logbook_count' => $filledLogbookCount,
                 'intern_id' => $group->first()->intern_id
             ];
         });
 
-        return view('logbook_interns', compact('logbookCounts'));
+        return view('logbook.logbook_interns', compact('logbookCounts'));
     }
 
+    //Menampilkan detail logbook intern yang sudah di groupBy :admin
     public function showDetailLogbook($internId)
     {
         $logbookInterns = LogbookIntern::where('intern_id', $internId)->get();
@@ -105,6 +91,6 @@ class LogbookInternController extends Controller
             return redirect()->route('logbookIntern.index')->with('error', 'Tidak ada peserta untuk logbook ini.');
         }
 
-        return view('detailLogbook', compact('logbookInterns', 'internId'));
+        return view('logbook.logbook_interns_detail', compact('logbookInterns', 'internId'));
     }
 }

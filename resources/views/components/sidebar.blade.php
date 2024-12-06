@@ -53,7 +53,7 @@
                     </li>
 
                     <li class="{{ request()->is('list_logbook_intern') ? 'sidebar-item active' : 'sidebar-item' }}">
-                        <a href="/list_logbook_intern" class='sidebar-link'>
+                        <a href="/logbook" class='sidebar-link'>
                             <i class="bi bi-grid-fill"></i>
                             <span>Logbook Harian</span>
                         </a>

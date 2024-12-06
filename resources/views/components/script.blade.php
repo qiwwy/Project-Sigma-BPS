@@ -45,6 +45,7 @@
         });
     });
 
+    //Modal dinamis untuk detail logbook peserta
     $(document).ready(function() {
         // Ketika modal dibuka
         $('#detailLogbook').on('show.bs.modal', function(event) {
@@ -53,7 +54,7 @@
             console.log('Logbook ID:', logbookId); // Debugging ID
 
             $.ajax({
-                url: '/list_logbook_intern/' +
+                url: '/logbook/' +
                     logbookId, // Endpoint untuk mengambil detail logbook
                 method: 'GET',
                 success: function(response) {

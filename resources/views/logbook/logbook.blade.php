@@ -18,7 +18,6 @@
             </div>
         </div>
     </div>
-
     <section class="section">
         <div class="card">
             <div class="card-header">
@@ -74,7 +73,6 @@
                                         data-id="{{ $item->id }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-
                                     <a href="{{ route('logbookIntern.edit', $item->id) }}" class="btn btn-success">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
@@ -87,18 +85,16 @@
             </div>
         </div>
 
-        <!-- Modal Statis -->
+        {{-- Modal detail view --}}
         <div class="modal fade" id="detailLogbook" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"> <!-- Add modal-lg here -->
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div id="date-logbook"></div>
                     </div>
                     <div class="modal-body" id="modal-body">
-                        <!-- Isi modal akan dimasukkan di sini -->
                     </div>
-                    <!-- Modal Footer with Close Button -->
                     <div class="modal-footer d-flex justify-content-end">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </div>

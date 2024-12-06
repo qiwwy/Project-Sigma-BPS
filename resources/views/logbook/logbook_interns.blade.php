@@ -18,7 +18,6 @@
             </div>
         </div>
     </div>
-
     <section class="section">
         <div class="card">
             <div class="card-header">
@@ -61,7 +60,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
             </div>
         </div>
     </section>

@@ -69,8 +69,10 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href=""
-                                        class="btn btn-primary">
+                                    <a href="#"
+                                        class="btn btn-primary {{ empty($item->title) || empty($item->job_description) || empty($item->completion_stat) || empty($item->processing_time) || empty($item->divisi) ? 'd-none' : '' }}"
+                                        data-bs-toggle="modal" data-bs-target="#detailLogbook"
+                                        data-id="{{ $item->id }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                 </td>
@@ -80,6 +82,22 @@
                 </table>
             </div>
         </div>
-    </section>
 
+        {{-- Modal detail view --}}
+        <div class="modal fade" id="detailLogbook" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div id="date-logbook"></div>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                    </div>
+                    <div class="modal-footer d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </x-main-layout>

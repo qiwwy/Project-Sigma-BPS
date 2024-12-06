@@ -41,13 +41,14 @@ Route::get('/detailQueue/{last_date_id}', [InternQueueController::class, 'showDe
 
 Route::post('/transfer_to_intern', [InternQueueController::class, 'transferToIntern'])->name('internQueue.transferToIntern');
 
-Route::get('/list_logbook_intern', [LogbookInternController::class, 'index'])->name('logbookIntern.index');
-Route::get('/list_logbook_intern/{id}', [LogbookInternController::class, 'show'])->name('logbookIntern.show');
-Route::get('/list_logbook_intern/{id}/edit', [LogbookInternController::class, 'edit'])->name('logbookIntern.edit');
-Route::put('/list_logbook_intern/{id}', [LogbookInternController::class,  'update'])->name('logbookIntern.update');
+//logbook route
+Route::get('/logbook', [LogbookInternController::class, 'index'])->name('logbookIntern.index');
+Route::get('/logbook/{id}', [LogbookInternController::class, 'show'])->name('logbookIntern.show');
+Route::get('/logbook/{id}/edit', [LogbookInternController::class, 'edit'])->name('logbookIntern.edit');
+Route::put('/logbook_update/{id}', [LogbookInternController::class,  'update'])->name('logbookIntern.update');
 Route::get('/logbook_interns', [LogbookInternController::class, 'getLogbookByIntern'])->name('logbookIntern.getLogbookByIntern');
-Route::get('/logbook_intern/{id}', [LogbookInternController::class, 'show']);
-Route::get('/detailLogbook/{intern_id}', [LogbookInternController::class, 'showDetailLogbook'])->name('logbookIntern.showDetailLogbook');
+Route::get('/logbook_interns/{id}', [LogbookInternController::class, 'show']);
+Route::get('/logbook_interns_by/{intern_id}', [LogbookInternController::class, 'showDetailLogbook'])->name('logbookIntern.showDetailLogbook');
 
 Route::get('/sample', function () {
 
