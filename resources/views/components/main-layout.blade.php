@@ -6,9 +6,7 @@
 <body>
 
     <div id="app">
-
-        @if (request()->is('intern_register') || request()->is('list_intern_register/*'))
-
+        @if (request()->is('registration'))
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">

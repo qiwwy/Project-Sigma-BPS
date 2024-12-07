@@ -3,7 +3,7 @@
         <div class="page-title">
             <div class="row align-items-center mt-4 mb-3">
                 <div class="col-12 col-md-6 text-left">
-                    <h2 class="mb-0">Selamat datang {{ session('intern')->name }}
+                    {{-- <h2 class="mb-0">Selamat datang {{ session('intern')->name }} --}}
                     </h2>
                 </div>
                 <div class="col-12 col-md-3 text-center">

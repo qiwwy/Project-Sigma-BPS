@@ -44,76 +44,79 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
-                @if (session('intern')->role === 'intern')
-                    <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
-                        <a href="/dashboard" class='sidebar-link'>
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+                {{-- @if (session('intern')->role === 'intern') --}}
+                <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
+                    <a href="/dashboard" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
-                    <li class="{{ request()->is('list_logbook_intern') ? 'sidebar-item active' : 'sidebar-item' }}">
-                        <a href="/logbook" class='sidebar-link'>
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Logbook Harian</span>
-                        </a>
-                    </li>
-                @else
-                    <li class="{{ request()->is('list_intern_registers') ? 'sidebar-item active' : 'sidebar-item' }}">
-                        <a href="/list_intern_registers" class='sidebar-link'>
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Daftar Registrasi</span>
-                        </a>
-                    </li>
-                    <li class="{{ request()->is('sample') ? 'sidebar-item active' : 'sidebar-item' }}">
-                        <a href="/sample" class='sidebar-link'>
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Sample</span>
-                        </a>
-                    </li>
+                <li class="sidebar-item has-sub {{ request()->is('master*') ? 'active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-collection-fill"></i>
+                        <span>Master</span>
+                    </a>
 
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
-                            <i class="bi bi-collection-fill"></i>
-                            <span>Extra Components</span>
-                        </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
+                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Peserta
+                                    Magang</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
+                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Mentor</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
+                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Divisi</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
+                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Sekolah</span></a>
+                        </li>
+                    </ul>
+                </li>
 
-                        <ul class="submenu ">
-                            <li class="submenu-item  ">
-                                <a href="\" class="submenu-link">Test</a>
-                            </li>
-                        </ul>
-                    </li>
 
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
-                            <i class="bi bi-grid-1x2-fill"></i>
-                            <span>Layouts</span>
-                        </a>
+                <li class="sidebar-item has-sub {{ request()->is('logbook*') ? 'active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-book-fill"></i>
+                        <span>Logbook</span>
+                    </a>
 
-                        <ul class="submenu ">
-                            <li class="submenu-item  ">
-                                <a href="layout-default.html" class="submenu-link">Default Layout</a>
-                            </li>
+                    <ul class="submenu ">
+                        <li class="submenu-item {{ request()->is('logbook/intern') ? 'active' : '' }}">
+                            <a href="{{ route('logbookIntern.index') }}" class="submenu-link"><span>Logbook
+                                    Harian</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('logbook/interns') ? 'active' : '' }}">
+                            <a href="{{ route('logbookIntern.getLogbookByIntern') }}"
+                                class="submenu-link"><span>Logbook
+                                    Peserta</span></a>
+                        </li>
+                    </ul>
+                </li>
 
-                            <li class="submenu-item  ">
-                                <a href="layout-vertical-1-column.html" class="submenu-link">1 Column</a>
-                            </li>
+                {{-- @else --}}
 
-                            <li class="submenu-item  ">
-                                <a href="layout-vertical-navbar.html" class="submenu-link">Vertical Navbar</a>
-                            </li>
+                <li class="sidebar-item has-sub {{ request()->is('registration*') ? 'active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-clipboard2-check-fill"></i>
+                        <span>Registration</span>
+                    </a>
 
-                            <li class="submenu-item  ">
-                                <a href="layout-rtl.html" class="submenu-link">RTL Layout</a>
-                            </li>
+                    <ul class="submenu ">
+                        <li class="submenu-item {{ request()->is('registration/list') ? 'active' : '' }}">
+                            <a href="{{ route('internRegister.index') }}" class="submenu-link"><span>Daftar
+                                    Registrasi</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
+                            <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Daftar
+                                    Antrian Registrasi</span></a>
+                        </li>
+                    </ul>
+                </li>
 
-                            <li class="submenu-item  ">
-                                <a href="layout-horizontal.html" class="submenu-link">Horizontal Menu</a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
+                {{-- @endif --}}
+
             </ul>
         </div>
     </div>

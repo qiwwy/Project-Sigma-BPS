@@ -15,10 +15,14 @@ class LogbookInternController extends Controller
         $internSession = session('intern');
         $today = Carbon::today();
 
-        $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())
-            ->whereDate('date_logbook', '<=', $today) // Tambahkan kondisi filter tanggal
-            ->orderBy('date_logbook', 'desc') // Opsional: urutkan berdasarkan tanggal logbook
-            ->get();
+        // $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())
+        //     ->whereDate('date_logbook', '<=', $today) // Tambahkan kondisi filter tanggal
+        //     ->orderBy('date_logbook', 'desc') // Opsional: urutkan berdasarkan tanggal logbook
+        //     ->get();
+
+        $logbookInterns = LogbookIntern::all();
+
+
 
         return view('logbook.logbook', compact('logbookInterns'));
     }

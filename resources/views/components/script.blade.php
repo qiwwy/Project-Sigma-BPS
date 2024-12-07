@@ -54,7 +54,7 @@
             console.log('Logbook ID:', logbookId); // Debugging ID
 
             $.ajax({
-                url: '/logbook/' +
+                url: '/logbook/detail/' +
                     logbookId, // Endpoint untuk mengambil detail logbook
                 method: 'GET',
                 success: function(response) {

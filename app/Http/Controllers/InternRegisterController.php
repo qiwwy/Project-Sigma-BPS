@@ -48,11 +48,6 @@ class InternRegisterController extends Controller
         return view('intern_register_byToken', compact('internRegister'));
     }
 
-    public function create(): View
-    {
-        return view('intern_register');
-    }
-
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -91,7 +86,7 @@ class InternRegisterController extends Controller
         ]);
 
         Mail::to($internRegister->email)->send(new InternRegisterMail($internRegister));
-        return redirect()->route('internRegister.create')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('internRegister.daftar')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function updateStatus(Request $request)

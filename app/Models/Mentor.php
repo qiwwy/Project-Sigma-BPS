@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Mentor extends Model
@@ -12,19 +11,17 @@ class Mentor extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'division_id',
+        'username',
+        'password',
+        'role',
         'identity_number',
         'name',
         'address',
         'phone_number',
+        'division',
         'email',
         'image'
     ];
-
-    public function division(): BelongsTo
-    {
-        return $this->belongsTo(Division::class);
-    }
 
     public function interns(): HasMany
     {
