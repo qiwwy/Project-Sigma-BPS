@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InternRegister extends Model
 {
-    protected $table= 'intern_registers';
-    protected $primaryKey= 'id';
+    protected $table = 'intern_registers';
+    protected $primaryKey = 'id';
 
-    protected $fillable= [
+    protected $fillable = [
         'identity_number',
         'name',
         'address',
-        'school_name',
+        'school_id',
         'phone_number',
         'email',
         'start_date',
@@ -23,4 +24,9 @@ class InternRegister extends Model
         'token',
         'is_sent'
     ];
+
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(School::class);
+    }
 }

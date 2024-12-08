@@ -21,7 +21,7 @@
 
     <div class="row mb-3">
         <div class="col-3">
-            <a href="/list_intern_registers" class="btn icon icon-left btn-primary w-100" ">
+            <a href="{{route('internRegister.index')}}" class="btn icon icon-left btn-primary w-100" ">
                 <i class="bi bi-arrow-left-circle"></i>
                 Kembali Ke Daftar Pendaftaran
             </a>

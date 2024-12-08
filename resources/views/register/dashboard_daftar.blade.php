@@ -93,7 +93,7 @@
 
     <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel33">Isi Data Anda</h4>
@@ -101,88 +101,100 @@
                         <i data-feather="x"></i>
                     </button>
                 </div>
-                <form action="{{ route('internRegister.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <label for="identity_number">NIS / NIM</label>
-                        <div class="form-group">
-                            <input id="identity_number_id" name="identity_number" type="text"
-                                placeholder="Masukkan Nama Lengkap Anda" class="form-control">
-                        </div>
-                        <label for="name">Nama Lengkap</label>
-                        <div class="form-group">
-                            <input id="name_id" name="name" type="text"
-                                placeholder="Masukkan Nama Lengkap Anda" class="form-control">
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="phone_number">No. HP</label>
-                                <div class="form-group">
-                                    <input id="phone_number_id" name="phone_number" type="text"
-                                        placeholder="Masukan NISN / NIM Anda..." class="form-control">
+                <div class="modal-body">
+                    <!-- Form Content -->
+                    <form action="{{ route('internRegister.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <label for="identity_number">NIS / NIM</label>
+                            <div class="form-group">
+                                <input id="identity_number_id" name="identity_number" type="text"
+                                    placeholder="Masukkan Nama Lengkap Anda" class="form-control">
+                            </div>
+                            <label for="name">Nama Lengkap</label>
+                            <div class="form-group">
+                                <input id="name_id" name="name" type="text"
+                                    placeholder="Masukkan Nama Lengkap Anda" class="form-control">
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="phone_number">No. HP</label>
+                                    <div class="form-group">
+                                        <input id="phone_number_id" name="phone_number" type="text"
+                                            placeholder="Masukan NISN / NIM Anda..." class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="email">Email</label>
+                                    <div class="form-group">
+                                        <input id="email_id" name="email" type="text"
+                                            placeholder="Masukan No. HP Anda..." class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <label for="email">Email</label>
-                                <div class="form-group">
-                                    <input id="email_id" name="email" type="text"
-                                        placeholder="Masukan No. HP Anda..." class="form-control">
+                            <label for="address">Alamat</label>
+                            <div class="form-group">
+                                <input id="address_id" name="address" type="text"
+                                    placeholder="Masukkan Alamat Lengkap Anda" class="form-control">
+                            </div>
+
+                            @php
+                                $schools = \App\Models\School::all();
+                            @endphp
+
+                            <label for="school_id">Asal Sekolah</label>
+                            <div class="form-group">
+                                <select class="form-select" name="school_id" id="school_id" required>
+                                    <option value="">Pilih Sekolah</option>
+                                    @foreach ($schools as $school)
+                                        <option value="{{ $school->id }}">{{ $school->school_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="start_date">Periode Awal Magang</label>
+                                    <div class="form-group">
+                                        <input type="date" id="start_date_id" name="start_date"
+                                            class="form-control mb-3 flatpickr-no-config" placeholder="Select date..">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="end_date">Periode Akhir Magang</label>
+                                    <div class="form-group">
+                                        <input type="date" id="end_date_id" name="end_date"
+                                            class="form-control mb-3 flatpickr-no-config" placeholder="Select date..">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="cover_letter">Surat Pengantar</label>
+                                    <div class="form-group">
+                                        <input class="form-control" type="file" name="cover_letter"
+                                            id="cover_letter_id">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="image">Foto</label>
+                                    <div class="form-group">
+                                        <input class="form-control" type="file" name="image" id="image_id">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <label for="address">Alamat</label>
-                        <div class="form-group">
-                            <input id="address_id" name="address" type="text"
-                                placeholder="Masukkan Alamat Lengkap Anda" class="form-control">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Close</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                                <i class="bx bx-check d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Kirim</span>
+                            </button>
                         </div>
-                        <label for="school_name">Asal Sekolah</label>
-                        <div class="form-group">
-                            <input id="school_name_id" name="school_name" type="text"
-                                placeholder="Masukkan Nama Lengkap Sekolah Anda..." class="form-control">
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="start_date">Periode Awal Magang</label>
-                                <div class="form-group">
-                                    <input type="date" id="start_date_id" name="start_date"
-                                        class="form-control mb-3 flatpickr-no-config" placeholder="Select date..">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label for="end_date">Periode Akhir Magang</label>
-                                <div class="form-group">
-                                    <input type="date" id="end_date_id" name="end_date"
-                                        class="form-control mb-3 flatpickr-no-config" placeholder="Select date..">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="cover_letter">Surat Pengantar</label>
-                                <div class="form-group">
-                                    <input class="form-control" type="file" name="cover_letter"
-                                        id="cover_letter_id">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label for="image">Foto</label>
-                                <div class="form-group">
-                                    <input class="form-control" type="file" name="image" id="image_id">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Close</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Kirim</span>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -21,10 +21,10 @@
 
     <div class="row mb-3">
         <div class="col-2">
-            <button type="submit" class="btn icon icon-left btn-primary w-100" onclick="window.history.back()">
+            <a href="{{ route('internQueue.index') }}" type="submit" class="btn icon icon-left btn-primary w-100">
                 <i class="bi bi-arrow-left-circle"></i>
                 Kembali Ke Antrian
-            </button>
+            </a>
         </div>
     </div>
 

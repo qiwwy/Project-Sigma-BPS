@@ -16,7 +16,7 @@ class InternQueueController extends Controller
         $internQueueGroup = InternQueue::with('lastDate')
             ->get()
             ->groupBy('last_date_id');
-        return view('list_intern_queues', compact('internQueueGroup'));
+        return view('register.register_queue', compact('internQueueGroup'));
     }
 
     public function showDetailQueue($lastDateId)
@@ -27,7 +27,7 @@ class InternQueueController extends Controller
             return redirect()->route('internQueue.index')->with('error', 'Tidak ada peserta untuk tanggal ini.');
         }
 
-        return view('detailQueue', compact('interns', 'lastDateId'));
+        return view('register.register_queue_detail', compact('interns', 'lastDateId'));
     }
 
     public function transferToIntern(Request $request)

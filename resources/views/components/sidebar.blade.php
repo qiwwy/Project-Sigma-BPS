@@ -69,8 +69,8 @@
                         <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
                             <a href="{{ route('interns.index') }}" class="submenu-link"><span>Divisi</span></a>
                         </li>
-                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
-                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Sekolah</span></a>
+                        <li class="submenu-item {{ request()->is('master/schools') ? 'active' : '' }}">
+                            <a href="{{ route('schools.index') }}" class="submenu-link"><span>Sekolah</span></a>
                         </li>
                     </ul>
                 </li>

@@ -5,7 +5,7 @@ use App\Http\Controllers\InternRegisterController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\InternQueueController;
 use App\Http\Controllers\LogbookInternController;
-use App\Http\Middleware\CheckRoleFromSession;
+use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -20,21 +20,16 @@ Route::get('/dashboard', function () {
     return view('intern.dashboard');
 })->middleware('checkRole:intern');
 
-
-
-
-
-
-
-
-
-
 Route::get('/detailQueue/{last_date_id}', [InternQueueController::class, 'showDetailQueue'])->name('internQueue.showDetailQueue');
 
 Route::post('/transfer_to_intern', [InternQueueController::class, 'transferToIntern'])->name('internQueue.transferToIntern');
 
-Route::prefix('master')->group(function (){
+Route::prefix('master')->group(function () {
     Route::get('/interns', [InternController::class, 'index'])->name('interns.index');
+    Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
+    Route::post('/schools', [SchoolController::class, 'store'])->name('schools.store');
+    Route::delete('/school/{id}', [SchoolController::class, 'destroy'])->name('schools.destroy');
+    Route::put('/school/{id}', [SchoolController::class, 'update'])->name('schools.update');
 });
 
 Route::prefix('logbook')->group(function () {
@@ -57,7 +52,7 @@ Route::prefix('registration')->group(function () {
     Route::post('/getDate', [InternController::class, 'getEndDateUnique'])->name('interns.getEndDateUnique');
 
     Route::get('/', function () {
-        return view('intern_register');
+        return view('register.dashboard_daftar');
     })->name('internRegister.daftar');
 });
 

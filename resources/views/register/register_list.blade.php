@@ -103,13 +103,13 @@
 
     <div class="row d-flex justify-content-end mb-3">
         <div class="col-auto">
-            <a href="/list_interns" class="btn icon icon-left btn-primary">
+            <a href="{{route('interns.index')}}" class="btn icon icon-left btn-primary">
                 <i class="bi bi-people-fill"></i>
                 Daftar Peserta Magang
             </a>
         </div>
         <div class="col-auto">
-            <a href="/list_intern_queues" class="btn icon icon-left btn-primary">
+            <a href="{{route('internQueue.index')}}" class="btn icon icon-left btn-primary">
                 <i class="bi bi-collection-fill"></i>
                 Daftar Antrian Pendaftaran
             </a>
@@ -154,7 +154,7 @@
                         <tr>
                             <td>{{ $number++ }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ Str::limit($item->school_name, 40, '...') }}</td>
+                            <td>{{ $item->school->school_name }}</td>
                             <td>
                                 {{ \Carbon\Carbon::parse($item->start_date)->format('d-m-Y') }} -
                                 {{ \Carbon\Carbon::parse($item->end_date)->format('d-m-Y') }}
@@ -277,5 +277,4 @@
             });
         }
     </script>
-
 </x-main-layout>

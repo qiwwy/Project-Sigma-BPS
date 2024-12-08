@@ -126,4 +126,21 @@
             });
         });
     });
+
+    // Ketika modal edit dibuka, isi field dengan data yang sesuai
+    $('#editSchoolModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Tombol yang memicu modal
+        var schoolId = button.data('school-id'); // Ambil ID sekolah
+        var schoolName = button.data('school-name'); // Ambil nama sekolah
+        var typeSchool = button.data('type-school'); // Ambil jenis sekolah
+
+        var modal = $(this);
+        modal.find('#edit_school_name').val(schoolName); // Isi input dengan nama sekolah
+        modal.find('#edit_type_school').val(typeSchool); // Isi select dengan jenis sekolah
+
+        // Ubah action form dengan route yang sesuai
+        var formAction = "{{ route('schools.update', ':id') }}";
+        formAction = formAction.replace(':id', schoolId);
+        modal.find('#editSchoolForm').attr('action', formAction); // Atur action form ke URL yang benar
+    });
 </script>

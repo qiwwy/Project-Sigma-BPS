@@ -25,6 +25,6 @@ class Mentor extends Model
 
     public function interns(): HasMany
     {
-        return $this->hasMany(interns::class);
+        return $this->hasMany(Interns::class);
     }
 }

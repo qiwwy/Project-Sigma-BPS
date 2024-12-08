@@ -12,7 +12,7 @@ class InternController extends Controller
     public function index(): View
     {
         $interns = Interns::all();
-        return view('list_interns', compact('interns'));
+        return view('master.interns', compact('interns'));
     }
 
     public function getEndDateUnique()
