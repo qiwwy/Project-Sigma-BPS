@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DivisionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InternRegisterController;
 use App\Http\Controllers\InternController;
@@ -30,6 +31,10 @@ Route::prefix('master')->group(function () {
     Route::post('/schools', [SchoolController::class, 'store'])->name('schools.store');
     Route::delete('/school/{id}', [SchoolController::class, 'destroy'])->name('schools.destroy');
     Route::put('/school/{id}', [SchoolController::class, 'update'])->name('schools.update');
+    Route::get('/divisions', [DivisionController::class, 'index'])->name('divisions.index');
+    Route::post('/divisions', [DivisionController::class, 'store'])->name('divisions.store');
+    Route::delete('/division/{id}', [DivisionController::class, 'destroy'])->name('divisions.destroy');
+    Route::put('/division/{id}', [DivisionController::class, 'update'])->name('divisions.update');
 });
 
 Route::prefix('logbook')->group(function () {
@@ -56,9 +61,9 @@ Route::prefix('registration')->group(function () {
     })->name('internRegister.daftar');
 });
 
-Route::get('/sample', function () {
-
-    return view('sample');
+Route::prefix('monitoring')->group(function () {
+    Route::get('/disposition', [InternController::class, 'dispositionIntern'])->name('monitoring.disposition.index');
+    Route::put('/disposition/{id}', [InternController::class, 'updateDisposition'])->name('monitoring.disposition.update');
 });
 
 Auth::routes();
@@ -69,4 +74,4 @@ Route::post('/logout', function () {
 })->name('logout');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

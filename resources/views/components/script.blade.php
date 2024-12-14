@@ -143,4 +143,32 @@
         formAction = formAction.replace(':id', schoolId);
         modal.find('#editSchoolForm').attr('action', formAction); // Atur action form ke URL yang benar
     });
+
+    $('#editDivisionModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Tombol yang memicu modal
+        var divisionId = button.data('division-id'); // Ambil ID sekolah
+        var divisionName = button.data('division-name'); // Ambil nama sekolah
+
+        var modal = $(this);
+        modal.find('#edit_division_name').val(divisionName); // Isi input dengan nama sekolah
+
+        // Ubah action form dengan route yang sesuai
+        var formAction = "{{ route('divisions.update', ':id') }}";
+        formAction = formAction.replace(':id', divisionId);
+        modal.find('#editDivisionForm').attr('action', formAction); // Atur action form ke URL yang benar
+    });
+
+    $('#editDispositionModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Tombol yang memicu modal
+        var internId = button.data('intern-id'); // Ambil ID intern
+        var divisionId = button.data('division-id'); // Ambil ID divisi
+
+        var modal = $(this);
+        modal.find('#division_id').val(divisionId); // Pilih option yang sesuai di dropdown
+
+        // Ubah action form dengan route yang sesuai
+        var formAction = "{{ route('monitoring.disposition.update', ':id') }}";
+        formAction = formAction.replace(':id', internId);
+        modal.find('#editDispositionForm').attr('action', formAction); // Set action form ke URL yang benar
+    });
 </script>

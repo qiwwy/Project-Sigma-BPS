@@ -63,34 +63,11 @@
                             <a href="{{ route('interns.index') }}" class="submenu-link"><span>Peserta
                                     Magang</span></a>
                         </li>
-                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
-                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Mentor</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
-                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Divisi</span></a>
+                        <li class="submenu-item {{ request()->is('master/divisions') ? 'active' : '' }}">
+                            <a href="{{ route('divisions.index') }}" class="submenu-link"><span>Divisi</span></a>
                         </li>
                         <li class="submenu-item {{ request()->is('master/schools') ? 'active' : '' }}">
                             <a href="{{ route('schools.index') }}" class="submenu-link"><span>Sekolah</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li class="sidebar-item has-sub {{ request()->is('logbook*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-book-fill"></i>
-                        <span>Logbook</span>
-                    </a>
-
-                    <ul class="submenu ">
-                        <li class="submenu-item {{ request()->is('logbook/intern') ? 'active' : '' }}">
-                            <a href="{{ route('logbookIntern.index') }}" class="submenu-link"><span>Logbook
-                                    Harian</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('logbook/interns') ? 'active' : '' }}">
-                            <a href="{{ route('logbookIntern.getLogbookByIntern') }}"
-                                class="submenu-link"><span>Logbook
-                                    Peserta</span></a>
                         </li>
                     </ul>
                 </li>
@@ -111,6 +88,44 @@
                         <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
                             <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Daftar
                                     Antrian Registrasi</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub {{ request()->is('monitoring*') ? 'active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-person-workspace"></i>
+                        <span>Monitoring</span>
+                    </a>
+
+                    <ul class="submenu ">
+                        <li class="submenu-item {{ request()->is('monitoring/disposition') ? 'active' : '' }}">
+                            <a href="{{ route('monitoring.disposition.index') }}" class="submenu-link"><span>Disposisi Unit</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
+                            <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Assignment or Information</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
+                            <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Logbook Peserta</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub {{ request()->is('logbook*') ? 'active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-book-fill"></i>
+                        <span>Logbook</span>
+                    </a>
+
+                    <ul class="submenu ">
+                        <li class="submenu-item {{ request()->is('logbook/intern') ? 'active' : '' }}">
+                            <a href="{{ route('logbookIntern.index') }}" class="submenu-link"><span>Logbook
+                                    Harian</span></a>
+                        </li>
+                        <li class="submenu-item {{ request()->is('logbook/interns') ? 'active' : '' }}">
+                            <a href="{{ route('logbookIntern.getLogbookByIntern') }}"
+                                class="submenu-link"><span>Logbook
+                                    Peserta</span></a>
                         </li>
                     </ul>
                 </li>

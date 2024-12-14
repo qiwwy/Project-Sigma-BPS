@@ -27,11 +27,6 @@ class Interns extends Model
         'image',
     ];
 
-    public function mentor(): BelongsTo
-    {
-        return $this->belongsTo(Mentor::class);
-    }
-
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
@@ -42,12 +37,19 @@ class Interns extends Model
         return $this->hasMany(LogbookIntern::class, 'intern_id');
     }
 
-    public function setId($id) {
+    public function division(): BelongsTo
+    {
+        return $this->belongsTo(Division::class);
+    }
+
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
     // Getter
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 }

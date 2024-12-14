@@ -14,14 +14,10 @@ return new class extends Migration
     {
         Schema::create('interns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mentor_id')->nullable()->constrained(
-                table: 'mentors',
-                indexName: 'interns_mentor_id'
-            )->onUpdate('cascade')->onDelete('cascade');
             $table->string('identity_number');
             $table->string('name');
             $table->text('address');
-            $table->string('school_name');
+            $table->string('school_name')->nullable();
             $table->string('phone_number');
             $table->string('email');
             $table->date('start_date');
