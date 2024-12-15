@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\InformationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InternRegisterController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\InternQueueController;
 use App\Http\Controllers\LogbookInternController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,9 +19,9 @@ Route::get('/auth-login', function () {
     return view('login');
 });
 
-Route::get('/dashboard', function () {
-    return view('intern.dashboard');
-})->middleware('checkRole:intern');
+// Route::get('/dashboard', function () {
+//     return view('intern.dashboard');
+// })->middleware('checkRole:intern')->name('dashboard.intern');
 
 Route::get('/detailQueue/{last_date_id}', [InternQueueController::class, 'showDetailQueue'])->name('internQueue.showDetailQueue');
 
@@ -38,8 +40,6 @@ Route::prefix('master')->group(function () {
 });
 
 Route::prefix('logbook')->group(function () {
-    Route::get('/intern', [LogbookInternController::class, 'index'])->name('logbookIntern.index');
-    Route::get('/interns', [LogbookInternController::class, 'getLogbookByIntern'])->name('logbookIntern.getLogbookByIntern');
     Route::get('/detail/{id}', [LogbookInternController::class, 'show'])->name('logbookIntern.show');
     Route::get('/edit/{id}', [LogbookInternController::class, 'edit'])->name('logbookIntern.edit');
     Route::put('/update/{id}', [LogbookInternController::class,  'update'])->name('logbookIntern.update');
@@ -64,6 +64,18 @@ Route::prefix('registration')->group(function () {
 Route::prefix('monitoring')->group(function () {
     Route::get('/disposition', [InternController::class, 'dispositionIntern'])->name('monitoring.disposition.index');
     Route::put('/disposition/{id}', [InternController::class, 'updateDisposition'])->name('monitoring.disposition.update');
+    Route::get('/information', [InformationController::class, 'index'])->name('monitoring.information.index');
+    Route::post('/information', [InformationController::class, 'store'])->name('monitoring.information.store');
+    Route::delete('/information/{id}', [InformationController::class, 'destroy'])->name('monitoring.information.destroy');
+    Route::get('/information/edit/{id}', [InformationController::class, 'edit'])->name('monitoring.information.edit');
+    Route::put('/information/{id}', [InformationController::class, 'update'])->name('monitoring.information.update');
+    Route::get('/group-logbook', [LogbookInternController::class, 'getLogbookByIntern'])->name('monitoring.logbookIntern.getLogbookByIntern');
+});
+
+Route::prefix('activity')->group(function () {
+    Route::get('/logbooks', [LogbookInternController::class, 'index'])->name('activity.logbook');
+    Route::get('/presences', [PresenceController::class, 'index'])->name('activity.presence.index');
+    Route::post('/presences', [PresenceController::class, 'store'])->name('activity.presence.store');
 });
 
 Auth::routes();

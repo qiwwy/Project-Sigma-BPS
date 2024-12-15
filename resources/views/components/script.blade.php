@@ -171,4 +171,22 @@
         formAction = formAction.replace(':id', internId);
         modal.find('#editDispositionForm').attr('action', formAction); // Set action form ke URL yang benar
     });
+
+    $('#editInformationModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Tombol yang memicu modal
+        var informationId = button.data('information-id'); // Ambil ID intern
+        var divisionId = button.data('division-id'); // Ambil ID divisi
+        var title = button.data('title'); // Ambil judul
+        var description = button.data('description'); // Ambil deskripsi
+
+        var modal = $(this);
+        modal.find('#division_id').val(divisionId); // Pilih option yang sesuai di dropdown
+        modal.find('#title').val(title); // Isi field judul
+        modal.find('#description').val(description); // Isi field deskripsi
+
+        // Ubah action form dengan route yang sesuai
+        var formAction = "{{ route('monitoring.information.update', ':id') }}";
+        formAction = formAction.replace(':id', informationId);
+        modal.find('#editInformatiionForm').attr('action', formAction); // Set action form ke URL yang benar
+    });
 </script>

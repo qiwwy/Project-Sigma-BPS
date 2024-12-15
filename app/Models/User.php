@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable; // Harus mewarisi Authenticatable
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable // Harus mewarisi Authenticatable untuk autentikasi
 {
@@ -21,5 +22,10 @@ class User extends Authenticatable // Harus mewarisi Authenticatable untuk auten
     public function intern(): BelongsTo
     {
         return $this->belongsTo(Interns::class, 'interns_id'); // Menggunakan relasi belongsTo
+    }
+
+    public function presences(): HasMany
+    {
+        return $this->hasMany(Presence::class, 'user_id');
     }
 }

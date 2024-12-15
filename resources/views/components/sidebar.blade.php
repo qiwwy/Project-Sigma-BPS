@@ -44,94 +44,95 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
-                {{-- @if (session('intern')->role === 'intern') --}}
+
                 <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
                     <a href="/dashboard" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+                @if (session('intern')->role === 'admin')
+                    <li class="sidebar-item has-sub {{ request()->is('master*') ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-collection-fill"></i>
+                            <span>Master</span>
+                        </a>
 
-                <li class="sidebar-item has-sub {{ request()->is('master*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
-                        <span>Master</span>
-                    </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
+                                <a href="{{ route('interns.index') }}" class="submenu-link"><span>Peserta
+                                        Magang</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('master/divisions') ? 'active' : '' }}">
+                                <a href="{{ route('divisions.index') }}" class="submenu-link"><span>Divisi</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('master/schools') ? 'active' : '' }}">
+                                <a href="{{ route('schools.index') }}" class="submenu-link"><span>Sekolah</span></a>
+                            </li>
+                        </ul>
+                    </li>
 
-                    <ul class="submenu ">
-                        <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
-                            <a href="{{ route('interns.index') }}" class="submenu-link"><span>Peserta
-                                    Magang</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('master/divisions') ? 'active' : '' }}">
-                            <a href="{{ route('divisions.index') }}" class="submenu-link"><span>Divisi</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('master/schools') ? 'active' : '' }}">
-                            <a href="{{ route('schools.index') }}" class="submenu-link"><span>Sekolah</span></a>
-                        </li>
-                    </ul>
-                </li>
 
-                {{-- @else --}}
+                    <li class="sidebar-item has-sub {{ request()->is('registration*') ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-clipboard2-check-fill"></i>
+                            <span>Registration</span>
+                        </a>
 
-                <li class="sidebar-item has-sub {{ request()->is('registration*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-clipboard2-check-fill"></i>
-                        <span>Registration</span>
-                    </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item {{ request()->is('registration/list') ? 'active' : '' }}">
+                                <a href="{{ route('internRegister.index') }}" class="submenu-link"><span>Daftar
+                                        Registrasi</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
+                                <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Daftar
+                                        Antrian Registrasi</span></a>
+                            </li>
+                        </ul>
+                    </li>
 
-                    <ul class="submenu ">
-                        <li class="submenu-item {{ request()->is('registration/list') ? 'active' : '' }}">
-                            <a href="{{ route('internRegister.index') }}" class="submenu-link"><span>Daftar
-                                    Registrasi</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
-                            <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Daftar
-                                    Antrian Registrasi</span></a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="sidebar-item has-sub {{ request()->is('monitoring*') ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-person-workspace"></i>
+                            <span>Monitoring</span>
+                        </a>
 
-                <li class="sidebar-item has-sub {{ request()->is('monitoring*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-person-workspace"></i>
-                        <span>Monitoring</span>
-                    </a>
-
-                    <ul class="submenu ">
-                        <li class="submenu-item {{ request()->is('monitoring/disposition') ? 'active' : '' }}">
-                            <a href="{{ route('monitoring.disposition.index') }}" class="submenu-link"><span>Disposisi Unit</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
-                            <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Assignment or Information</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('registration/queue') ? 'active' : '' }}">
-                            <a href="{{ route('internQueue.index') }}" class="submenu-link"><span>Logbook Peserta</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item has-sub {{ request()->is('logbook*') ? 'active' : '' }}">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-book-fill"></i>
-                        <span>Logbook</span>
-                    </a>
-
-                    <ul class="submenu ">
-                        <li class="submenu-item {{ request()->is('logbook/intern') ? 'active' : '' }}">
-                            <a href="{{ route('logbookIntern.index') }}" class="submenu-link"><span>Logbook
-                                    Harian</span></a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('logbook/interns') ? 'active' : '' }}">
-                            <a href="{{ route('logbookIntern.getLogbookByIntern') }}"
-                                class="submenu-link"><span>Logbook
-                                    Peserta</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-                {{-- @endif --}}
-
+                        <ul class="submenu ">
+                            <li class="submenu-item {{ request()->is('monitoring/disposition') ? 'active' : '' }}">
+                                <a href="{{ route('monitoring.disposition.index') }}"
+                                    class="submenu-link"><span>Disposisi
+                                        Unit</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('monitoring/information') ? 'active' : '' }}">
+                                <a href="{{ route('monitoring.information.index') }}"
+                                    class="submenu-link"><span>Assignment
+                                        or Information</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('monitoring/group-logbook') ? 'active' : '' }}">
+                                <a href="{{ route('monitoring.logbookIntern.getLogbookByIntern') }}"
+                                    class="submenu-link"><span>Logbook
+                                        Peserta</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="sidebar-item has-sub {{ request()->is('activity*') ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-book-fill"></i>
+                            <span>Aktivitas</span>
+                        </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item {{ request()->is('activity/presences') ? 'active' : '' }}">
+                                <a href="{{ route('activity.presence.index') }}" class="submenu-link"><span>Daftar
+                                        Kehadiran Anda</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('activity/logbooks') ? 'active' : '' }}">
+                                <a href="{{ route('activity.logbook') }}" class="submenu-link"><span>Logbook
+                                        Harian Anda</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

@@ -15,15 +15,12 @@ class LogbookInternController extends Controller
         $internSession = session('intern');
         $today = Carbon::today();
 
-        // $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())
-        //     ->whereDate('date_logbook', '<=', $today) // Tambahkan kondisi filter tanggal
-        //     ->orderBy('date_logbook', 'desc') // Opsional: urutkan berdasarkan tanggal logbook
-        //     ->get();
+        $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())
+            ->whereDate('date_logbook', '<=', $today) // Tambahkan kondisi filter tanggal
+            ->orderBy('date_logbook', 'desc') // Opsional: urutkan berdasarkan tanggal logbook
+            ->get();
 
-        $logbookInterns = LogbookIntern::all();
-
-
-
+        // $logbookInterns = LogbookIntern::all();
         return view('logbook.logbook', compact('logbookInterns'));
     }
 
@@ -54,7 +51,7 @@ class LogbookInternController extends Controller
 
         $logbookIntern = LogbookIntern::findOrFail($id);
         $logbookIntern->update($validated);
-        return redirect()->route('logbookIntern.index')->with('success', 'Logbook berhasil diperbarui');
+        return redirect()->route('activity.logbook')->with('success', 'Logbook berhasil diperbarui');
     }
 
     //Menampilkan seluruh data logbok berdasarkan peserta :admin
@@ -92,7 +89,7 @@ class LogbookInternController extends Controller
     {
         $logbookInterns = LogbookIntern::where('intern_id', $internId)->get();
         if ($logbookInterns->isEmpty()) {
-            return redirect()->route('logbookIntern.index')->with('error', 'Tidak ada peserta untuk logbook ini.');
+            return redirect()->route('activity.logbook')->with('error', 'Tidak ada peserta untuk logbook ini.');
         }
 
         return view('logbook.logbook_interns_detail', compact('logbookInterns', 'internId'));

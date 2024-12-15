@@ -24,7 +24,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->enum('status', ['Active', 'Nonactive'])->default('Active');
             $table->string('image');
-            $table->enum('role', ['intern', 'mentor', 'admin']);
+            $table->enum('role', ['intern', 'admin']);
             $table->timestamps();
         });
     }
