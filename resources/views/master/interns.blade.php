@@ -25,6 +25,11 @@
                     </h5>
                 </div>
                 <div class="card-body">
+                    @if (session('successDisposition'))
+                        <div class="alert alert-light-success color-success">
+                            {{ session('successDisposition') }}
+                        </div>
+                    @endif
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
@@ -32,8 +37,7 @@
                                 <th>NIS/NIM</th>
                                 <th>Nama</th>
                                 <th>Asal Sekolah</th>
-                                <th>Waktu Tersisa</th>
-                                <th>Status</th>
+                                <th>Divisi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -48,26 +52,13 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->school_name }}</td>
                                     <td>
-                                        @php
-                                            $endDate = \Carbon\Carbon::parse($item->end_date);
-                                            $now = \Carbon\Carbon::now();
-                                            $diff = $now->diff($endDate);
-                                            $status = $item->status; //
-                                        @endphp
-
-                                        @if ($now->greaterThan($endDate))
-                                            <span class="text-danger">Sudah lewat</span>
-                                            @php
-                                                $status = 'Nonactive';
-                                            @endphp
+                                        @if ($item->division->division_name === 'P3SDI')
+                                            <span class="badge bg-primary">{{ $item->division->division_name }}</span>
+                                        @elseif ($item->division->division_name === 'Teknis')
+                                            <span class="badge bg-danger">{{ $item->division->division_name }}</span>
                                         @else
-                                            <span>{{ $diff->day }} hari, {{ $diff->h }} jam</span>
+                                            <span class="badge bg-success">{{ $item->division->division_name }}</span>
                                         @endif
-                                    </td>
-                                    <td>
-                                        <span class="badge {{ $status === 'Nonactive' ? 'bg-danger' : 'bg-success' }}">
-                                            {{ $status }}
-                                        </span>
                                     </td>
                                     <td>
                                         <div class="btn-group">

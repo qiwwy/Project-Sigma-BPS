@@ -46,7 +46,7 @@
                 <li class="sidebar-title">Menu</li>
 
                 <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
-                    <a href="/dashboard" class='sidebar-link'>
+                    <a href="{{ route('dashboard') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -113,9 +113,31 @@
                                     class="submenu-link"><span>Logbook
                                         Peserta</span></a>
                             </li>
+                            <li
+                                class="submenu-item {{ request()->is('monitoring/certificate-intern') ? 'active' : '' }}">
+                                <a href="{{ route('monitoring.certificateIntern') }}"
+                                    class="submenu-link"><span>Penilaian</span></a>
+                            </li>
                         </ul>
                     </li>
-                @else
+
+                    <li class="sidebar-item has-sub {{ request()->is('master*') ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-collection-fill"></i>
+                            <span>Cetak Laporan</span>
+                        </a>
+
+                        <ul class="submenu ">
+                            <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
+                                <a href="{{ route('interns.index') }}" class="submenu-link"><span>Presensi</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('master/divisions') ? 'active' : '' }}">
+                                <a href="{{ route('divisions.index') }}"
+                                    class="submenu-link"><span>Logbook</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                @elseif (session('intern')->role === 'intern')
                     <li class="sidebar-item has-sub {{ request()->is('activity*') ? 'active' : '' }}">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-book-fill"></i>
@@ -131,6 +153,21 @@
                                         Harian Anda</span></a>
                             </li>
                         </ul>
+                    </li>
+                @else
+                    <li
+                        class="{{ request()->is('mentor/intern-by-division') ? 'sidebar-item active' : 'sidebar-item' }}">
+                        <a href="{{ route('mentor.internByDivision') }}" class='sidebar-link'>
+                            <i class="bi bi-person-circle"></i>
+                            <span>Peserta Bimbingan</span>
+                        </a>
+                    </li>
+                    <li
+                        class="{{ request()->is('mentor/presence-by-division') ? 'sidebar-item active' : 'sidebar-item' }}">
+                        <a href="{{ route('mentor.presenceByDivision') }}" class='sidebar-link'>
+                            <i class="bi bi-clipboard2-check-fill"></i>
+                            <span>Daftar Kehadiran</span>
+                        </a>
                     </li>
                 @endif
             </ul>

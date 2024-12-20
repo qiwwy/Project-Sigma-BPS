@@ -25,6 +25,13 @@
                     </h5>
                 </div>
                 <div class="card-body">
+
+                    @if (session('successTransferedtoDisposition'))
+                        <div class="alert alert-light-success color-success">
+                            {{ session('successTransferedtoDisposition') }}
+                        </div>
+                    @endif
+
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>

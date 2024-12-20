@@ -19,6 +19,8 @@
                                 <p class="mb-0 text-sm text-gray-600">Peserta Magang</p>
                             @elseif (session('intern')->role === 'admin')
                                 <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                            @elseif (session('intern')->role === 'mentor')
+                                <p class="mb-0 text-sm text-gray-600">Mentor</p>
                             @endif
                         </div>
                         <div class="user-img d-flex align-items-center">

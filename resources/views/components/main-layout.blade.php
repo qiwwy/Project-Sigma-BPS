@@ -6,7 +6,7 @@
 <body>
 
     <div id="app">
-        @if (request()->is('registration'))
+        @if (request()->is('registration') || request()->is('registration/list/*'))
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">

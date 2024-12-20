@@ -5,6 +5,7 @@
 <!-- Need: Apexcharts -->
 <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
 <script src="{{ asset('assets/static/js/pages/simple-datatables.js') }}"></script>
@@ -170,6 +171,53 @@
         var formAction = "{{ route('monitoring.disposition.update', ':id') }}";
         formAction = formAction.replace(':id', internId);
         modal.find('#editDispositionForm').attr('action', formAction); // Set action form ke URL yang benar
+    });
+
+    $('#editPointModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Mendapatkan tombol yang memicu modal
+        var logbookId = button.data('logbook-id'); // Mengambil ID logbook dari data-logbook-id
+        var point = button.data('logbook-point'); // Mengambil nilai point dari data-logbook-point
+
+        var modal = $(this);
+        modal.find('#edit_point_id').val(point); // Menyeting nilai point ke dalam form select
+        modal.find('#editPointForm').attr('action', '/mentor/point-logbook/' +
+        logbookId); // Mengganti URL action form dengan ID logbook
+    });
+
+    $(document).on('submit', '#editPointForm', function(e) {
+        e.preventDefault(); // Mencegah pengiriman form secara default
+
+        let form = $(this);
+        let url = form.attr('action'); // Dapatkan URL action dari form
+        let data = form.serialize(); // Serialisasi data form
+
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: data,
+            success: function(response) {
+                // Tampilkan notifikasi sukses dengan SweetAlert
+                Swal.fire({
+                    icon: "success",
+                    title: "Aktifitas Berhasil Di Nilai",
+                    text: response.success,
+                    confirmButtonText: "OK",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#editPointModal').modal('hide'); // Tutup modal
+                        location.reload(); // Reload halaman
+                    }
+                });
+            },
+            error: function(xhr) {
+                // Tangani error
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: xhr.responseJSON?.message || "Terjadi kesalahan!",
+                });
+            }
+        });
     });
 
     $('#editInformationModal').on('show.bs.modal', function(event) {

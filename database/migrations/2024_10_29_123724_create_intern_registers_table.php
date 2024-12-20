@@ -15,18 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('identity_number');
             $table->string('name');
-            $table->text('address');
-            $table->string('phone_number');
+            $table->text('address')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('email');
             $table->date('start_date');
             $table->date('end_date');
             $table->date('closest_date')->nullable();
             $table->string('cover_letter');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('token');
-            $table->boolean('is_sent')->default(false);
+            $table->enum('is_sent', ['not_yet', 'done'])->default('not_yet');
             $table->enum('accept_stat', ['Process', 'Accept', 'Reject'])->default('Process');
-            $table->enum('register_stat', ['Register', 'Unregister'])->default('Register');
             $table->timestamps();
         });
     }

@@ -54,3 +54,65 @@
         /* Menghapus jarak antar tombol */
     }
 </style>
+
+<style>
+    .bar-chart {
+        display: flex;
+        /* Gunakan Flexbox untuk menyusun batang secara horizontal */
+        justify-content: space-between;
+        /* Memberikan jarak antar batang */
+        align-items: flex-end;
+        /* Memastikan batang mulai dari dasar */
+        height: 400px;
+        /* Atur tinggi container agar batang bisa lebih tinggi */
+        max-height: 500px;
+        /* Menambahkan batasan max-height jika data terlalu besar */
+        gap: 15px;
+        /* Spasi antar batang */
+        margin-top: 20px;
+    }
+
+    .bar {
+        width: 30px;
+        /* Lebar setiap batang */
+        background-color: #4caf50;
+        /* Warna batang */
+        border-radius: 5px;
+        /* Agar batang tidak kaku */
+        position: relative;
+        animation: growBar 1s ease-out;
+        /* Animasi batang tumbuh */
+    }
+
+    .bar .label {
+        position: absolute;
+        bottom: 0;
+        /* Label di bawah batang */
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        color: #fff;
+    }
+
+    .bar .month-name {
+        position: absolute;
+        bottom: -20px;
+        /* Menempatkan nama bulan di bawah batang */
+        width: 100%;
+        text-align: center;
+        font-size: 10px;
+        color: #000;
+        white-space: nowrap;
+    }
+
+    @keyframes growBar {
+        from {
+            height: 0;
+        }
+
+        to {
+            height: calc(100%);
+            /* Tinggi berdasarkan data */
+        }
+    }
+</style>

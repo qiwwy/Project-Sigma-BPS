@@ -23,9 +23,4 @@ class User extends Authenticatable // Harus mewarisi Authenticatable untuk auten
     {
         return $this->belongsTo(Interns::class, 'interns_id'); // Menggunakan relasi belongsTo
     }
-
-    public function presences(): HasMany
-    {
-        return $this->hasMany(Presence::class, 'user_id');
-    }
 }

@@ -63,21 +63,24 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-primary"
-                                        style="@if (empty($item->title) ||
-                                                empty($item->job_description) ||
-                                                empty($item->completion_stat) ||
-                                                empty($item->processing_time) ||
-                                                empty($item->divisi)) visibility: hidden; @endif"
-                                        data-bs-toggle="modal" data-bs-target="#detailLogbook"
-                                        data-id="{{ $item->id }}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
-                                    <a href="{{ route('logbookIntern.edit', $item->id) }}" class="btn btn-success">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
+                                    <div class="btn-group">
+                                        <a href="#" class="btn btn-primary  btn-sm"
+                                            style="@if (empty($item->title) ||
+                                                    empty($item->job_description) ||
+                                                    empty($item->completion_stat) ||
+                                                    empty($item->processing_time) ||
+                                                    empty($item->divisi)) visibility: hidden; @endif"
+                                            data-bs-toggle="modal" data-bs-target="#detailLogbook"
+                                            data-id="{{ $item->id }}">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="{{ route('logbookIntern.edit', $item->id) }}" class="btn btn-success  btn-sm">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                    </div>
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>

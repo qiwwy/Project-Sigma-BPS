@@ -11,15 +11,15 @@ class Presence extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'user_id',
-        'type',
+        'intern_id',
+        'value',
         'presence_time',
         'presence_date',
         'status'
     ];
 
-    public function user(): BelongsTo
+    public function intern(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Interns::class);
     }
 }

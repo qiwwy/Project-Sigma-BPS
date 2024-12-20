@@ -28,6 +28,14 @@ class DivisionController extends Controller
         return redirect()->route('divisions.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
+    public function showDivisionsWithInternCount()
+    {
+        $divisions = Division::withCount('interns')->get();
+
+        return view('dashboard', compact('divisions'));
+    }
+
+
     public function destroy($id)
     {
         $division = Division::findOrFail($id);

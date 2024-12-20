@@ -32,6 +32,7 @@ return new class extends Migration
                         processing_time,
                         divisi,
                         accept_stat,
+                        point,
                         created_at,
                         updated_at
                     )
@@ -44,6 +45,7 @@ return new class extends Migration
                         NULL,
                         NULL,
                         'Pending',
+                        NULL,
                         NOW(),
                         NOW()
                     );

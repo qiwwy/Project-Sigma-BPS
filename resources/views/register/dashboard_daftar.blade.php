@@ -1,199 +1,186 @@
 <x-main-layout>
-    <nav class="navbar navbar-light">
-        <div class="container d-block">
-            <a href="index.html"><i class="bi bi-chevron-left"></i></a>
-            <a class="navbar-brand ms-4" href="index.html">
-                <img
-                    src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20152%2034'%20fill-rule='evenodd'%20stroke-linejoin='round'%20stroke-miterlimit='2'%3e%3cpath%20d='M0%2027.472c0%204.409%206.18%205.552%2013.5%205.552%207.281%200%2013.5-1.103%2013.5-5.513s-6.179-5.552-13.5-5.552c-7.281%200-13.5%201.103-13.5%205.513z'%20fill='%23435ebe'%20fill-rule='nonzero'/%3e%3ccircle%20cx='13.5'%20cy='8.8'%20r='8.8'%20fill='%2341bbdd'/%3e%3cpath%20d='M71.676%203.22c.709%200%201.279.228%201.71.684.431.431.646%201.013.646%201.748v22.496c0%20.709-.203%201.267-.608%201.672s-.937.608-1.596.608-1.178-.203-1.558-.608-.57-.963-.57-1.672V12.492l-6.46%2012.236c-.304.557-.633.975-.988%201.254-.355.253-.773.38-1.254.38s-.899-.127-1.254-.38-.684-.671-.988-1.254l-6.498-12.046v15.466c0%20.684-.203%201.241-.608%201.672-.38.405-.899.608-1.558.608s-1.178-.203-1.558-.608-.57-.963-.57-1.672V5.652c0-.735.203-1.317.608-1.748.431-.456%201.001-.684%201.71-.684.988%200%201.761.545%202.318%201.634l8.436%2016.074%208.398-16.074c.557-1.089%201.305-1.634%202.242-1.634zm15.801%207.942c2.584%200%204.497.646%205.738%201.938%201.267%201.267%201.9%203.205%201.9%205.814v9.272c0%20.684-.203%201.229-.608%201.634-.405.38-.962.57-1.672.57-.658%200-1.203-.203-1.634-.608-.405-.405-.608-.937-.608-1.596v-.836c-.431.988-1.114%201.761-2.052%202.318-.912.557-1.976.836-3.192.836-1.241%200-2.368-.253-3.382-.76s-1.811-1.203-2.394-2.09-.874-1.875-.874-2.964c0-1.368.342-2.445%201.026-3.23.71-.785%201.85-1.355%203.42-1.71s3.737-.532%206.498-.532h.95v-.874c0-1.241-.266-2.141-.798-2.698-.532-.583-1.393-.874-2.584-.874a7.78%207.78%200%200%200-2.242.342c-.76.203-1.659.507-2.698.912-.658.329-1.14.494-1.444.494-.456%200-.836-.165-1.14-.494-.278-.329-.418-.76-.418-1.292%200-.431.102-.798.304-1.102.228-.329.596-.633%201.102-.912.887-.481%201.938-.861%203.154-1.14%201.242-.279%202.458-.418%203.648-.418zm-1.178%2015.922c1.267%200%202.293-.418%203.078-1.254.811-.861%201.216-1.963%201.216-3.306v-.798h-.684c-1.697%200-3.015.076-3.952.228s-1.608.418-2.014.798-.608.899-.608%201.558c0%20.811.279%201.482.836%202.014.583.507%201.292.76%202.128.76zm27.476-.456c1.418%200%202.128.595%202.128%201.786%200%20.557-.178%201.001-.532%201.33-.355.304-.887.456-1.596.456h-12.692c-.634%200-1.153-.203-1.558-.608a1.97%201.97%200%200%201-.608-1.444c0-.583.228-1.14.684-1.672l9.766-11.286h-8.474c-.71%200-1.242-.152-1.596-.456s-.532-.747-.532-1.33.177-1.026.532-1.33.886-.456%201.596-.456h12.274c.658%200%201.178.203%201.558.608.405.38.608.861.608%201.444%200%20.608-.216%201.165-.646%201.672l-9.804%2011.286h8.892zm19.762-1.52c.431%200%20.773.165%201.026.494.279.329.418.773.418%201.33%200%20.785-.468%201.444-1.406%201.976-.861.481-1.836.874-2.926%201.178-1.089.279-2.128.418-3.116.418-2.989%200-5.358-.861-7.106-2.584s-2.622-4.079-2.622-7.068c0-1.9.38-3.585%201.14-5.054s1.824-2.609%203.192-3.42c1.394-.811%202.964-1.216%204.712-1.216%201.672%200%203.129.367%204.37%201.102s2.204%201.773%202.888%203.116%201.026%202.926%201.026%204.75c0%201.089-.481%201.634-1.444%201.634h-11.21c.152%201.748.646%203.04%201.482%203.876.836.811%202.052%201.216%203.648%201.216.811%200%201.52-.101%202.128-.304.634-.203%201.343-.481%202.128-.836.76-.405%201.318-.608%201.672-.608zm-6.574-10.602c-1.292%200-2.33.405-3.116%201.216-.76.811-1.216%201.976-1.368%203.496h8.588c-.05-1.545-.43-2.711-1.14-3.496-.709-.811-1.697-1.216-2.964-1.216zm22.43-3.268c.658-.051%201.178.089%201.558.418s.57.823.57%201.482c0%20.684-.165%201.191-.494%201.52s-.925.545-1.786.646l-1.14.114c-1.495.152-2.597.659-3.306%201.52-.684.861-1.026%201.938-1.026%203.23v7.98c0%20.735-.228%201.305-.684%201.71-.456.38-1.026.57-1.71.57s-1.254-.19-1.71-.57c-.431-.405-.646-.975-.646-1.71V13.442c0-.709.215-1.254.646-1.634.456-.38%201.013-.57%201.672-.57s1.19.19%201.596.57c.405.355.608.874.608%201.558v1.52c.481-1.115%201.19-1.976%202.128-2.584.962-.608%202.026-.95%203.192-1.026l.532-.038z'%20fill='%23435ebe'%20fill-rule='nonzero'/%3e%3c/svg%3e">
-            </a>
+    <nav class="navbar navbar-light mb-2">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Tombol Kembali -->
+                <a href="/" class="btn btn-primary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>
+                    Kembali Ke Landing Page
+                </a>
+                <!-- Tombol Info Lowongan -->
+                <a href="/" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#lowonganModal">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Info Lowongan
+                </a>
+            </div>
         </div>
     </nav>
+
+    @php
+        $lastDates = \App\Models\LastDateInterns::where('count', '!=', 0)->get();
+    @endphp
+
     <div class="container">
-        <div class="card mt-5">
-            <div class="card-header">
-                <div class="col-12 col-md-3 text-center mt-3">
-                    <a href="#" class="btn btn-primary btn-block" data-bs-toggle="modal"
-                        data-bs-target="#inlineForm">Silahkan Daftar Disini</a>
-                </div>
+        <div class="card shadow-sm rounded">
+            <div class="card-header bg-primary text-white text-center">
+                <h4>Daftar Magang</h4>
             </div>
+
             <div class="card-body">
-                <div class="row">
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon purple mb-2">
-                                            <i class="iconly-boldShow"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Jumlah Kunjungan Website</h6>
-                                        <h6 class="font-extrabold mb-0">112.000</h6>
-                                    </div>
+                @if (session('successRegister'))
+                    <div class="alert alert-success">
+                        {{ session('successRegister') }}
+                    </div>
+                @endif
+
+                <div class="row g-3">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div class="stats-icon bg-purple text-white rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="iconly-boldShow"></i>
                                 </div>
+                                <h6 class="text-muted">Stok Kapasitas</h6>
+                                <h5 class="fw-bold">112.000</h5>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon blue mb-2">
-                                            <i class="iconly-boldProfile"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Jumlah Peserta Siswa</h6>
-                                        <h6 class="font-extrabold mb-0">183.000</h6>
-                                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div class="stats-icon bg-blue text-white rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="iconly-boldProfile"></i>
                                 </div>
+                                <h6 class="text-muted">Total Peserta SMK</h6>
+                                <h5 class="fw-bold">183.000</h5>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon green mb-2">
-                                            <i class="iconly-boldAdd-User"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Jumlah Peserta Mahasiswa</h6>
-                                        <h6 class="font-extrabold mb-0">80.000</h6>
-                                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div class="stats-icon bg-green text-white rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="iconly-boldAdd-User"></i>
                                 </div>
+                                <h6 class="text-muted">Peserta Mahasiswa</h6>
+                                <h5 class="fw-bold">80.000</h5>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon red mb-2">
-                                            <i class="iconly-boldBookmark"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Kejuruan Terbanyak</h6>
-                                        <h6 class="font-extrabold mb-0">112</h6>
-                                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div class="stats-icon bg-danger text-white rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="iconly-boldBookmark"></i>
                                 </div>
+                                <h6 class="text-muted">Kejuruan Terbanyak</h6>
+                                <h5 class="fw-bold">112</h5>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                        Silahkan Daftar Disini
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+    <!-- Modal -->
+    <div class="modal fade" id="inlineForm" tabindex="-1" aria-labelledby="inlineFormLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">Isi Data Anda</h4>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <i data-feather="x"></i>
-                    </button>
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="inlineFormLabel">Isi Data Anda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <!-- Form Content -->
-                    <form action="{{ route('internRegister.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="modal-body">
-                            <label for="identity_number">NIS / NIM</label>
-                            <div class="form-group">
-                                <input id="identity_number_id" name="identity_number" type="text"
-                                    placeholder="Masukkan Nama Lengkap Anda" class="form-control">
+                <form action="{{ route('internRegister.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="identity_number" class="form-label">NIS / NIM</label>
+                                <input type="text" name="identity_number" id="identity_number" class="form-control"
+                                    placeholder="Masukkan NIS/NIM Anda">
                             </div>
-                            <label for="name">Nama Lengkap</label>
-                            <div class="form-group">
-                                <input id="name_id" name="name" type="text"
-                                    placeholder="Masukkan Nama Lengkap Anda" class="form-control">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" name="name" id="name" class="form-control"
+                                    placeholder="Masukkan Nama Anda">
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="phone_number">No. HP</label>
-                                    <div class="form-group">
-                                        <input id="phone_number_id" name="phone_number" type="text"
-                                            placeholder="Masukan NISN / NIM Anda..." class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="email">Email</label>
-                                    <div class="form-group">
-                                        <input id="email_id" name="email" type="text"
-                                            placeholder="Masukan No. HP Anda..." class="form-control">
-                                    </div>
-                                </div>
+                            <div class="col-md-12">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" name="email" id="email" class="form-control"
+                                    placeholder="Masukkan Email Anda">
                             </div>
-                            <label for="address">Alamat</label>
-                            <div class="form-group">
-                                <input id="address_id" name="address" type="text"
-                                    placeholder="Masukkan Alamat Lengkap Anda" class="form-control">
-                            </div>
-
                             @php
                                 $schools = \App\Models\School::all();
                             @endphp
-
-                            <label for="school_id">Asal Sekolah</label>
-                            <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="school_id" class="form-label">Asal Sekolah</label>
                                 <select class="form-select" name="school_id" id="school_id" required>
-                                    <option value="">Pilih Sekolah</option>
+                                    <option value="" selected>Pilih Sekolah</option>
                                     @foreach ($schools as $school)
                                         <option value="{{ $school->id }}">{{ $school->school_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="start_date">Periode Awal Magang</label>
-                                    <div class="form-group">
-                                        <input type="date" id="start_date_id" name="start_date"
-                                            class="form-control mb-3 flatpickr-no-config" placeholder="Select date..">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="end_date">Periode Akhir Magang</label>
-                                    <div class="form-group">
-                                        <input type="date" id="end_date_id" name="end_date"
-                                            class="form-control mb-3 flatpickr-no-config" placeholder="Select date..">
+                            <div class="col-md-6">
+                                <label for="start_date" class="form-label">Periode Awal</label>
+                                <input type="date" name="start_date" id="start_date" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="end_date" class="form-label">Periode Akhir</label>
+                                <input type="date" name="end_date" id="end_date" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="cover_letter" class="form-label">Surat Pengantar</label>
+                                <input type="file" name="cover_letter" id="cover_letter" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="lowonganModal" tabindex="-1" aria-labelledby="inlineFormLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Header Modal -->
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="inlineFormLabel">Informasi Lowongan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Body Modal -->
+                <div class="modal-body">
+                    <p class="text-muted mb-4">
+                        Berikut adalah daftar tanggal beserta jumlah lowongan yang tersedia di BPS Kota Pekalongan
+                    </p>
+                    <div class="row g-3">
+                        @foreach ($lastDates as $item)
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="card shadow-sm border-light rounded-3">
+                                    <div class="card-body text-center">
+                                        <h6 class="text-muted mb-2">Kosong Pada Tanggal</h6>
+                                        <h5 class="font-extrabold text-primary mb-2">{{ $item->end_date }}</h5>
+                                        <p class="mb-1 text-muted">Jumlah: <strong>{{ $item->count }}</strong></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="cover_letter">Surat Pengantar</label>
-                                    <div class="form-group">
-                                        <input class="form-control" type="file" name="cover_letter"
-                                            id="cover_letter_id">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="image">Foto</label>
-                                    <div class="form-group">
-                                        <input class="form-control" type="file" name="image" id="image_id">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                <i class="bx bx-x d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Close</span>
-                            </button>
-                            <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                                <i class="bx bx-check d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Kirim</span>
-                            </button>
-                        </div>
-                    </form>
+                        @endforeach
+                    </div>
+                </div>
+                <!-- Footer Modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>

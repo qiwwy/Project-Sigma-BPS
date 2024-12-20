@@ -16,7 +16,7 @@ class InternRegisterController extends Controller
 {
     public function index(): View
     {
-        $internRegisters = InternRegister::with('school')->where('is_sent', false)->get();
+        $internRegisters = InternRegister::with('school')->where('is_sent', 'not_yet')->get();
 
         foreach ($internRegisters as $item) {
             $closestDate = LastDateInterns::where('end_date', '<', $item->start_date)
@@ -31,7 +31,6 @@ class InternRegisterController extends Controller
 
             $item->save();
         }
-
         return view('register.register_list', compact('internRegisters'));
     }
 
@@ -51,23 +50,16 @@ class InternRegisterController extends Controller
         $request->validate([
             'identity_number' => 'required',
             'name' => 'required',
-            'address' => 'required',
             'school_id' => 'required|exists:schools,id', // Validasi foreign key
-            'phone_number' => 'required',
             'email' => 'required|email',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'cover_letter' => 'required|file',
-            'image' => 'required|file',
         ]);
 
         // Simpan file cover letter
         $cover_letter = $request->file('cover_letter');
         $cover_letter->storeAs('cover_letter', $cover_letter->hashName());
-
-        // Simpan file image
-        $image = $request->file('image');
-        $image->storeAs('image', $image->hashName());
 
         // Generate token unik
         $token = Str::random(32);
@@ -76,19 +68,16 @@ class InternRegisterController extends Controller
         $internRegister = InternRegister::create([
             'identity_number' => $request->identity_number,
             'name' => $request->name,
-            'address' => $request->address,
             'school_id' => $request->school_id, // Simpan ID sekolah
-            'phone_number' => $request->phone_number,
             'email' => $request->email,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'cover_letter' => $cover_letter->hashName(),
-            'image' => $image->hashName(),
             'token' => $token,
         ]);
 
         Mail::to($internRegister->email)->send(new InternRegisterMail($internRegister));
-        return redirect()->route('internRegister.daftar')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('internRegister.daftar')->with(['successRegister' => 'Pendaftaran berhasil dikirim!']);
     }
 
     public function updateStatus(Request $request)
@@ -117,7 +106,12 @@ class InternRegisterController extends Controller
         $initialCapacity = $lastDate->count;
         $remainingCapacity = $initialCapacity;
 
-        $acceptedRegisters = InternRegister::with('school')->where('accept_stat', 'Accept')->get();
+        // Modifikasi query untuk memfilter data dengan accept_stat 'Accept' dan is_set false
+        $acceptedRegisters = InternRegister::with('school')
+            ->where('accept_stat', 'Accept')   // Data dengan status 'Accept'
+            ->where('is_sent', 'not_yet')           // Data yang belum diproses (is_set false)
+            ->get();
+
         $notSentCount = 0;
         $sentCount = 0;
 
@@ -126,6 +120,7 @@ class InternRegisterController extends Controller
             $exists = InternQueue::where('identity_number', $acceptedRegister->identity_number)->exists();
 
             if (!$exists && $remainingCapacity > 0) {
+                // Masukkan data ke antrian
                 InternQueue::create([
                     'identity_number' => $acceptedRegister->identity_number,
                     'name' => $acceptedRegister->name,
@@ -139,8 +134,8 @@ class InternRegisterController extends Controller
                     'last_date_id' => $lastDate->id
                 ]);
 
-                // Update status pengiriman
-                $acceptedRegister->is_sent = true;
+                // Update field 'is_set' menjadi true
+                $acceptedRegister->is_sent = 'done';
                 $acceptedRegister->save();
 
                 $sentCount++;
@@ -153,7 +148,7 @@ class InternRegisterController extends Controller
         $lastDate->count = $remainingCapacity;
         $lastDate->save();
 
-        return redirect()->route('internQueue.index')->with('successTransfered', 'Transfered participants successfully');
+        return redirect()->route('internQueue.index')->with('successTransferedtoQueue', 'Data registrasi berhasil dipindahkan ke antrian');
     }
 
     public function transferRejected()

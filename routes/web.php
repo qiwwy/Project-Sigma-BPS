@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\InformationController;
 use Illuminate\Support\Facades\Route;
@@ -12,7 +13,7 @@ use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('sigma-bps');
+    return view('sigma-landing-page');
 });
 
 Route::get('/auth-login', function () {
@@ -42,7 +43,7 @@ Route::prefix('master')->group(function () {
 Route::prefix('logbook')->group(function () {
     Route::get('/detail/{id}', [LogbookInternController::class, 'show'])->name('logbookIntern.show');
     Route::get('/edit/{id}', [LogbookInternController::class, 'edit'])->name('logbookIntern.edit');
-    Route::put('/update/{id}', [LogbookInternController::class,  'update'])->name('logbookIntern.update');
+    Route::put('/update/{id}', [LogbookInternController::class, 'update'])->name('logbookIntern.update');
     Route::get('/groupBy/{intern_id}', [LogbookInternController::class, 'showDetailLogbook'])->name('logbookIntern.showDetailLogbook');
 });
 
@@ -70,6 +71,7 @@ Route::prefix('monitoring')->group(function () {
     Route::get('/information/edit/{id}', [InformationController::class, 'edit'])->name('monitoring.information.edit');
     Route::put('/information/{id}', [InformationController::class, 'update'])->name('monitoring.information.update');
     Route::get('/group-logbook', [LogbookInternController::class, 'getLogbookByIntern'])->name('monitoring.logbookIntern.getLogbookByIntern');
+    Route::get('/certificate-intern', [InternController::class,'certificateIntern'])->name('monitoring.certificateIntern');
 });
 
 Route::prefix('activity')->group(function () {
@@ -78,12 +80,23 @@ Route::prefix('activity')->group(function () {
     Route::post('/presences', [PresenceController::class, 'store'])->name('activity.presence.store');
 });
 
+Route::prefix('mentor')->group(function () {
+    Route::get('/intern-by-division', [InternController::class, 'getInternsByDivision'])->name('mentor.internByDivision');
+    Route::get('/intern-logbook/{internId}', [InternController::class, 'showLogbookByIntern'])->name('mentor.internLogbook');
+    Route::get('/intern-logbook/create/{id}', [InternController::class, 'edit'])->name('mentor.internLogbook.edit');
+    Route::put('/point-logbook/{id}', [InternController::class, 'updatePoint'])->name('mentor.updatePoint');
+    Route::get('/presence-by-division', [PresenceController::class, 'presenceByDivision'])->name('mentor.presenceByDivision');
+    Route::post('/presence-by-division', [PresenceController::class, 'storeByMentor'])->name('mentor.storePresencebyMentor');
+    Route::get('/intern-presence/{internId}', [PresenceController::class, 'showPresenceByIntern'])->name('mentor.internPresence');
+});
+
 Auth::routes();
 
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login'); // Ganti '/custom-redirect-url' dengan URL yang diinginkan
 })->name('logout');
+
 
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

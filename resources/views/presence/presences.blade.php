@@ -18,6 +18,7 @@
             </div>
         </div>
     </div>
+
     <section class="section">
         <div class="card">
             <div class="card-header">
@@ -35,8 +36,9 @@
                         <tr>
                             <th>No.</th>
                             <th>Tanggal</th>
-                            <th>Jenis Absen</th>
+                            <th>Nama</th>
                             <th>Waktu Presensi</th>
+                            <th>Keterangan</th>
                             <th>Status Presensi</th>
                         </tr>
                     </thead>
@@ -49,13 +51,20 @@
                                 <td>{{ $number++ }}</td>
                                 <td>{{ $item->presence_date }}</td>
                                 <td>
-                                    @if ($item->type === 'masuk')
-                                        <span class="badge bg-primary">Presensi Masuk</span>
-                                    @elseif ($item->type === 'pulang')
-                                        <span class="badge bg-warning">Presensi Pulang</span>
-                                    @endif
+                                    {{ $item->intern->name }}
                                 </td>
                                 <td>{{ $item->presence_time }}</td>
+                                <td>
+                                    @if ($item->value === 'hadir')
+                                        <span class="badge bg-primary">Hadir</span>
+                                    @elseif ($item->value === 'ijin')
+                                        <span class="badge bg-success">Izin</span>
+                                    @elseif ($item->value === 'sakit')
+                                        <span class="badge bg-warning">Sakit</span>
+                                    @else
+                                        <span class="badge bg-danger">Alfa</span>
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($item->status === 1)
                                         <span class="badge bg-success">Presensi Tepat Waktu</span>

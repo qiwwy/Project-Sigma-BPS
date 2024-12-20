@@ -42,6 +42,11 @@ class Interns extends Model
         return $this->belongsTo(Division::class);
     }
 
+    public function presences(): HasMany
+    {
+        return $this->hasMany(Presence::class, 'intern_id');
+    }
+
     public function setId($id)
     {
         $this->id = $id;

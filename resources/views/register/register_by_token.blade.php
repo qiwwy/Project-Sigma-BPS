@@ -8,6 +8,11 @@
                     </h5>
                 </div>
                 <div class="card-body">
+                    @if (session('successTransfered') || session('successRemoved'))
+                        <div class="alert alert-light-success color-success">
+                            {{ session('successTransfered') ?? session('successRemoved') }}
+                        </div>
+                    @endif
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
@@ -25,7 +30,7 @@
                                 <td>1.</td>
                                 <td>{{ $internRegister->identity_number }}</td>
                                 <td>{{ $internRegister->name }}</td>
-                                <td>{{ $internRegister->school_name }}</td>
+                                <td>{{ $internRegister->school->school_name }}</td>
                                 <td>
                                     {{ \Carbon\Carbon::parse($internRegister->start_date)->format('d-m-Y') }} -
                                     {{ \Carbon\Carbon::parse($internRegister->end_date)->format('d-m-Y') }}

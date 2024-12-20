@@ -26,6 +26,7 @@ return new class extends Migration
             $table->enum('processing_time', ['1 Jam', '1 - 3 Jam', '3 - 5 Jam', '5 - 8 Jam'])->nullable();
             $table->enum('divisi', ['P3SDI', 'Teknis', 'Sub Bagian Umum'])->nullable();
             $table->enum('accept_stat', ['Pending', 'Accept', 'Reject'])->default('Pending');
+            $table->enum('point', [25, 50, 75, 100])->nullable();
             $table->timestamps();
         });
     }

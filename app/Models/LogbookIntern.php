@@ -18,7 +18,8 @@ class LogbookIntern extends Model
         'completion_stat',
         'processing_time',
         'divisi',
-        'accept_stat'
+        'accept_stat',
+        'point'
     ];
 
     public function intern(): BelongsTo

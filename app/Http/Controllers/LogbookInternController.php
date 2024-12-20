@@ -12,17 +12,25 @@ class LogbookInternController extends Controller
     //Menampilkan logbook milik user yang melakukan login :intern
     public function index(): View
     {
+        // Ambil data intern dari session
         $internSession = session('intern');
+
+        // Ambil id intern dari session
+        $internId = $internSession->id;
+
+        // Dapatkan tanggal hari ini
         $today = Carbon::today();
 
-        $logbookInterns = LogbookIntern::where('intern_id', $internSession->getId())
-            ->whereDate('date_logbook', '<=', $today) // Tambahkan kondisi filter tanggal
-            ->orderBy('date_logbook', 'desc') // Opsional: urutkan berdasarkan tanggal logbook
+        // Query logbook yang sesuai dengan intern_id dan filter berdasarkan tanggal (opsional)
+        $logbookInterns = LogbookIntern::where('intern_id', $internId)
+            ->whereDate('date_logbook', '<=', $today)  // Filter berdasarkan tanggal logbook
+            ->orderBy('date_logbook', 'desc')  // Urutkan berdasarkan tanggal logbook
             ->get();
 
-        // $logbookInterns = LogbookIntern::all();
+        // Kirim data logbookInterns ke view
         return view('logbook.logbook', compact('logbookInterns'));
     }
+
 
     //Menampilkan detail logbook by id didalam modal :intern
     public function show($id)
@@ -58,6 +66,9 @@ class LogbookInternController extends Controller
     public function getLogbookByIntern(): View
     {
         $logbookInterns = LogbookIntern::with('intern')
+            ->whereHas('intern', function ($query) {
+                $query->whereNotNull('division_id')->where('role', 'intern');
+            })
             ->get()
             ->groupBy(function ($logbook) {
                 return $logbook->intern->name;

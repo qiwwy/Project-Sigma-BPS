@@ -19,13 +19,13 @@ return new class extends Migration
             )->onUpdate('cascade')->onDelete('cascade');
             $table->string('identity_number');
             $table->string('name');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->string('school_name');
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->string('email');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -16,15 +16,15 @@ return new class extends Migration
             $table->id();
             $table->string('identity_number');
             $table->string('name');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->string('school_name')->nullable();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->string('email');
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status', ['Active', 'Nonactive'])->default('Active');
-            $table->string('image');
-            $table->enum('role', ['intern', 'admin']);
+            $table->string('image')->nullable();
+            $table->enum('role', ['intern', 'admin', 'mentor']);
             $table->timestamps();
         });
     }
