@@ -3,7 +3,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Daftar Divisi </h3>
+                    <h3>Daftar Tugas Yang Dikumpulkan </h3>
                     <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
                         thanks to simple-datatables.</p>
                 </div>
@@ -21,8 +21,8 @@
         <div class="row mb-3 mt-5">
             <div class="col-2">
                 <a href="#" class="btn icon icon-left btn-success w-100" data-bs-toggle="modal"
-                    data-bs-target="#addDivision">
-                    <i class="bi bi-plus-circle-fill"></i> Tambah Divisi
+                    data-bs-target="#addSubmission">
+                    <i class="bi bi-plus-circle-fill"></i> Kumpulkan Tugas
                 </a>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">
-                        List Divisi
+                        List Tugas
                     </h5>
                 </div>
                 <div class="card-body">
@@ -39,38 +39,21 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Divisi</th>
-                                <th>Action</th>
+                                <th>Judul Tugas</th>
+                                <th>Nama File</th>
+                                <th>Catatan</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
                                 $number = 1;
                             @endphp
-                            @foreach ($divisions as $item)
+                            @foreach ($taskSubmission as $item)
                                 <tr>
                                     <td>{{ $number++ }}</td>
-                                    <td>{{ $item->division_name }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="#" class="badge bg-warning" title="Edit"
-                                                data-bs-toggle="modal" data-bs-target="#editDivisionModal"
-                                                data-division-id="{{ $item->id }}"
-                                                data-division-name="{{ $item->division_name }}">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </a>
-                                        </div>
-                                        <form action="{{ route('divisions.destroy', $item->id) }}" method="POST"
-                                            style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <div class="btn-group">
-                                                <button type="submit" class="badge bg-danger border-0" title="Hapus">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </td>
+                                    <td>{{ $item->information->title }}</td>
+                                    <td>{{ basename($item->file_path) }}</td>
+                                    <td>{{ $item->note }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -81,33 +64,55 @@
     </div>
 
     {{-- Modal Tambah divisi --}}
-    <div class="modal fade text-left" id="addDivision" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+    <div class="modal fade text-left" id="addSubmission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
         aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">Isi Data Anda</h4>
+                    <h4 class="modal-title" id="myModalLabel33">Kumpulkan Tugas Anda</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i data-feather="x"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <!-- Form Content -->
-                    <form action="{{ route('divisions.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('monitoring.submission.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
-                            <label for="division_name">Nama Divisi</label>
+
+                            <!-- Information ID (Dropdown) -->
+                            <la for="information_id">Pilih Tugas</la
+                                bel>
                             <div class="form-group">
-                                <input id="school_name_id" name="division_name" type="text"
-                                    placeholder="Masukkan Nama Lengkap Divisi" class="form-control">
+                                <select id="information_id" name="information_id" class="form-control" required>
+                                    <option value="">-- Pilih Tugas --</option>
+                                    @foreach ($informations as $information)
+                                        <option value="{{ $information->id }}">
+                                            {{ $information->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
+
+                            <!-- File Upload -->
+                            <label for="file_path">Unggah File</label>
+                            <div class="form-group">
+                                <input id="file_path" name="file_path" type="file" class="form-control" required>
+                            </div>
+
+                            <!-- Note -->
+                            <label for="note">Catatan (Opsional)</label>
+                            <div class="form-group">
+                                <textarea id="note" name="note" class="form-control" rows="3" placeholder="Masukkan catatan (jika ada)"></textarea>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                                 <i class="bx bx-x d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Close</span>
                             </button>
-                            <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                            <button type="submit" class="btn btn-primary ms-1">
                                 <i class="bx bx-check d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Kirim</span>
                             </button>
@@ -119,7 +124,7 @@
     </div>
 
     {{-- Modal Update Sekolah --}}
-    <div class="modal fade text-left" id="editDivisionModal" tabindex="-1" role="dialog"
+    {{-- <div class="modal fade text-left" id="editDivisionModal" tabindex="-1" role="dialog"
         aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -150,5 +155,5 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 </x-main-layout>

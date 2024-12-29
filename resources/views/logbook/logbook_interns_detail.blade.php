@@ -23,7 +23,7 @@
         <div class="col-2">
             <button type="submit" class="btn icon icon-left btn-primary w-100" onclick="window.history.back()">
                 <i class="bi bi-arrow-left-circle"></i>
-                Kembali Ke Daftar Logbook
+                Kembali
             </button>
         </div>
     </div>
@@ -70,7 +70,7 @@
                                 </td>
                                 <td>
                                     <a href="#"
-                                        class="btn btn-primary {{ empty($item->title) || empty($item->job_description) || empty($item->completion_stat) || empty($item->processing_time) || empty($item->divisi) ? 'd-none' : '' }}"
+                                        class="badge bg-primary {{ empty($item->title) || empty($item->job_description) || empty($item->completion_stat) || empty($item->processing_time) || empty($item->divisi) ? 'd-none' : '' }}"
                                         data-bs-toggle="modal" data-bs-target="#detailLogbook"
                                         data-id="{{ $item->id }}">
                                         <i class="bi bi-eye-fill"></i>

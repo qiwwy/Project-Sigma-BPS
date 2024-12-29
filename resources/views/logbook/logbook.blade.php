@@ -38,7 +38,6 @@
                             <th>Judul Pekerjaan</th>
                             <th>Presentase Penyelesaian</th>
                             <th>Pemberi Tugas</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -54,17 +53,8 @@
                                 <td>{{ $item->completion_stat ?? 'Waktu dibutuhkan masih kosong...' }}</td>
                                 <td>{{ $item->divisi ?? 'Pemberi tugas masih kosong...' }}</td>
                                 <td>
-                                    <span
-                                        class="badge
-                                                 @if ($item->accept_stat === 'Pending') bg-warning
-                                                 @elseif($item->accept_stat === 'Accept') bg-success
-                                                 @elseif($item->accept_stat === 'Reject') bg-danger @endif">
-                                        {{ $item->accept_stat }}
-                                    </span>
-                                </td>
-                                <td>
                                     <div class="btn-group">
-                                        <a href="#" class="btn btn-primary  btn-sm"
+                                        <a href="#" class="badge bg-primary"
                                             style="@if (empty($item->title) ||
                                                     empty($item->job_description) ||
                                                     empty($item->completion_stat) ||
@@ -76,7 +66,7 @@
                                         </a>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="{{ route('logbookIntern.edit', $item->id) }}" class="btn btn-success  btn-sm">
+                                        <a href="{{ route('logbookIntern.edit', $item->id) }}" class="badge bg-success">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
                                     </div>

@@ -46,6 +46,10 @@ class Interns extends Model
     {
         return $this->hasMany(Presence::class, 'intern_id');
     }
+    public function submissions(): HasMany
+    {
+        return $this->hasMany(TaskSubmission::class, 'intern_id');
+    }
 
     public function setId($id)
     {

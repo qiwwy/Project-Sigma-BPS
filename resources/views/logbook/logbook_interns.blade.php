@@ -52,7 +52,7 @@
                                 <td>{{ $logbook['filled_logbook_count'] }} / {{ $logbook['total_logbook_count'] }}</td>
                                 <td>
                                     <a href="{{ route('logbookIntern.showDetailLogbook', ['intern_id' => $logbook['intern_id']]) }}"
-                                        class="btn btn-primary">
+                                        class="badge bg-primary">
                                         <i class="bi bi-eye-fill"></i> Detail
                                     </a>
                                 </td>

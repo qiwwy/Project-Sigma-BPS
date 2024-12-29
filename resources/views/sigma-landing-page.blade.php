@@ -26,17 +26,7 @@
     <link href="{{ asset('assets-sigma/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-sigma/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-sigma/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-
-    <!-- Main CSS File -->
     <link href="{{ asset('assets-sigma/css/main.css') }}" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: Logis
-  * Template URL: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="index-page">
@@ -44,8 +34,7 @@
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-            <a href="index.html" class="logo d-flex align-items-center me-auto">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
+            <a href="#hero" class="logo d-flex align-items-center me-auto">
                 <img src="{{ asset('assetsLandingPage/images/logo bps.png') }}" alt="">
                 <h1 class="sitename">BPS Kota Pekalongan</h1>
             </a>
@@ -73,9 +62,7 @@
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-
-            <a class="btn-getstarted" href="get-a-quote.html">Login</a>
-
+            <a class="btn-getstarted" href="{{ route('login') }}">Login</a>
         </div>
     </header>
 
@@ -83,74 +70,28 @@
 
         <!-- Hero Section -->
         <section id="hero" class="hero section dark-background">
-
             <img src="{{ asset('assets-sigma/img/world-dotted-map.png') }}" alt="" class="hero-bg"
                 data-aos="fade-in">
 
             <div class="container">
                 <div class="row gy-4 d-flex justify-content-between">
                     <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                        <h2 data-aos="fade-up"> Jadilah Bagian dari Tim Kami, Daftar untuk Magang Sekarang!</h2>
+                        <h2 data-aos="fade-up">Jadilah Bagian dari Tim Kami, Daftar untuk Magang Sekarang!</h2>
+                        <a href="{{ route('internRegister.daftar') }}" class="btn btn-primary btn-lg mt-4"
+                            style="width: 100%; max-width: 400px;">
+                            <strong>Informasi Magang</strong>
+                        </a>
                     </div>
 
                     <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
                         <img src="{{ asset('assets-sigma/img/hero-img.svg') }}" class="img-fluid mb-3 mb-lg-0"
                             alt="">
                     </div>
-
                 </div>
             </div>
-
         </section><!-- /Hero Section -->
 
-        <!-- Featured Services Section -->
-        <section id="featured-services" class="featured-services section">
 
-            {{-- <div class="container">
-
-                <div class="row gy-4">
-
-                    <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
-                        <div class="icon flex-shrink-0"><i class="fa-solid fa-cart-flatbed"></i></div>
-                        <div>
-                            <h4 class="title">Lorem Ipsum</h4>
-                            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias
-                                excepturi sint occaecati cupiditate non provident</p>
-                            <a href="#" class="readmore stretched-link"><span>Learn More</span><i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <!-- End Service Item -->
-
-                    <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                        <div class="icon flex-shrink-0"><i class="fa-solid fa-truck"></i></div>
-                        <div>
-                            <h4 class="title">Dolor Sitema</h4>
-                            <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat tarad limino ata</p>
-                            <a href="#" class="readmore stretched-link"><span>Learn More</span><i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                    <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                        <div class="icon flex-shrink-0"><i class="fa-solid fa-truck-ramp-box"></i></div>
-                        <div>
-                            <h4 class="title">Sed ut perspiciatis</h4>
-                            <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur</p>
-                            <a href="#" class="readmore stretched-link"><span>Learn More</span><i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                </div>
-
-            </div> --}}
-
-        </section><!-- /Featured Services Section -->
-
-        <!-- About Section -->
         <section id="about" class="about section">
 
             <div class="container">
@@ -160,7 +101,8 @@
                     <div class="col-lg-6 position-relative align-self-start order-lg-last order-first"
                         data-aos="fade-up" data-aos-delay="200">
                         <img src="{{ asset('assets-sigma/img/bpspicture.jpeg') }}" class="img-fluid" alt="">
-                        <a href="{{asset('assetsLandingPage/images/bpsvidio.mp4')}}" class="glightbox pulsating-play-btn"></a>
+                        <a href="{{ asset('assetsLandingPage/images/bpsvidio.mp4') }}"
+                            class="glightbox pulsating-play-btn"></a>
                     </div>
 
                     <div class="col-lg-6 content order-last  order-lg-first" data-aos="fade-up" data-aos-delay="100">
@@ -196,13 +138,11 @@
 
                 <div class="row gy-4">
 
-                    <!-- Gambar di sebelah kanan -->
                     <div class="col-lg-6 position-relative align-self-start order-lg-first order-last"
                         data-aos="fade-up" data-aos-delay="200">
                         <img src="{{ asset('assets-sigma/img/magang2.jpg') }}" class="img-fluid" alt="">
                     </div>
 
-                    <!-- Konten di sebelah kiri -->
                     <div class="col-lg-6 content order-lg-last order-first" data-aos="fade-up" data-aos-delay="100">
                         <h3>Program Magang</h3>
                         <p>
@@ -305,7 +245,7 @@
                     </div>
                 </div><!-- Features Item -->
             </div>
-        </section><!-- /Features Section -->
+        </section>
 
         <section id="offline" class="features section">
             <div class="container">
@@ -382,17 +322,16 @@
                             </li>
                         </ul>
                     </div>
-                </div><!-- Features Item -->
+                </div>
             </div>
-        </section><!-- /Features Section -->
+        </section>
 
         <section id="program" class="pricing section">
 
-            <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
                 <span>Apa Saja Sih Yang Dilakukan Ketika Magang</span>
                 <h2>Apa Saja Sih Yang Dilakukan Ketika Magang di BPS?</h2>
-            </div><!-- End Section Title -->
+            </div>
 
             <div class="container">
 
@@ -408,7 +347,7 @@
                                 penelitian yang dilakukan oleh BPS, memberikan mereka pemahaman tentang pentingnya data
                                 yang akurat dalam mendukung perencanaan dan kebijakan publik.</span>
                         </div>
-                    </div><!-- End Pricing Item -->
+                    </div>
 
                     <div class="col-lg-3 col-md-6 col-sm-12" data-aos="zoom-in" data-aos-delay="100">
                         <div class="pricing-item featured" style="text-align: center;">
@@ -454,9 +393,8 @@
 
             </div>
 
-        </section><!-- /Pricing Section -->
+        </section>
 
-        <!-- Services Section -->
         <section id="galeri" class="services section">
 
             <!-- Section Title -->
@@ -493,7 +431,6 @@
                                 masyarakat yang membutuhan data dari BPS.</p>
                         </div>
                     </div><!-- End Card Item -->
-                    <!-- Tambahkan bagian lainnya dengan cara yang sama -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="card">
                             <div class="card-img">
@@ -541,7 +478,6 @@
                             <p>Potret lepas sambut dari peserta magang waktu kegiatan magang sudah berakhir.</p>
                         </div>
                     </div><!-- End Card Item -->
-                    <!-- Tambahkan bagian lainnya dengan cara yang sama -->
                 </div>
 
             </div>
@@ -567,7 +503,8 @@
                             <i class="bi bi-geo-alt flex-shrink-0"></i>
                             <div>
                                 <h3>Alamat Lengkap</h3>
-                                <p>A108 Adam Street, New York, NY 535022</p>
+                                <p>Jl. Singosari, Podosugih, Kec. Pekalongan Bar., Kota Pekalongan, Jawa Tengah 51111
+                                </p>
                             </div>
                         </div><!-- End Info Item -->
 
@@ -575,7 +512,7 @@
                             <i class="bi bi-telephone flex-shrink-0"></i>
                             <div>
                                 <h3>Hubungi Kami</h3>
-                                <p>+1 5589 55488 55</p>
+                                <p>(0285) 423504</p>
                             </div>
                         </div><!-- End Info Item -->
 
@@ -587,15 +524,17 @@
                             <i class="bi bi-envelope flex-shrink-0"></i>
                             <div>
                                 <h3>Alamat Email</h3>
-                                <p>info@example.com</p>
+                                <p>bps3375@bps.go.id</p>
                             </div>
                         </div><!-- End Info Item -->
 
                         <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                            <i class="bi bi-instagram flex-shrink-0"></i>
+                            <a href="https://www.instagram.com/bpspklkota/"><i
+                                    class="bi bi-instagram flex-shrink-0"></i>
+                            </a>
                             <div>
                                 <h3>Instagram</h3>
-                                <p>+1 5589 55488 55</p>
+                                <p>@bpspklkota</p>
                             </div>
                         </div><!-- End Info Item -->
 
@@ -604,18 +543,21 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
-                            <i class="bi bi-facebook flex-shrink-0"></i>
+                            <a href="https://www.facebook.com/bpspklkota/?locale=id_ID"> <i
+                                    class="bi bi-facebook flex-shrink-0"></i>
+                            </a>
                             <div>
                                 <h3>Facebook</h3>
-                                <p>info@example.com</p>
+                                <p>BPS Kota Pekalongan</p>
                             </div>
                         </div><!-- End Info Item -->
 
                         <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                            <i class="bi bi-twitter flex-shrink-0"></i>
+                            <a href="https://x.com/bpspklkota"> <i class="bi bi-twitter flex-shrink-0"></i>
+                            </a>
                             <div>
                                 <h3>Twitter</h3>
-                                <p>+1 5589 55488 55</p>
+                                <p>@bpspkllota</p>
                             </div>
                         </div><!-- End Info Item -->
                     </div>
@@ -625,77 +567,65 @@
 
         </section><!-- /Contact Section -->
 
-        <!-- Pricing Section -->
-
-
     </main>
 
     <footer id="footer" class="footer dark-background">
-
         <div class="container footer-top">
             <div class="row gy-4">
-                <div class="col-lg-5 col-md-12 footer-about">
-                    <a href="index.html" class="logo d-flex align-items-center">
-                        <span class="sitename">Logis</span>
+                <div class="col-lg-7 col-md-12 footer-about" style="display: flex; align-items: flex-start;">
+                    <a href="#hero" class="logo d-flex align-items-center" style="margin-right: 8px;">
+                        <img src="{{ asset('assetsLandingPage/images/logo bps.png') }}" alt="Logo BPS" style="max-width: 40px; height: auto;">
                     </a>
-                    <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita
-                        valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-                    <div class="social-links d-flex mt-4">
-                        <a href=""><i class="bi bi-twitter-x"></i></a>
-                        <a href=""><i class="bi bi-facebook"></i></a>
-                        <a href=""><i class="bi bi-instagram"></i></a>
-                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    <div>
+                        <span class="sitename" style="font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 10px;">
+                            BPS Kota Pekalongan
+                        </span>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.6;">
+                            BPS Kota Pekalongan adalah lembaga pemerintah yang menyediakan data statistik akurat untuk
+                            mendukung perencanaan pembangunan di Kota Pekalongan. Berlokasi di Jl. Singosari, Podosugih,
+                            lembaga ini menghasilkan informasi penting tentang ekonomi, sosial, dan kependudukan untuk
+                            pengambilan keputusan berbasis data, mendukung pembangunan kota yang berkelanjutan.
+                        </p>
+                        <div class="social-links d-flex mt-4" style="margin-top: 20px;">
+                            <a href="https://x.com/bpspklkota" style="margin-right: 10px;"><i class="bi bi-twitter"></i></a>
+                            <a href="https://www.facebook.com/bpspklkota/?locale=id_ID" style="margin-right: 10px;"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/bpspklkota/"><i class="bi bi-instagram"></i></a>
+                        </div>
                     </div>
                 </div>
+
+
 
                 <div class="col-lg-2 col-6 footer-links">
                     <h4>Useful Links</h4>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#about">About us</a></li>
+                        <li><a href="#online">Pendaftaran Online</a></li>
+                        <li><a href="#offline">Pendaftaran Offline</a></li>
+                        <li><a href="#program">Program Tersedia</a></li>
+                        <li><a href="#galeri">Galeri</a></li>
                     </ul>
                 </div>
 
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                <div class="col-lg-2 col-md-12 footer-contact text-center text-md-start">
                     <h4>Contact Us</h4>
-                    <p>A108 Adam Street</p>
-                    <p>New York, NY 535022</p>
-                    <p>United States</p>
-                    <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-                    <p><strong>Email:</strong> <span>info@example.com</span></p>
+                    <p>Jl. Singosari, Podosugih<br>Kota Pekalongan, Jawa Tengah<br>Indonesia</p>
+                    <p class="mt-4"><strong>Phone:</strong> <span>+62 285 424123</span></p>
+                    <p><strong>Email:</strong> <span>bpspklkota@bps.go.id</span></p>
                 </div>
-
             </div>
         </div>
 
         <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Logis</strong> <span>All Rights Reserved</span>
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">BPS Kota Pekalongan</strong> <span>All Rights Reserved</span>
             </p>
             <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you've purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a
-                    href=“https://themewagon.com>ThemeWagon
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
             </div>
         </div>
-
     </footer>
+
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i

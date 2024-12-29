@@ -12,23 +12,45 @@ class InformationController extends Controller
 {
     public function index(): View
     {
+        $user = session('intern'); // Mengambil data dari session
+
         $divisions = Division::all();
-        $informations = Information::all();
+
+        // Jika pengguna adalah mentor, hanya ambil informasi dengan division_id sesuai atau dengan division_id null
+        if ($user->role === 'mentor' || $user->role === 'intern') {
+            $informations = Information::where(function ($query) use ($user) {
+                $query->where('division_id', $user->division_id)  // Menampilkan berdasarkan division_id
+                    ->orWhereNull('division_id');  // Atau jika target adalah 'Semua Peserta'
+            })->get();
+        } else {
+            // Admin melihat semua informasi
+            $informations = Information::all();
+        }
+
         return view('monitoring.information', compact('informations', 'divisions'));
     }
 
     public function store(Request $request): RedirectResponse
     {
+        // Tentukan apakah pengguna adalah ketua divisi
+        $isDivisionHead = session('intern')->role === 'mentor'; // Ketua divisi ditentukan oleh role 'mentor'
+        $divisionId = $isDivisionHead ? session('intern')->division_id : null;
+
+        // Validasi input
         $request->validate([
             'title' => 'required',
             'description' => 'required',
             'type' => 'required',
-            'target' => 'required',
-            'division_id' => 'required_if:target,division',
+            'target' => $isDivisionHead ? 'nullable' : 'required', // Ketua divisi tidak perlu memilih target
+            'division_id' => $isDivisionHead ? 'nullable' : 'required_if:target,division',
             'document' => 'nullable|file',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
         ]);
+
+        if ($isDivisionHead && !$divisionId) {
+            return redirect()->back()->withErrors(['error' => 'Division ID tidak ditemukan dalam session.']);
+        }
 
         // Handle document upload
         $documentPath = null;
@@ -36,15 +58,16 @@ class InformationController extends Controller
             $documentPath = $request->file('document')->store('documents', 'public');
         }
 
-        // Prepare division_id
-        $divisionId = $request->target === 'division' ? $request->division_id : null;
+        // Tetapkan target dan division_id
+        $target = $isDivisionHead ? 'division' : $request->target;
+        $divisionId = $isDivisionHead ? $divisionId : ($request->target === 'division' ? $request->division_id : null);
 
-        // Save information
+        // Simpan informasi
         Information::create([
             'title' => $request->title,
             'description' => $request->description,
             'type' => $request->type,
-            'target' => $request->target,
+            'target' => $target,
             'division_id' => $divisionId,
             'document' => $documentPath,
             'start_date' => $request->start_date,

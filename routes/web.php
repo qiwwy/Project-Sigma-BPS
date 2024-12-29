@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\TaskSubmissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InternRegisterController;
 use App\Http\Controllers\InternController;
@@ -71,7 +72,9 @@ Route::prefix('monitoring')->group(function () {
     Route::get('/information/edit/{id}', [InformationController::class, 'edit'])->name('monitoring.information.edit');
     Route::put('/information/{id}', [InformationController::class, 'update'])->name('monitoring.information.update');
     Route::get('/group-logbook', [LogbookInternController::class, 'getLogbookByIntern'])->name('monitoring.logbookIntern.getLogbookByIntern');
-    Route::get('/certificate-intern', [InternController::class,'certificateIntern'])->name('monitoring.certificateIntern');
+    Route::get('/certificate-intern', [InternController::class, 'certificateIntern'])->name('monitoring.certificateIntern');
+    Route::get('/submission', [TaskSubmissionController::class, 'index'])->name('monitoring.submission.index');
+    Route::post('/submission', [TaskSubmissionController::class, 'store'])->name('monitoring.submission.store');
 });
 
 Route::prefix('activity')->group(function () {

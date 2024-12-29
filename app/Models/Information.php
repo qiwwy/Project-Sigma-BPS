@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Information extends Model
 {
@@ -24,5 +25,10 @@ class Information extends Model
     public function division(): BelongsTo
     {
         return $this->belongsTo(Information::class);
+    }
+
+    public function submissions(): HasMany
+    {
+        return $this->hasMany(TaskSubmission::class, 'information_id');
     }
 }

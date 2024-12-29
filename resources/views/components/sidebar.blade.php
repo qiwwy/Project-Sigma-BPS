@@ -154,6 +154,23 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-item has-sub {{ request()->is('monitoring*') ? 'active' : '' }}">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-person-workspace"></i>
+                            <span>Tugas & Informasi</span>
+                        </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item {{ request()->is('monitoring/information') ? 'active' : '' }}">
+                                <a href="{{ route('monitoring.information.index') }}"
+                                    class="submenu-link"><span>Tugas & Informasi Anda</span></a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('monitoring/submission') ? 'active' : '' }}">
+                                <a href="{{ route('monitoring.submission.index') }}" class="submenu-link"><span>Tugas
+                                        Dikumpulkan</span></a>
+                            </li>
+                        </ul>
+                    </li>
                 @else
                     <li
                         class="{{ request()->is('mentor/intern-by-division') ? 'sidebar-item active' : 'sidebar-item' }}">
@@ -167,6 +184,14 @@
                         <a href="{{ route('mentor.presenceByDivision') }}" class='sidebar-link'>
                             <i class="bi bi-clipboard2-check-fill"></i>
                             <span>Daftar Kehadiran</span>
+                        </a>
+                    </li>
+                    <li
+                        class="{{ request()->is('monitoring/information') ? 'sidebar-item active' : 'sidebar-item' }}">
+                        <a href="{{ route('monitoring.information.index') }}" class='sidebar-link'>
+                            <i class="bi bi-envelope-open-fill"></i>
+                            <span>Assignment
+                                or Information</span>
                         </a>
                     </li>
                 @endif

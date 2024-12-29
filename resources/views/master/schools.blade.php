@@ -22,7 +22,7 @@
             <div class="col-2">
                 <a href="#" class="btn icon icon-left btn-success w-100" data-bs-toggle="modal"
                     data-bs-target="#addSchool">
-                    <i class="bi bi-plus-circle-fill"></i> Tambah Sekolah Baru
+                    <i class="bi bi-plus-circle-fill"></i> Tambah Sekolah
                 </a>
             </div>
         </div>

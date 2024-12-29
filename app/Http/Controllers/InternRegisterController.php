@@ -31,6 +31,10 @@ class InternRegisterController extends Controller
 
             $item->save();
         }
+
+        // Mengurutkan berdasarkan `closest_date` yang paling kecil
+        $internRegisters = $internRegisters->sortBy('closest_date');
+
         return view('register.register_list', compact('internRegisters'));
     }
 
@@ -77,7 +81,7 @@ class InternRegisterController extends Controller
         ]);
 
         Mail::to($internRegister->email)->send(new InternRegisterMail($internRegister));
-        return redirect()->route('internRegister.daftar')->with(['successRegister' => 'Pendaftaran berhasil dikirim!']);
+        return redirect()->route('internRegister.daftar')->with(['successRegister' => 'Silahkan cek email anda untuk pemantauan status pendaftaran!']);
     }
 
     public function updateStatus(Request $request)
@@ -156,7 +160,7 @@ class InternRegisterController extends Controller
         $rejectedRegisters = InternRegister::where('accept_stat', 'Reject')->get();
 
         foreach ($rejectedRegisters as $rejectedRegister) {
-            $rejectedRegister->is_sent = true;
+            $rejectedRegister->is_sent = 'done';
             $rejectedRegister->save();
         }
 

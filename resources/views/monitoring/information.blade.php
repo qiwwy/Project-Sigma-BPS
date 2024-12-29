@@ -18,14 +18,25 @@
             </div>
         </div>
 
-        <div class="row mb-3 mt-5">
-            <div class="col-2">
-                <a href="#" class="btn icon icon-left btn-success w-100" data-bs-toggle="modal"
-                    data-bs-target="#addDivision">
-                    <i class="bi bi-plus-circle-fill"></i> Tambah Informasi Baru
-                </a>
+        @if (session('intern')->role === 'intern')
+            <div class="row mb-3 mt-5" style="display: none;">
+                <div class="col-2">
+                    <a href="#" class="btn icon icon-left btn-success w-100" data-bs-toggle="modal"
+                        data-bs-target="#addInformation">
+                        <i class="bi bi-plus-circle-fill"></i> Informasi Baru
+                    </a>
+                </div>
             </div>
-        </div>
+        @else
+            <div class="row mb-3 mt-5">
+                <div class="col-2">
+                    <a href="#" class="btn icon icon-left btn-success w-100" data-bs-toggle="modal"
+                        data-bs-target="#addInformation">
+                        <i class="bi bi-plus-circle-fill"></i> Informasi Baru
+                    </a>
+                </div>
+            </div>
+        @endif
 
         <section class="section">
             <div class="card">
@@ -38,59 +49,94 @@
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
-                                <th>No.</th>
-                                <th>Title</th>
-                                <th>Tipe Information</th>
-                                <th>Target Information</th>
-                                <th>Action</th>
+                                @if (session('intern')->role === 'intern')
+                                    <th>No.</th>
+                                    <th>Title</th>
+                                    <th>Tipe Information</th>
+                                    <th>Target Information</th>
+                                @else
+                                    <th>No.</th>
+                                    <th>Title</th>
+                                    <th>Tipe Information</th>
+                                    <th>Target Information</th>
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
+
                             @php
                                 $number = 1;
                             @endphp
+
                             @foreach ($informations as $item)
                                 <tr>
-                                    <td>{{ $number++ }}</td>
-                                    <td>{{ $item->title }}</td>
-                                    <td>
-                                        @if ($item->type === 'event')
-                                            <span class="badge bg-success">Acara</span>
-                                        @elseif ($item->type === 'task')
-                                            <span class="badge bg-primary">Tugas</span>
-                                        @elseif ($item->type === 'info')
-                                            <span class="badge bg-warning">Information</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($item->division_id === null)
-                                            <span class="badge bg-success">Semua Peserta</span>
-                                        @elseif ($item->division_id === 1)
-                                            <span class="badge bg-primary">P3SDI</span>
-                                        @elseif ($item->division_id === 2)
-                                            <span class="badge bg-danger">Teknis</span>
-                                        @elseif ($item->division_id === 3)
-                                            <span class="badge bg-warning">Sub Bagian Umum</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('monitoring.information.edit', $item->id) }}"
-                                                class="badge bg-warning">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </a>
-                                        </div>
-                                        <form action="{{ route('monitoring.information.destroy', $item->id) }}"
-                                            method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
+                                    @if (session('intern')->role === 'intern')
+                                        <td>{{ $number++ }}</td>
+                                        <td>{{ $item->title }}</td>
+                                        <td>
+                                            @if ($item->type === 'event')
+                                                <span class="badge bg-success">Acara</span>
+                                            @elseif ($item->type === 'task')
+                                                <span class="badge bg-primary">Tugas</span>
+                                            @elseif ($item->type === 'info')
+                                                <span class="badge bg-warning">Information</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->division_id === null)
+                                                <span class="badge bg-success">Semua Peserta</span>
+                                            @elseif ($item->division_id === 1)
+                                                <span class="badge bg-primary">P3SDI</span>
+                                            @elseif ($item->division_id === 2)
+                                                <span class="badge bg-danger">Teknis</span>
+                                            @elseif ($item->division_id === 3)
+                                                <span class="badge bg-warning">Sub Bagian Umum</span>
+                                            @endif
+                                        </td>
+                                    @else
+                                        <td>{{ $number++ }}</td>
+                                        <td>{{ $item->title }}</td>
+                                        <td>
+                                            @if ($item->type === 'event')
+                                                <span class="badge bg-success">Acara</span>
+                                            @elseif ($item->type === 'task')
+                                                <span class="badge bg-primary">Tugas</span>
+                                            @elseif ($item->type === 'info')
+                                                <span class="badge bg-warning">Information</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->division_id === null)
+                                                <span class="badge bg-success">Semua Peserta</span>
+                                            @elseif ($item->division_id === 1)
+                                                <span class="badge bg-primary">P3SDI</span>
+                                            @elseif ($item->division_id === 2)
+                                                <span class="badge bg-danger">Teknis</span>
+                                            @elseif ($item->division_id === 3)
+                                                <span class="badge bg-warning">Sub Bagian Umum</span>
+                                            @endif
+                                        </td>
+                                        <td>
                                             <div class="btn-group">
-                                                <button type="submit" class="badge bg-danger border-0" title="Hapus">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </button>
+                                                <a href="{{ route('monitoring.information.edit', $item->id) }}"
+                                                    class="badge bg-warning">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </a>
                                             </div>
-                                        </form>
-                                    </td>
+                                            <form action="{{ route('monitoring.information.destroy', $item->id) }}"
+                                                method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="btn-group">
+                                                    <button type="submit" class="badge bg-danger border-0"
+                                                        title="Hapus">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -100,7 +146,7 @@
         </section>
     </div>
 
-    <div class="modal fade text-left" id="addDivision" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+    <div class="modal fade text-left" id="addInformation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -130,47 +176,62 @@
                                     required></textarea>
                             </div>
 
-                            <!-- Type -->
-                            <div class="row">
-                                <div class="col">
-                                    <label for="type">Jenis Informasi</label>
-                                    <div class="form-group">
-                                        <select id="type" name="type" class="form-control" required>
-                                            <option value="">-- Pilih Jenis --</option>
-                                            <option value="event">Acara</option>
-                                            <option value="task">Tugas</option>
-                                            <option value="info">Informasi</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <!-- Target -->
-                                    <label for="target">Target Informasi</label>
-                                    <div class="form-group">
-                                        <select id="target" name="target" class="form-control"
-                                            onchange="toggleDivisionInput()" required>
-                                            <option value="">-- Pilih Target --</option>
-                                            <option value="all">Semua Peserta</option>
-                                            <option value="division">Divisi Tertentu</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- Division ID (Shown if Target is Division) -->
-                            <div id="division_input" style="display: none;">
-                                <label for="division_id">Divisi</label>
+                            @if (session('intern')->role === 'mentor')
+                                <label for="type">Jenis Informasi</label>
                                 <div class="form-group">
-                                    <select id="division_id" name="division_id" class="form-control">
-                                        <option value="">-- Pilih Divisi --</option>
-                                        @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}">{{ $division->division_name }}
-                                            </option>
-                                        @endforeach
+                                    <select id="type" name="type" class="form-control" required>
+                                        <option value="">-- Pilih Jenis --</option>
+                                        <option value="event">Acara</option>
+                                        <option value="task">Tugas</option>
+                                        <option value="info">Informasi</option>
                                     </select>
                                 </div>
-                            </div>
+                                <input type="hidden" name="target" value="division">
+                                <input type="hidden" name="division_id"
+                                    value="{{ session('intern')->division_id }}">
+                            @else
+                                <!-- Type -->
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="type">Jenis Informasi</label>
+                                        <div class="form-group">
+                                            <select id="type" name="type" class="form-control" required>
+                                                <option value="">-- Pilih Jenis --</option>
+                                                <option value="event">Acara</option>
+                                                <option value="task">Tugas</option>
+                                                <option value="info">Informasi</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Target -->
+                                        <label for="target">Target Informasi</label>
+                                        <div class="form-group">
+                                            <select id="target" name="target" class="form-control"
+                                                onchange="toggleDivisionInput()" required>
+                                                <option value="">-- Pilih Target --</option>
+                                                <option value="all">Semua Peserta</option>
+                                                <option value="division">Divisi Tertentu</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- Division ID (Shown if Target is Division) -->
+                                <div id="division_input" style="display: none;">
+                                    <label for="division_id">Divisi</label>
+                                    <div class="form-group">
+                                        <select id="division_id" name="division_id" class="form-control">
+                                            <option value="">-- Pilih Divisi --</option>
+                                            @foreach ($divisions as $division)
+                                                <option value="{{ $division->id }}">{{ $division->division_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
 
                             <!-- Document -->
                             <label for="document">Dokumen</label>
