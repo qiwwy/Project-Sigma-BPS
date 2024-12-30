@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Division;
 use App\Models\Information;
+use App\Models\TaskSubmission;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,24 +13,25 @@ class InformationController extends Controller
 {
     public function index(): View
     {
-        $user = session('intern'); // Mengambil data dari session
-
+        $user = session('intern');
         $divisions = Division::all();
 
-        // Jika pengguna adalah mentor, hanya ambil informasi dengan division_id sesuai atau dengan division_id null
-        if ($user->role === 'mentor' || $user->role === 'intern') {
+        if ($user->role === 'mentor') {
+
+            $informations = Information::where('division_id', $user->division_id)->get();
+        } elseif ($user->role === 'intern') {
+
             $informations = Information::where(function ($query) use ($user) {
-                $query->where('division_id', $user->division_id)  // Menampilkan berdasarkan division_id
-                    ->orWhereNull('division_id');  // Atau jika target adalah 'Semua Peserta'
+                $query->where('division_id', $user->division_id)
+                    ->orWhereNull('division_id');
             })->get();
         } else {
-            // Admin melihat semua informasi
+
             $informations = Information::all();
         }
 
         return view('monitoring.information', compact('informations', 'divisions'));
     }
-
     public function store(Request $request): RedirectResponse
     {
         // Tentukan apakah pengguna adalah ketua divisi
@@ -125,5 +127,23 @@ class InformationController extends Controller
         }
 
         return redirect()->route('monitoring.information.index')->with(['success' => 'Informasi Berhasil Diperbaharui!']);
+    }
+
+    public function showSubmissionsByTask($taskId): View
+    {
+        $informations = Information::with('submissions')->findOrFail($taskId);
+
+        return view('monitoring.submissions_by_task', compact('informations'));
+    }
+
+    public function downloadSubmission(TaskSubmission $taskSubmission)
+    {
+        $filePath = storage_path('app/public/' . $taskSubmission->file_path);
+
+        if (!file_exists($filePath)) {
+            abort(404, 'File not found.');
+        }
+
+        return response()->download($filePath);
     }
 }

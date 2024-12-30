@@ -51,14 +51,15 @@
                             <tr>
                                 @if (session('intern')->role === 'intern')
                                     <th>No.</th>
-                                    <th>Title</th>
+                                    <th>Judul</th>
                                     <th>Tipe Information</th>
                                     <th>Target Information</th>
                                 @else
                                     <th>No.</th>
-                                    <th>Title</th>
+                                    <th>Judul</th>
                                     <th>Tipe Information</th>
                                     <th>Target Information</th>
+                                    <th>Dikumpulkan</th>
                                     <th>Action</th>
                                 @endif
                             </tr>
@@ -116,6 +117,14 @@
                                             @elseif ($item->division_id === 3)
                                                 <span class="badge bg-warning">Sub Bagian Umum</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{{ route('monitoring.taskSubmission', ['taskId' => $item->id]) }}"
+                                                    class="badge bg-info">
+                                                    Lihat Pengumpulan
+                                                </a>
+                                            </div>
                                         </td>
                                         <td>
                                             <div class="btn-group">

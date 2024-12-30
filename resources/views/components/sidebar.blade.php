@@ -121,7 +121,7 @@
                         </ul>
                     </li>
 
-                    <li class="sidebar-item has-sub {{ request()->is('master*') ? 'active' : '' }}">
+                    <li class="sidebar-item has-sub {{ request()->is('cetak*') ? 'active' : '' }}">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-collection-fill"></i>
                             <span>Cetak Laporan</span>
@@ -131,8 +131,8 @@
                             <li class="submenu-item {{ request()->is('master/interns') ? 'active' : '' }}">
                                 <a href="{{ route('interns.index') }}" class="submenu-link"><span>Presensi</span></a>
                             </li>
-                            <li class="submenu-item {{ request()->is('master/divisions') ? 'active' : '' }}">
-                                <a href="{{ route('divisions.index') }}"
+                            <li class="submenu-item {{ request()->is('cetak/logbooks') ? 'active' : '' }}">
+                                <a href="{{ route('cetak.logbook') }}"
                                     class="submenu-link"><span>Logbook</span></a>
                             </li>
                         </ul>

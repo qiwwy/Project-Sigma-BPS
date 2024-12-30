@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LogbookExport;
 use App\Models\LogbookIntern;
 use Illuminate\Contracts\View\View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class LogbookInternController extends Controller
 {
@@ -31,8 +34,38 @@ class LogbookInternController extends Controller
         return view('logbook.logbook', compact('logbookInterns'));
     }
 
+    public function logbooks(Request $request): View
+    {
+        $tanggalAwal = $request->query('tanggal_awal');
+        $tanggalAkhir = $request->query('tanggal_akhir');
 
-    //Menampilkan detail logbook by id didalam modal :intern
+        $logbooks = LogbookIntern::query();
+
+        if ($tanggalAwal && $tanggalAkhir) {
+            $logbooks->whereBetween('date_logbook', [$tanggalAwal, $tanggalAkhir]);
+        }
+
+        $logbooks = $logbooks->get(); // Data untuk ditampilkan di view
+
+        return view('cetak.cetak_logbook', compact('logbooks', 'tanggalAwal', 'tanggalAkhir'));
+    }
+
+    // Mengekspor data logbook ke Excel
+    public function export(Request $request)
+    {
+        $tanggalAwal = $request->query('tanggal_awal');
+        $tanggalAkhir = $request->query('tanggal_akhir');
+
+        $logbooksQuery = LogbookIntern::query();
+
+        if ($tanggalAwal && $tanggalAkhir) {
+            $logbooksQuery->whereBetween('date_logbook', [$tanggalAwal, $tanggalAkhir]);
+        }
+
+        // Export data logbook yang sudah difilter
+        return Excel::download(new LogbookExport($logbooksQuery), "Logbook_{$tanggalAwal}_to_{$tanggalAkhir}.xlsx");
+    }
+
     public function show($id)
     {
         $logbookIntern = LogbookIntern::findOrFail($id);

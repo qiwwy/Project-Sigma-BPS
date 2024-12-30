@@ -75,6 +75,8 @@ Route::prefix('monitoring')->group(function () {
     Route::get('/certificate-intern', [InternController::class, 'certificateIntern'])->name('monitoring.certificateIntern');
     Route::get('/submission', [TaskSubmissionController::class, 'index'])->name('monitoring.submission.index');
     Route::post('/submission', [TaskSubmissionController::class, 'store'])->name('monitoring.submission.store');
+    Route::get('/task-submission/{taskId}', [InformationController::class, 'showSubmissionsByTask'])->name('monitoring.taskSubmission');
+    Route::get('/task/{taskSubmission}/download', [InformationController::class, 'downloadSubmission'])->name('monitoring.taskSubmission.download');
 });
 
 Route::prefix('activity')->group(function () {
@@ -91,6 +93,12 @@ Route::prefix('mentor')->group(function () {
     Route::get('/presence-by-division', [PresenceController::class, 'presenceByDivision'])->name('mentor.presenceByDivision');
     Route::post('/presence-by-division', [PresenceController::class, 'storeByMentor'])->name('mentor.storePresencebyMentor');
     Route::get('/intern-presence/{internId}', [PresenceController::class, 'showPresenceByIntern'])->name('mentor.internPresence');
+});
+
+Route::prefix('cetak')->group(function () {
+    Route::get('/logbooks', [LogbookInternController::class, 'logbooks'])->name('cetak.logbook');
+    Route::get('/logbooks-export', [LogbookInternController::class, 'export'])->name('cetak.logbook.export');
+
 });
 
 Auth::routes();
