@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PresenceExport;
+use App\Exports\PresenceInternExport;
 use App\Models\Interns;
 use App\Models\Presence;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PresenceController extends Controller
 {
@@ -20,6 +23,54 @@ class PresenceController extends Controller
         return view('presence.presences', compact('presences'));
     }
 
+    public function presences(Request $request): View
+    {
+        $tanggalAwal = $request->query('tanggal_awal');
+        $tanggalAkhir = $request->query('tanggal_akhir');
+
+        $presences = collect(); // Default nilai kosong
+
+        if ($tanggalAwal && $tanggalAkhir) {
+            $presences = Presence::whereBetween('presence_date', [$tanggalAwal, $tanggalAkhir])->get();
+        }
+
+        return view('cetak.cetak_presence', compact('presences', 'tanggalAwal', 'tanggalAkhir'));
+    }
+
+
+    public function export(Request $request)
+    {
+        $tanggalAwal = $request->query('tanggal_awal');
+        $tanggalAkhir = $request->query('tanggal_akhir');
+
+        $presenceQuery = Presence::query();
+
+        if ($tanggalAwal && $tanggalAkhir) {
+            $presenceQuery->whereBetween('presence_date', [$tanggalAwal, $tanggalAkhir]);
+        }
+
+        // Export data logbook yang sudah difilter
+        return Excel::download(new PresenceExport($presenceQuery), "Presensi_{$tanggalAwal}_to_{$tanggalAkhir}.xlsx");
+    }
+
+    public function exportPresenceIntern(Request $request)
+    {
+        $intern_id = $request->input('intern_id');
+
+        // Ambil data peserta berdasarkan intern_id
+        $intern = Interns::find($intern_id);
+
+        // Jika peserta ditemukan, gunakan namanya untuk nama file
+        if ($intern) {
+            $fileName = 'Data_Presensi_' . str_replace(' ', '_', $intern->name) . '.xlsx';
+        } else {
+            $fileName = 'Data_P resensi.xlsx'; // Default jika peserta tidak ditemukan
+        }
+
+        // Download file dengan nama yang disesuaikan
+        return Excel::download(new PresenceInternExport($intern_id), $fileName);
+    }
+
     public function presenceByDivision(): View
     {
         $internSession = session('intern');
@@ -30,6 +81,45 @@ class PresenceController extends Controller
         })->get();
 
         return view('mentor.presence_by_division', compact('presences'));
+    }
+
+    public function getPrecencesByIntern(): View
+    {
+        $presenceInterns = Presence::with('intern')
+            ->whereHas('intern', function ($query) {
+                $query->whereNotNull('division_id')->where('role', 'intern');
+            })
+            ->get()
+            ->groupBy('intern_id');
+
+        $presenceData = $presenceInterns->map(function ($group) {
+            $intern = $group->first()->intern;
+
+            // Hitung total hari dari start_date hingga end_date
+            $startDate = Carbon::parse($intern->start_date);
+            $endDate = Carbon::parse($intern->end_date);
+            $totalDays = $startDate->diffInDays($endDate) + 1; // +1 untuk inklusif
+
+            // Hitung total kehadiran yang sudah tercatat
+            $totalPresenceCount = $group->count();
+
+            return [
+                'name' => $intern->name,
+                'school_name' => $intern->school_name,
+                'total_presence_count' => $totalPresenceCount,
+                'total_days' => $totalDays,
+                'intern_id' => $intern->id,
+            ];
+        });
+
+        return view('presence.presence_interns', compact('presenceData'));
+    }
+
+    public function showDetailPresence($internId)
+    {
+        $presenceInterns = Presence::where('intern_id', $internId)->get();
+
+        return view('presence.presence_interns_detail', compact('presenceInterns', 'internId'));
     }
 
     public function showPresenceByIntern($internId): View

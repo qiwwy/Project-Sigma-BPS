@@ -3,10 +3,9 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Daftar Antrian Penerimaan</h3>
-                    <p class="text-subtitle text-muted">
-                        A sortable, searchable, paginated table without dependencies thanks to simple-datatables.
-                    </p>
+                    <h3>Daftar Data Antrian</h3>
+                    <p class="text-subtitle text-muted">Lihat daftar lengkap data registrasi yang sudah diterima. Anda
+                        dapat melakukan pencarian data registrasi, dan penelusuran data dengan mudah.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -30,6 +29,58 @@
     </div>
 
     <section class="section">
+        <!-- Card untuk Menampilkan Total Peserta Magang Aktif -->
+        <div class="col-12">
+            <div class="row">
+                <!-- Total Peserta Magang Aktif -->
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm border-light">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="card-title mb-0"><i class="fas fa-user-graduate me-2"></i>Total Peserta Magang
+                                Aktif</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="fw-bold text-primary mt-3">{{ $totalActiveInterns }}</h3>
+                            <p class="text-muted mb-0">Peserta Magang Aktif</p>
+                        </div>
+                    </div>
+                </div>
+
+                @php
+                    $lastDates = \App\Models\LastDateInterns::where('count', '!=', 0)->get();
+                @endphp
+
+                <!-- Nonactive Dates Section -->
+                <div class="col-md-8">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="card-title mb-0"><i class="fas fa-calendar-times me-2"></i> Nonactive Pada Tanggal</h5>
+                        </div>
+                        <div class="card-body p-3" style="max-height: 250px; overflow-y: auto;">
+                            <div class="row">
+                                @foreach ($lastDates as $item)
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card border-light shadow-sm h-100">
+                                            <div class="card-body text-center d-flex flex-column justify-content-center" style="max-height: 140px;">
+                                                <h6 class="text-danger fw-semibold">Nonactive</h6>
+                                                <h5 class="fw-bold">
+                                                    {{ \Carbon\Carbon::parse($item->end_date)->format('d M Y') }}
+                                                </h5>
+                                                <p class="text-muted mb-0">
+                                                    <i class="fas fa-users me-1"></i> {{ $item->count }} peserta
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">List Data</h5>
@@ -55,26 +106,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                         @foreach ($internQueueGroup as $lastDateId => $interns)
                             <tr>
                                 <td>{{ $number++ }}</td>
                                 <td>{{ \Carbon\Carbon::parse($interns->first()->start_date)->format('d M Y') }}</td>
                                 <td>
                                     @php
-                                        $endDate = \Carbon\Carbon::parse(
-                                            $interns->first()->lastDate->end_date,
-                                        )->startOfDay();
-                                        $now = \Carbon\Carbon::now()->startOfDay();
-                                        $daysLeft = $now->diffInDays($endDate, false);
+                                        $endDate = $interns->first()->lastDate->end_date ?? null;
                                     @endphp
-                                    @if ($daysLeft > 0)
-                                        {{ $daysLeft }} Hari Lagi
-                                    @elseif ($daysLeft === 0)
-                                        <span class="badge bg-success">Dapat Dikirim</span>
-                                    @elseif ($daysLeft < 0)
-                                        <span class="badge bg-warning">{{ abs($daysLeft) }} Hari Terlewatkan</span>
+
+                                    @if ($endDate)
+                                        {{ \Carbon\Carbon::parse($endDate)->format('d M Y') }}
                                     @else
-                                        Hari Ini
+                                        {{ \Carbon\Carbon::parse($interns->first()->start_date)->format('d M Y') }}
                                     @endif
                                 </td>
                                 <td>{{ $interns->first()->school_name }}</td>
@@ -83,9 +130,6 @@
                                     <a href="{{ route('internQueue.showDetailQueue', ['last_date_id' => $lastDateId]) }}"
                                         class="btn btn-primary">
                                         <i class="bi bi-eye-fill"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger">
-                                        <i class="bi bi-trash-fill"></i>
                                     </a>
                                     <form action="{{ route('internQueue.transferToIntern') }}" method="POST"
                                         style="display:inline;">

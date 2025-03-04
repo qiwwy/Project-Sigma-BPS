@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\LogbookExport;
+use App\Exports\LogbookInternExport;
+use App\Models\Interns;
 use App\Models\LogbookIntern;
 use Illuminate\Contracts\View\View;
 use Carbon\Carbon;
@@ -39,13 +41,11 @@ class LogbookInternController extends Controller
         $tanggalAwal = $request->query('tanggal_awal');
         $tanggalAkhir = $request->query('tanggal_akhir');
 
-        $logbooks = LogbookIntern::query();
+        $logbooks = collect(); // Default nilai kosong
 
         if ($tanggalAwal && $tanggalAkhir) {
-            $logbooks->whereBetween('date_logbook', [$tanggalAwal, $tanggalAkhir]);
+            $logbooks = LogbookIntern::whereBetween('date_logbook', [$tanggalAwal, $tanggalAkhir])->get();
         }
-
-        $logbooks = $logbooks->get(); // Data untuk ditampilkan di view
 
         return view('cetak.cetak_logbook', compact('logbooks', 'tanggalAwal', 'tanggalAkhir'));
     }
@@ -66,6 +66,23 @@ class LogbookInternController extends Controller
         return Excel::download(new LogbookExport($logbooksQuery), "Logbook_{$tanggalAwal}_to_{$tanggalAkhir}.xlsx");
     }
 
+    public function exportLogbookIntern(Request $request)
+    {
+        $intern_id = $request->input('intern_id');
+
+        // Ambil data peserta berdasarkan intern_id
+        $intern = Interns::find($intern_id);
+
+        // Jika peserta ditemukan, gunakan namanya untuk nama file
+        if ($intern) {
+            $fileName = 'Data_Logbook_' . str_replace(' ', '_', $intern->name) . '.xlsx';
+        } else {
+            $fileName = 'Data_Logbook.xlsx'; // Default jika peserta tidak ditemukan
+        }
+
+        // Download file dengan nama yang disesuaikan
+        return Excel::download(new LogbookInternExport($intern_id), $fileName);
+    }
     public function show($id)
     {
         $logbookIntern = LogbookIntern::findOrFail($id);

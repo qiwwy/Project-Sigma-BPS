@@ -45,6 +45,17 @@
     @endif
 
     <div class="container">
+        @if ($errors->any())
+            <div class="pt-3">
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
         <div class="card shadow-sm rounded">
             <div class="card-header bg-primary text-white text-center">
                 <h4>Daftar Magang</h4>
@@ -193,6 +204,13 @@
         </div>
     </div>
 
+    @php
+        $lastDates = \App\Models\LastDateInterns::where('count', '!=', 0)->get();
+        $totalCapacity = \App\Models\LastDateInterns::sum('count'); // Total kapasitas awal
+        $totalUsed = \App\Models\LastDateInterns::sum('count_used'); // Total yang sudah digunakan
+        $rumus = $totalCapacity + $totalUsed - $totalUsed; // Tanggal Bebas jika kapasitas kurang dari 15
+    @endphp
+
     <div class="modal fade" id="lowonganModal" tabindex="-1" aria-labelledby="inlineFormLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -201,25 +219,51 @@
                     <h5 class="modal-title" id="inlineFormLabel">Informasi Lowongan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <!-- Body Modal -->
                 <div class="modal-body">
                     <p class="text-muted mb-4">
                         Berikut adalah daftar tanggal beserta jumlah lowongan yang tersedia di BPS Kota Pekalongan
                     </p>
                     <div class="row g-3">
+                        {{-- Daftar Tanggal Tersedia --}}
                         @foreach ($lastDates as $item)
                             <div class="col-12 col-sm-6 col-md-4">
                                 <div class="card shadow-sm border-light rounded-3">
                                     <div class="card-body text-center">
                                         <h6 class="text-muted mb-2">Kosong Pada Tanggal</h6>
-                                        <h5 class="font-extrabold text-primary mb-2">{{ $item->end_date }}</h5>
-                                        <p class="mb-1 text-muted">Jumlah: <strong>{{ $item->count }}</strong></p>
+                                        <h5 class="font-extrabold text-primary mb-2">
+                                            {{ \Carbon\Carbon::parse($item->end_date)->format('d M Y') }}
+                                        </h5>
+                                        <p class="mb-1 text-muted">
+                                            Jumlah: <strong>{{ $item->count_used }} / {{ $item->count }}</strong>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
+                        {{-- Tambahkan "Tanggal Bebas" --}}
+                        @php
+                            $totalCapacity = \App\Models\LastDateInterns::sum('count'); // Total kapasitas
+                            $totalUsed = \App\Models\LastDateInterns::sum('count_used'); // Total yang sudah digunakan
+                            $rumus = max(0, $totalCapacity - $totalUsed); // Sisa kapasitas (tidak negatif)
+                        @endphp
+
+                        @if ($rumus < 15)
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="card shadow-sm border-light rounded-3">
+                                    <div class="card-body text-center">
+                                        <h6 class="text-muted mb-2">Tanggal Bebas Digunakan</h6>
+                                        <h5 class="font-extrabold text-primary mb-2">Tanggal Bebas</h5>
+                                        <p class="mb-1 text-muted">Jumlah: <strong>{{ 15 - $rumus }}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
+
                 <!-- Footer Modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -239,7 +283,8 @@
                 <!-- Body Modal -->
                 <div class="modal-body">
                     <p class="text-muted mb-4">
-                        Berikut adalah daftar tanggal beserta jumlah lowongan yang tersedia di BPS Kota Pekalongan
+                        Berikut adalah daftar antrian peserta yang diterima di BPS Kota Pekalongan beserta informasi
+                        tanggal keberangkatan.
                     </p>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -256,7 +301,17 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $intern->name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($intern->start_date)->format('d M Y') }}</td>
+                                        <td>
+                                            @php
+                                                $endDate = $intern->lastDate->end_date ?? null; // Akses langsung ke relasi lastDate
+                                            @endphp
+
+                                            @if ($endDate)
+                                                {{ \Carbon\Carbon::parse($endDate)->format('d M Y') }}
+                                            @else
+                                                {{ \Carbon\Carbon::parse($intern->start_date)->format('d M Y') }}
+                                            @endif
+                                        </td>
                                         <td>{{ $intern->school_name }}</td>
                                     </tr>
                                 @endforeach

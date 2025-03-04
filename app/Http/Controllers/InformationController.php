@@ -32,6 +32,15 @@ class InformationController extends Controller
 
         return view('monitoring.information', compact('informations', 'divisions'));
     }
+
+    public function show($id)
+    {
+        // Menemukan informasi berdasarkan ID
+        $information = Information::findOrFail($id);
+
+        // Mengirim data informasi ke view 'monitoring.information.show'
+        return view('monitoring.information_show', compact('information'));
+    }
     public function store(Request $request): RedirectResponse
     {
         // Tentukan apakah pengguna adalah ketua divisi

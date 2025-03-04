@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\InternRegister;
 
@@ -13,11 +12,11 @@ class InternRegisterSeeder extends Seeder
      */
     public function run(): void
     {
-        $startDateBandung = '2024-12-29';
-        $endDateBandung = '2025-01-29';
+        $startDateBandung = '2025-01-01';
+        $endDateBandung = '2025-02-01';
 
-        $startDateYogya = '2025-03-01';
-        $endDateYogya = '2025-04-01';
+        $startDateYogya = '2025-02-13';
+        $endDateYogya = '2025-03-13';
 
         InternRegister::create([
             'identity_number' => '21.230.0202',

@@ -33,6 +33,7 @@
                                 <th>Nama</th>
                                 <th>Sekolah</th>
                                 <th>Divisi</th>
+                                <th>Status</th>
                                 <th>Nilai Aktifitas</th>
                                 <th>Nilai Kehadiran</th>
                                 <th>Action</th>
@@ -57,14 +58,32 @@
                                             <span class="badge bg-success"> {{ $item->division->division_name }}</span>
                                         @endif
                                     </td>
-                                    <td>{{ $item->average_points ?? 'Nilai Masih Kosong' }}</td>
-                                    <td>{{ $item->attendance_score ?? 'Nilai Masih Kosong' }}</td>
+                                    <td>
+                                        @if ($item->status === 'Active')
+                                            <span class="badge bg-success"> {{ $item->status }}</span>
+                                        @else
+                                            <span class="badge bg-danger"> {{ $item->status }}</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $item->average_points ?? 0 }}</td>
+                                    <td>{{ $item->attendance_score ?? 0 }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <span class="badge" style="background-color: #654321; color: white;">
-                                                <a href="" style="color: white; text-decoration: none;">Cetak
-                                                    Sertifikat</a>
-                                            </span>
+                                            @if ($item->status === 'Active')
+                                                <span class="badge"
+                                                    style="background-color: #654321; color: white; opacity: 0.5;">
+                                                    <a href="#"
+                                                        style="color: white; text-decoration: none; pointer-events: none;">Cetak
+                                                        Sertifikat</a>
+                                                </span>
+                                            @else
+                                                <span class="badge" style="background-color: #654321; color: white;">
+                                                    <!-- Menambahkan parameter ID ke route -->
+                                                    <a href="{{ route('cetak.sertifikat', ['id' => $item->id]) }}"
+                                                        style="color: white; text-decoration: none;">Cetak
+                                                        Sertifikat</a>
+                                                </span>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

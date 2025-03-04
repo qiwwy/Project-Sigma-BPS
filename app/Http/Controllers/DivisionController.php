@@ -18,14 +18,30 @@ class DivisionController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'division_name' => 'required',
+            'division_name' => [
+                'required',
+                'min:3',                      // Minimal 3 karakter
+                'max:100',                    // Maksimal 100 karakter
+                'regex:/^[A-Za-z]/',          // Harus diawali dengan huruf
+            ],
+        ], [
+            'division_name.required' => 'Nama Divisi wajib diisi.',
+            'division_name.min' => 'Nama Divisi harus memiliki minimal 3 karakter.',
+            'division_name.max' => 'Nama Divisi tidak boleh lebih dari 100 karakter.',
+            'division_name.regex' => 'Nama Divisi harus diawali dengan huruf.',
         ]);
 
-        $division = Division::create([
-            'division_name' => $request->division_name,
-        ]);
+        try {
+            $division = Division::create([
+                'division_name' => $request->division_name,
+            ]);
 
-        return redirect()->route('divisions.index')->with(['success' => 'Data Berhasil Disimpan!']);
+            // Set session success message
+            return redirect()->route('divisions.index')->with('success', 'Data Berhasil Disimpan!');
+        } catch (\Exception $e) {
+            // Set session error message
+            return redirect()->route('divisions.index')->with('error', 'Data Gagal Disimpan! Coba lagi.');
+        }
     }
 
     public function showDivisionsWithInternCount()
@@ -38,11 +54,17 @@ class DivisionController extends Controller
 
     public function destroy($id)
     {
-        $division = Division::findOrFail($id);
-        $division->delete();
+        try {
+            $division = Division::findOrFail($id);
+            $division->delete();
 
-        return redirect()->route('divisions.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            return redirect()->route('divisions.index')->with(['successDelete' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Jika terjadi error (misal data tidak ditemukan)
+            return redirect()->route('divisions.index')->with(['errorDelete' => 'Data Gagal Dihapus. Silakan coba lagi.']);
+        }
     }
+
 
     public function update(Request $request, $id)
     {

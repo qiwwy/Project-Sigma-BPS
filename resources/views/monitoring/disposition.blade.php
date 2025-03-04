@@ -3,9 +3,8 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Daftar Pendaftar Belum Ditempatkan</h3>
-                    <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
-                        thanks to simple-datatables.</p>
+                    <h3>Daftar Peserta Belum Ditempatkan</h3>
+                    <p class="text-subtitle text-muted">Lihat daftar peserta yang belum ditempatkan. Anda dapat melaukan penempatan pada peserta dengan divisi yang sudah ditentukan.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">

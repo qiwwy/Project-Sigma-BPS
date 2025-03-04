@@ -12,6 +12,7 @@ class LastDateInterns extends Model
     protected $fillable = [
         'end_date',
         'count',
+        'count_used'
     ];
 
     public function queues(): HasMany

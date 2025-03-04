@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Interns;
+use Illuminate\Support\Str;
 
 class InternsSeeder extends Seeder
 {
@@ -13,8 +13,6 @@ class InternsSeeder extends Seeder
      */
     public function run(): void
     {
-        $startDateBandung = '2024-10-25';
-        $endDateBandung = '2024-12-25';
         Interns::create([
             'identity_number' => '11.222.3333',  // Diubah identity_number
             'name' => 'Administrator',  // Diubah nama
@@ -58,151 +56,145 @@ class InternsSeeder extends Seeder
             'role' => 'mentor',
             'division_id' => 3
         ]);
-        Interns::create([
-            'identity_number' => '21.230.0187',  // Diubah identity_number
-            'name' => 'Muhammad Bagus Setiawan',  // Diubah nama
-            'school_name' => 'Iwima Kota Pekalongan',
-            'email' => 'sbm@gmail.com',
-            'start_date' => $startDateBandung,
-            'end_date' => $endDateBandung,
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1003',
-            'name' => 'Citra Dewi',
-            'school_name' => 'SMK Negeri Bandung Raya',
-            'email' => 'citra@example.com',
-            'start_date' => $startDateBandung,
-            'end_date' => $endDateBandung,
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1004',
-            'name' => 'Dian Puspitasari',
-            'school_name' => 'SMK Negeri Bandung Raya',
-            'email' => 'dian@example.com',
-            'start_date' => $startDateBandung,
-            'end_date' => $endDateBandung,
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1050',
-            'name' => 'Dian Indah Nyata',
-            'school_name' => 'SMK Negeri Bandung Raya',
-            'email' => 'dian@example.com',
-            'start_date' => $startDateBandung,
-            'end_date' => $endDateBandung,
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.0971',
-            'name' => 'Anisa Nuraini',
-            'school_name' => 'SMK Negeri Bandung Raya',
-            'email' => 'dian@example.com',
-            'start_date' => $startDateBandung,
-            'end_date' => $endDateBandung,
-            'role' => 'intern'
-        ]);
 
-        $startDateYogya = '2024-11-20';
-        $endDateYogya = '2025-01-20';
-        Interns::create([
-            'identity_number' => '21.230.2001',
-            'name' => 'Khanifatun',
-            'school_name' => 'SMK Negeri Yogyakarta Baru',  // Diubah nama sekolah
-            'email' => 'asep_yogya@example.com',
-            'start_date' => $startDateYogya,
-            'end_date' => $endDateYogya,
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1077',
-            'name' => 'Santoso',
-            'school_name' => 'SMK Negeri Yogyakarta Baru',
-            'email' => 'budi_yogya@example.com',
-            'start_date' => $startDateYogya,
-            'end_date' => $endDateYogya,
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1088',
-            'name' => 'Dewi Yodelling',
-            'school_name' => 'SMK Negeri Yogyakarta Baru',
-            'email' => 'citra_yogya@example.com',
-            'start_date' => $startDateYogya,
-            'end_date' => $endDateYogya,
-            'role' => 'intern',
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1099',
-            'name' => 'Indriyatmono',
-            'school_name' => 'SMK Negeri Yogyakarta Baru',
-            'email' => 'dian_yogya@example.com',
-            'start_date' => $startDateYogya,
-            'end_date' => $endDateYogya,
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1889',
-            'name' => 'Nia Kurnia Sari',
-            'school_name' => 'SMK Negeri Yogyakarta Baru',
-            'email' => 'dian_yogya@example.com',
-            'start_date' => $startDateYogya,
-            'end_date' => $endDateYogya,
-            'role' => 'intern'
-        ]);
+        $startDateBandung = '2025-01-12';
+        $endDateBandung = '2025-02-12';
 
-        $startDateSurabaya = '2025-01-01';
-        $endDateSurabaya = '2025-03-05';
-        Interns::create([
-            'identity_number' => '21.230.1200',
-            'name' => 'Bagas Praskoro',
-            'school_name' => 'SMK Negeri Surabaya Baru',  // Diubah nama sekolah
-            'email' => 'asep_surabaya@example.com',
-            'start_date' => $startDateSurabaya,
-            'end_date' => $endDateSurabaya,
-            'status' => 'Nonactive',
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1311',
-            'name' => 'Vira Thaud',
-            'phone_number' => '085150021010',
-            'email' => 'budi_surabaya@example.com',
-            'start_date' => $startDateSurabaya,
-            'end_date' => $endDateSurabaya,
-            'status' => 'Nonactive',
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1912',
-            'name' => 'Jones Iskandar',
-            'school_name' => 'SMK Negeri Surabaya Baru',
-            'email' => 'citra_surabaya@example.com',
-            'start_date' => $startDateSurabaya,
-            'end_date' => $endDateSurabaya,
-            'status' => 'Nonactive',
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.1413',
-            'name' => 'Baris Situmorang',
-            'school_name' => 'SMK Negeri Surabaya Baru',
-            'email' => 'dian_surabaya@example.com',
-            'start_date' => $startDateSurabaya,
-            'end_date' => $endDateSurabaya,
-            'status' => 'Nonactive',
-            'role' => 'intern'
-        ]);
-        Interns::create([
-            'identity_number' => '21.230.2347',
-            'name' => 'Fida Zulhida',
-            'school_name' => 'SMK Negeri Surabaya Baru',
-            'email' => 'vika_surabaya@example.com',
-            'start_date' => $startDateSurabaya,
-            'end_date' => $endDateSurabaya,
-            'status' => 'Nonactive',
-            'role' => 'intern'
-        ]);
+        $startDatePekalongan = '2025-01-13';
+        $endDatePekalongan = '2025-03-13';
+
+        $startDateYogya = '2025-03-05';
+        $endDateYogya = '2025-04-05';
+
+        $divisionLimits = [1 => 0, 2 => 0, 3 => 0]; // Counter untuk tiap division_id
+
+        function getDivisionId(&$limits)
+        {
+            $available = array_filter($limits, fn($count) => $count < 5); // Filter division yang masih tersedia
+            $division = array_rand($available); // Ambil division_id secara acak dari yang tersedia
+            $limits[$division]++; // Tambahkan count pada division yang dipilih
+            return $division;
+        }
+
+        $data = [
+            [
+                'identity_number' => '21.230.4567',
+                'name' => 'Muhammad Rando ',
+                'school_name' => 'Iwima Kota Pekalongan',
+                'start_date' => $startDateBandung,
+                'end_date' => $endDateBandung,
+            ],
+            [
+                'identity_number' => '21.230.9876',
+                'name' => 'Citra Dewi',
+                'school_name' => 'SMK Negeri Bandung Raya',
+                'start_date' => $startDateBandung,
+                'end_date' => $endDateBandung,
+            ],
+            [
+                'identity_number' => '21.230.1234',
+                'name' => 'Dian Puspitasari',
+                'school_name' => 'SMK Negeri Bandung Raya',
+                'start_date' => $startDateBandung,
+                'end_date' => $endDateBandung,
+            ],
+            [
+                'identity_number' => '21.230.4321',
+                'name' => 'Dian Indah Nyata',
+                'school_name' => 'SMK Negeri Bandung Raya',
+                'start_date' => $startDateBandung,
+                'end_date' => $endDateBandung,
+            ],
+            [
+                'identity_number' => '21.230.8765',
+                'name' => 'Anisa Nuraini',
+                'school_name' => 'SMK Negeri Bandung Raya',
+                'start_date' => $startDateBandung,
+                'end_date' => $endDateBandung,
+            ],
+            [
+                'identity_number' => '21.230.2001',
+                'name' => 'Khanifatun',
+                'school_name' => 'SMK Negeri Yogyakarta Baru',
+                'start_date' => $startDateYogya,
+                'end_date' => $endDateYogya,
+            ],
+            [
+                'identity_number' => '21.230.1077',
+                'name' => 'Santoso',
+                'school_name' => 'SMK Negeri Yogyakarta Baru',
+                'start_date' => $startDateYogya,
+                'end_date' => $endDateYogya,
+            ],
+            [
+                'identity_number' => '21.230.1088',
+                'name' => 'Dewi Yodelling',
+                'school_name' => 'SMK Negeri Yogyakarta Baru',
+                'start_date' => $startDateYogya,
+                'end_date' => $endDateYogya,
+            ],
+            [
+                'identity_number' => '21.230.1099',
+                'name' => 'Indriyatmono',
+                'school_name' => 'SMK Negeri Yogyakarta Baru',
+                'start_date' => $startDateYogya,
+                'end_date' => $endDateYogya,
+            ],
+            [
+                'identity_number' => '21.230.1889',
+                'name' => 'Nia Kurnia Sari',
+                'school_name' => 'SMK Negeri Yogyakarta Baru',
+                'start_date' => $startDateYogya,
+                'end_date' => $endDateYogya,
+            ],
+            [
+                'identity_number' => '21.230.1001',
+                'name' => 'Agus Trihartono',
+                'school_name' => 'SMK Negeri Pekalongan Raya',
+                'start_date' => $startDatePekalongan,
+                'end_date' => $endDatePekalongan,
+            ],
+            [
+                'identity_number' => '21.230.1002',
+                'name' => 'Siti Aisyah',
+                'school_name' => 'SMK Negeri Pekalongan Raya',
+                'start_date' => $startDatePekalongan,
+                'end_date' => $endDatePekalongan,
+            ],
+            [
+                'identity_number' => '21.230.1003',
+                'name' => 'Rudi Setiawan',
+                'school_name' => 'SMK Negeri Pekalongan Raya',
+                'start_date' => $startDatePekalongan,
+                'end_date' => $endDatePekalongan,
+            ],
+            [
+                'identity_number' => '21.230.1004',
+                'name' => 'Fatimah Zahra',
+                'school_name' => 'SMK Negeri Pekalongan Raya',
+                'start_date' => $startDatePekalongan,
+                'end_date' => $endDatePekalongan,
+            ],
+            [
+                'identity_number' => '21.230.1005',
+                'name' => 'Ahmad Hidayat',
+                'school_name' => 'SMK Negeri Pekalongan Raya',
+                'start_date' => $startDatePekalongan,
+                'end_date' => $endDatePekalongan,
+            ],
+        ];
+
+        foreach ($data as $intern) {
+            Interns::create([
+                'identity_number' => $intern['identity_number'],
+                'name' => $intern['name'],
+                'school_name' => $intern['school_name'],
+                'email' => Str::random(10) . '@example.com', // Email random
+                'start_date' => $intern['start_date'],
+                'end_date' => $intern['end_date'],
+                'role' => 'intern',
+                'division_id' => getDivisionId($divisionLimits), // Assign division_id secara acak
+            ]);
+        }
     }
 }

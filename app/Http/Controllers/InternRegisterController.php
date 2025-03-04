@@ -59,6 +59,20 @@ class InternRegisterController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'cover_letter' => 'required|file',
+        ], [
+            'identity_number.required' => 'Nomor identitas wajib diisi.',
+            'name.required' => 'Nama lengkap harus diisi.',
+            'school_id.required' => 'ID sekolah wajib dipilih.',
+            'school_id.exists' => 'ID sekolah yang Anda pilih tidak valid.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email yang Anda masukkan tidak valid.',
+            'start_date.required' => 'Tanggal mulai wajib diisi.',
+            'start_date.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
+            'end_date.required' => 'Tanggal akhir wajib diisi.',
+            'end_date.date' => 'Tanggal akhir harus berupa tanggal yang valid.',
+            'end_date.after_or_equal' => 'Tanggal akhir harus lebih besar atau sama dengan tanggal mulai.',
+            'cover_letter.required' => 'Surat lamaran wajib diunggah.',
+            'cover_letter.file' => 'File surat lamaran harus berupa file.',
         ]);
 
         // Simpan file cover letter
@@ -107,38 +121,60 @@ class InternRegisterController extends Controller
         $lastDateId = $request->input('lastDate_id');
         $lastDate = LastDateInterns::find($lastDateId);
 
-        $initialCapacity = $lastDate->count;
-        $remainingCapacity = $initialCapacity;
+        $totalCount = LastDateInterns::sum('count');
+        $totalCountUsed = LastDateInterns::sum('count_used');
+        $rumus = $totalCount - $totalCountUsed; // Kapasitas yang tersisa
 
-        // Modifikasi query untuk memfilter data dengan accept_stat 'Accept' dan is_set false
+        // Periksa kondisi jika lastDate null dan $rumus berisi angka (tidak kosong)
+        if (is_null($lastDate) && $rumus > 0) {
+            return redirect()->route('internRegister.index')->with(
+                'errorTransfer',
+                'Transfer gagal! Anda harus memilih tanggal terlebih dahulu.'
+            );
+        }
+
+        // Kapasitas awal
+        $initialCapacity = $lastDate ? $lastDate->count : 0;
+        $remainingCapacity = $lastDate ? ($initialCapacity - $lastDate->count_used) : (15 - $totalCount);
+
+        // Ambil data registrasi yang diterima
         $acceptedRegisters = InternRegister::with('school')
-            ->where('accept_stat', 'Accept')   // Data dengan status 'Accept'
-            ->where('is_sent', 'not_yet')           // Data yang belum diproses (is_set false)
+            ->where('accept_stat', 'Accept')
+            ->where('is_sent', 'not_yet')
             ->get();
+
+        // Periksa apakah ada data dengan status `Accept` dan kapasitas > 0
+        if ($acceptedRegisters->isEmpty() || $remainingCapacity <= 0) {
+            return redirect()->route('internRegister.index')->with(
+                'errorTransfer',
+                $remainingCapacity <= 0
+                ? 'Transfer gagal! Kapasitas antrian sudah penuh.'
+                : 'Transfer gagal! Harap kirim data dengan status "Accept".'
+            );
+        }
 
         $notSentCount = 0;
         $sentCount = 0;
 
+        // Proses data untuk transfer
         foreach ($acceptedRegisters as $acceptedRegister) {
-            // Cek apakah sudah ada di dalam queue
             $exists = InternQueue::where('identity_number', $acceptedRegister->identity_number)->exists();
 
             if (!$exists && $remainingCapacity > 0) {
-                // Masukkan data ke antrian
                 InternQueue::create([
                     'identity_number' => $acceptedRegister->identity_number,
                     'name' => $acceptedRegister->name,
                     'address' => $acceptedRegister->address,
-                    'school_name' => $acceptedRegister->school->school_name ?? 'No School', // Pastikan school ada
+                    'school_name' => $acceptedRegister->school->school_name ?? 'No School',
                     'phone_number' => $acceptedRegister->phone_number,
                     'email' => $acceptedRegister->email,
                     'start_date' => $acceptedRegister->start_date,
                     'end_date' => $acceptedRegister->end_date,
                     'image' => $acceptedRegister->image,
-                    'last_date_id' => $lastDate->id
+                    'last_date_id' => $lastDate ? $lastDate->id : null,
                 ]);
 
-                // Update field 'is_set' menjadi true
+                // Update status data
                 $acceptedRegister->is_sent = 'done';
                 $acceptedRegister->save();
 
@@ -149,10 +185,17 @@ class InternRegisterController extends Controller
             }
         }
 
-        $lastDate->count = $remainingCapacity;
-        $lastDate->save();
+        // Jika ada lastDate, update kapasitasnya
+        if ($lastDate) {
+            $lastDate->count_used += $sentCount;
+            $lastDate->save();
+        }
 
-        return redirect()->route('internQueue.index')->with('successTransferedtoQueue', 'Data registrasi berhasil dipindahkan ke antrian');
+        // Redirect jika transfer berhasil
+        return redirect()->route('internQueue.index')->with(
+            'successTransferedtoQueue',
+            'Data registrasi berhasil dipindahkan ke antrian.'
+        );
     }
 
     public function transferRejected()

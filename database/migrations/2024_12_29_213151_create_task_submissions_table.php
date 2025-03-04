@@ -15,11 +15,11 @@ return new class extends Migration {
             $table->foreignId('intern_id')->constrained(
                 table: 'interns',
                 indexName: 'submission_intern_id'
-            );
+            )->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('information_id')->constrained(
                 table: 'informations',
                 indexName: 'submission_information_id'
-            );
+            )->onUpdate('cascade')->onDelete('cascade');
             $table->string('file_path');
             $table->text('note')->nullable();
             $table->timestamps();

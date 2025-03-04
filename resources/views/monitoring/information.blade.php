@@ -128,6 +128,12 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
+                                                <a href="{{ route('monitoring.information.show', $item->id) }}"
+                                                    class="badge bg-primary">
+                                                    <i class="bi bi-eye-fill"></i>
+                                                </a>
+                                            </div>
+                                            <div class="btn-group">
                                                 <a href="{{ route('monitoring.information.edit', $item->id) }}"
                                                     class="badge bg-warning">
                                                     <i class="bi bi-pencil-fill"></i>

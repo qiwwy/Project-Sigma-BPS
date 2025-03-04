@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Division;
 use App\Models\LogbookIntern;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,6 +21,14 @@ class InternController extends Controller
         return view('master.interns', compact('interns'));
     }
 
+    public function destroy($id)
+    {
+        $intern = Interns::findOrFail($id);
+        $intern->delete();
+
+        return redirect()->route('interns.index')->with(['successDelete' => 'Data Berhasil Dihapus!']);
+    }
+
     public function certificateIntern(): View
     {
         $interns = Interns::where('role', 'intern')
@@ -32,8 +41,12 @@ class InternController extends Controller
 
                 // Hitung nilai presensi
                 $attendanceValues = $intern->presences->map(function ($presence) {
-                    // Ubah status 'hadir' ke nilai 100 dan lainnya ke 0
-                    return $presence->value === 'hadir' ? 100 : 0;
+                    return match ($presence->value) {
+                        'hadir' => 100,
+                        'ijin', 'sakit' => 85,
+                        'alfa' => 0,
+                        default => 0, // Default value jika ada value yang tidak terdaftar
+                    };
                 });
 
                 $intern->attendance_score = $attendanceValues->avg() ?? 0;
@@ -43,6 +56,32 @@ class InternController extends Controller
 
         return view('monitoring.certificate-intern', compact('interns'));
     }
+
+    public function certificatePDF($id = null)
+    {
+        // Jika ID tidak diberikan, lakukan tindakan default atau validasi
+        if (!$id) {
+            // Misalnya, Anda bisa memilih intern pertama atau memberi error
+            $intern = Interns::first(); // Pilih intern pertama jika ID tidak ada
+        } else {
+            $intern = Interns::findOrFail($id); // Ambil intern berdasarkan ID
+        }
+
+        // Logika seperti sebelumnya
+        $intern->average_points = $intern->logbooks->avg('point');
+        $attendanceValues = $intern->presences->map(function ($presence) {
+            return $presence->value === 'hadir' ? 100 : 0;
+        });
+
+        $intern->attendance_score = $attendanceValues->avg() ?? 0;
+
+        // Load view PDF dengan data yang sama
+        $pdf = Pdf::loadView('cetak.cetak_sertifikat', compact('intern'));
+
+        // Tampilkan PDF di browser
+        return $pdf->stream('sertifikat_' . $intern->name . '.pdf');
+    }
+
 
     public function getInternsByDivision(): View
     {
@@ -115,16 +154,38 @@ class InternController extends Controller
     {
         $interns = Interns::where('status', 'Active')->get();
 
+        // Mengambil daftar end_date unik dan menghitung jumlahnya
         $endDateUnique = $interns->pluck('end_date')->filter();
         $endDateUniqueCounts = $endDateUnique->countBy();
         $sortedEndDateCounts = $endDateUniqueCounts->sortKeys();
 
         foreach ($sortedEndDateCounts as $endDate => $count) {
-            LastDateInterns::updateOrCreate(
-                ['end_date' => $endDate],
-                ['count' => $count]
-            );
+            // Mengecek apakah tanggal sudah ada di tabel LastDateInterns
+            $lastDate = LastDateInterns::where('end_date', $endDate)->first();
+
+            // Jika tanggal ada dan count > 0, maka abaikan update
+            if ($lastDate && $lastDate->count > 0) {
+                continue; // Tidak perlu update
+            }
+
+            // Jika tanggal ada dan count == 0, update count-nya
+            if ($lastDate) {
+                $lastDate->update(['count' => $count]);
+            }
+            // Jika tanggal tidak ada, buat data baru
+            else {
+                LastDateInterns::create(['end_date' => $endDate, 'count' => $count]);
+            }
         }
-        return redirect()->back()->with('success', 'Tanggal Tersedia Berhasil Diperbaharui');
+
+        // **Tambahan: Update status Interns menjadi "Nonactive" jika tanggal sekarang lebih besar dari end_date**
+        $today = now(); // Ambil tanggal saat ini
+
+        Interns::where('status', 'Active')
+            ->whereNotNull('division_id')
+            ->where('end_date', '<', $today)
+            ->update(['status' => 'Nonactive']);
+
+        return redirect()->back()->with('success', 'Tanggal Tersedia Berhasil Diperbaharui dan Status Intern Diperbarui');
     }
 }

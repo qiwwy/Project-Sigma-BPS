@@ -27,6 +27,8 @@
     <link href="{{ asset('assets-sigma/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-sigma/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-sigma/css/main.css') }}" rel="stylesheet">
+
+    {{-- <link rel="stylesheet" href="{{asset('assets/wireframe/css/wireframe2.css')}}"> --}}
 </head>
 
 <body class="index-page">
@@ -79,7 +81,7 @@
                         <h2 data-aos="fade-up">Jadilah Bagian dari Tim Kami, Daftar untuk Magang Sekarang!</h2>
                         <a href="{{ route('internRegister.daftar') }}" class="btn btn-primary btn-lg mt-4"
                             style="width: 100%; max-width: 400px;">
-                            <strong>Informasi Magang</strong>
+                            <strong>Detail Informasi Magang</strong>
                         </a>
                     </div>
 

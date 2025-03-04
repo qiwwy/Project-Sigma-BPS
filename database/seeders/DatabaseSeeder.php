@@ -1,10 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
-use App\Models\InternQueue;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +15,9 @@ class DatabaseSeeder extends Seeder
             SchoolSeeder::class,
             InternsSeeder::class,
             UserSeeder::class,
-            InternRegisterSeeder::class
+            InternRegisterSeeder::class,
+            LogbookSeeder::class,
+            PresenceSeeder::class
         ]);
     }
 }

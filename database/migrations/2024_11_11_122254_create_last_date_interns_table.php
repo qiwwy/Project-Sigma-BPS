@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('last_date_interns', function (Blueprint $table) {
             $table->id();
             $table->date('end_date');
-            $table->integer('count');
+            $table->integer('count'); // Total kapasitas awal
+            $table->integer('count_used')->default(0); // Jumlah yang sudah digunakan
             $table->timestamps();
         });
     }

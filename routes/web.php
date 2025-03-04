@@ -1,6 +1,4 @@
 <?php
-
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\TaskSubmissionController;
@@ -15,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('sigma-landing-page');
-});
+})->name('landing.page');
 
 Route::get('/auth-login', function () {
     return view('login');
@@ -25,12 +23,11 @@ Route::get('/auth-login', function () {
 //     return view('intern.dashboard');
 // })->middleware('checkRole:intern')->name('dashboard.intern');
 
-Route::get('/detailQueue/{last_date_id}', [InternQueueController::class, 'showDetailQueue'])->name('internQueue.showDetailQueue');
-
 Route::post('/transfer_to_intern', [InternQueueController::class, 'transferToIntern'])->name('internQueue.transferToIntern');
 
 Route::prefix('master')->group(function () {
     Route::get('/interns', [InternController::class, 'index'])->name('interns.index');
+    Route::delete('/intern/{id}', [InternController::class, 'destroy'])->name('master.intern.destroy');
     Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
     Route::post('/schools', [SchoolController::class, 'store'])->name('schools.store');
     Route::delete('/school/{id}', [SchoolController::class, 'destroy'])->name('schools.destroy');
@@ -48,10 +45,14 @@ Route::prefix('logbook')->group(function () {
     Route::get('/groupBy/{intern_id}', [LogbookInternController::class, 'showDetailLogbook'])->name('logbookIntern.showDetailLogbook');
 });
 
+Route::get('/detailQueue/{last_date_id?}', [InternQueueController::class, 'showDetailQueue'])
+    ->name('internQueue.showDetailQueue');
+
 Route::prefix('registration')->group(function () {
     Route::get('/list', [InternRegisterController::class, 'index'])->name('internRegister.index');
     Route::get('/list/{token}', [InternRegisterController::class, 'showByToken'])->name('internRegister.showByToken');
     Route::get('/queue', [InternQueueController::class, 'index'])->name('internQueue.index');
+    Route::delete('/queue/{id}', [InternQueueController::class, 'destroy'])->name('internQueue.destroy');
     Route::post('/store', [InternRegisterController::class, 'store'])->name('internRegister.store');
     Route::post('/transfer', [InternRegisterController::class, 'transferAccepted'])->name('internRegister.transferAccepted');
     Route::post('/remove', [InternRegisterController::class, 'transferRejected'])->name('internRegister.transferRejected');
@@ -67,11 +68,14 @@ Route::prefix('monitoring')->group(function () {
     Route::get('/disposition', [InternController::class, 'dispositionIntern'])->name('monitoring.disposition.index');
     Route::put('/disposition/{id}', [InternController::class, 'updateDisposition'])->name('monitoring.disposition.update');
     Route::get('/information', [InformationController::class, 'index'])->name('monitoring.information.index');
+    Route::get('/monitoring/information/{id}', [InformationController::class, 'show'])->name('monitoring.information.show');
     Route::post('/information', [InformationController::class, 'store'])->name('monitoring.information.store');
     Route::delete('/information/{id}', [InformationController::class, 'destroy'])->name('monitoring.information.destroy');
     Route::get('/information/edit/{id}', [InformationController::class, 'edit'])->name('monitoring.information.edit');
     Route::put('/information/{id}', [InformationController::class, 'update'])->name('monitoring.information.update');
     Route::get('/group-logbook', [LogbookInternController::class, 'getLogbookByIntern'])->name('monitoring.logbookIntern.getLogbookByIntern');
+    Route::get('/group-presence', [PresenceController::class, 'getPrecencesByIntern'])->name('monitoring.presence.getPresence');
+    Route::get('/groupBy/{intern_id}', [PresenceController::class, 'showDetailPresence'])->name('monitoring.presenceIntern.showDetailPresence');
     Route::get('/certificate-intern', [InternController::class, 'certificateIntern'])->name('monitoring.certificateIntern');
     Route::get('/submission', [TaskSubmissionController::class, 'index'])->name('monitoring.submission.index');
     Route::post('/submission', [TaskSubmissionController::class, 'store'])->name('monitoring.submission.store');
@@ -98,6 +102,11 @@ Route::prefix('mentor')->group(function () {
 Route::prefix('cetak')->group(function () {
     Route::get('/logbooks', [LogbookInternController::class, 'logbooks'])->name('cetak.logbook');
     Route::get('/logbooks-export', [LogbookInternController::class, 'export'])->name('cetak.logbook.export');
+    Route::get('/logbooks-intern-export', [LogbookInternController::class, 'exportLogbookIntern'])->name('cetak.logbook.intern.export');
+    Route::get('/presences', [PresenceController::class, 'presences'])->name('cetak.presence');
+    Route::get('/presences-export', [PresenceController::class, 'export'])->name('cetak.presence.export');
+    Route::get('/presences-intern-export', [PresenceController::class, 'exportPresenceIntern'])->name('cetak.presence.intern.export');
+    Route::get('/certificate/{id}', [InternController::class, 'certificatePDF'])->name('cetak.sertifikat');
 
 });
 

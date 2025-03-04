@@ -17,26 +17,44 @@ class SchoolController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        // Validasi input dengan aturan yang sama
         $request->validate([
-            'school_name' => 'required',
-            'type_school' => 'required',
+            'school_name' => [
+                'required',
+                'min:3',                      // Minimal 3 karakter
+                'max:100',                    // Maksimal 100 karakter
+                'regex:/^[A-Za-z]/',          // Harus diawali dengan huruf
+            ]
+        ], [
+            // Pesan validasi untuk 'school_name'
+            'school_name.required' => 'Nama sekolah wajib diisi.',
+            'school_name.min' => 'Nama sekolah harus memiliki minimal 3 karakter.',
+            'school_name.max' => 'Nama sekolah tidak boleh lebih dari 100 karakter.',
+            'school_name.regex' => 'Nama sekolah harus diawali dengan huruf.',
         ]);
 
-        // Simpan data ke database
-        $school = School::create([
-            'school_name' => $request->school_name,
-            'type_school' => $request->type_school,
-        ]);
+        try {
+            // Simpan data ke database
+            $school = School::create([
+                'school_name' => $request->school_name,
+                'type_school' => $request->type_school,
+            ]);
 
-        return redirect()->route('schools.index')->with(['success' => 'Data Berhasil Disimpan!']);
+            // Set session success message
+            return redirect()->route('schools.index')->with('success', 'Data Berhasil Disimpan!');
+        } catch (\Exception $e) {
+            // Set session error message
+            return redirect()->route('schools.index')->with('error', 'Data Gagal Disimpan! Coba lagi.');
+        }
     }
+
 
     public function destroy($id)
     {
         $school = School::findOrFail($id);
         $school->delete();
 
-        return redirect()->route('schools.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('schools.index')->with(['successDelete' => 'Data Berhasil Dihapus!']);
     }
 
     public function update(Request $request, $id)

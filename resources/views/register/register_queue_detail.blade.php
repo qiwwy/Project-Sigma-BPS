@@ -23,7 +23,7 @@
         <div class="col-2">
             <a href="{{ route('internQueue.index') }}" type="submit" class="btn icon icon-left btn-primary w-100">
                 <i class="bi bi-arrow-left-circle"></i>
-                Kembali Ke Antrian
+                Kembali
             </a>
         </div>
     </div>
@@ -45,7 +45,7 @@
                             <th>No.</th>
                             <th>Nama</th>
                             <th>Sekolah</th>
-                            <th>No. Handphone</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +54,17 @@
                                 <td>{{ $number++ }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->school_name }}</td>
-                                <td>{{ $item->phone_number }}</td>
+                                <td>
+                                    <form action="{{ route('internQueue.destroy', $item->id) }}"
+                                        method="POST" style="display:inline;" id="deleteForm{{ $item->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="badge bg-danger border-0 delete-button"
+                                            onclick="confirmDelete({{ $item->id }})" title="Hapus">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -63,4 +73,22 @@
         </div>
     </section>
 
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan bisa mengembalikannya!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Tidak, batalkan!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteForm' + id).submit(); // Menggunakan ID unik
+                } else {
+                    Swal.fire('Dibatalkan', 'Data Anda aman :)', 'error');
+                }
+            });
+        }
+    </script>
 </x-main-layout>

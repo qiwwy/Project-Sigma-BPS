@@ -4,9 +4,10 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
                     <h3>Daftar Pendaftar Magang</h3>
-                    <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
-                        thanks to simple-datatables.</p>
+                    <p class="text-subtitle text-muted">Lihat daftar lengkap pendaftar magang yang telah mendaftar. Anda
+                        dapat melakukan pencarian peserta, dan penelusuran data dengan mudah.</p>
                 </div>
+
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
@@ -28,6 +29,10 @@
                     @if (session('successDisposition'))
                         <div class="alert alert-light-success color-success">
                             {{ session('successDisposition') }}
+                        </div>
+                    @elseif (session('successDelete'))
+                        <div class="alert alert-light-success color-success">
+                            {{ session('successDelete') }}
                         </div>
                     @endif
                     <table class="table table-striped" id="table1">
@@ -61,26 +66,18 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="btn-group">
-                                            <a href="">
-                                                <span class="badge bg-primary">
-                                                    <i class="bi bi-eye-fill"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a href="">
-                                                <span class="badge bg-warning">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a href="">
-                                                <span class="badge bg-danger">
+                                        <!-- Container untuk kedua button -->
+                                        <div style="display: flex; align-items: center; gap: 5px;">
+                                            <form action="{{ route('master.intern.destroy', $item->id) }}"
+                                                method="POST" style="display:inline;"
+                                                id="deleteForm{{ $item->id }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="badge bg-danger border-0 delete-button"
+                                                    onclick="confirmDelete({{ $item->id }})" title="Hapus">
                                                     <i class="bi bi-trash-fill"></i>
-                                                </span>
-                                            </a>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -91,4 +88,23 @@
             </div>
         </section>
     </div>
+
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan bisa mengembalikannya!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Tidak, batalkan!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteForm' + id).submit(); // Menggunakan ID unik
+                } else {
+                    Swal.fire('Dibatalkan', 'Data Anda aman :)', 'error');
+                }
+            });
+        }
+    </script>
 </x-main-layout>

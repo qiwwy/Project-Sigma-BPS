@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('intern_id')->constrained(
                 table: 'interns',
                 indexName: 'presence_intern_id'
-            );
+            )->onUpdate('cascade')->onDelete('cascade');
             $table->enum('value', ['hadir', 'ijin', 'sakit', 'alfa'])->default('hadir');
             $table->time('presence_time');
             $table->date('presence_date');
